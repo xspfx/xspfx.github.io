@@ -27,7 +27,7 @@
       flex-direction:column;
       min-height:100vh;
       background-attachment: fixed;
-      background-size: 100% 100%;
+      background-size: cover;
       transition: background .3s ease, color .3s ease;
     }
 
@@ -68,12 +68,14 @@
       font-size:0.9rem;
       backdrop-filter: blur(6px);
       transition: all .25s ease;
+      display:flex;
+      align-items:center;
+      gap:0.4rem;
     }
     nav.language-switch button[aria-pressed="true"]{
       background:var(--primary-color);
       color:black;
       border-color:transparent;
-      text-shadow:0 0 6px rgba(0,0,0,0.5);
     }
     nav.language-switch button:hover:not([aria-pressed="true"]){
       background:rgba(255,255,255,0.12);
@@ -153,13 +155,20 @@
       --primary-color: #000000;
       --accent-color: #cc0000;
       background-image: none !important;
+    }
+    body.high-contrast *{
       text-shadow:none !important;
       box-shadow:none !important;
-    }
-    body.high-contrast .card,
-    body.high-contrast section h2::after{
-      box-shadow:none !important;
       backdrop-filter:none !important;
+    }
+    body.high-contrast nav.language-switch button{
+      background:#ffffff;
+      color:#000000;
+      border:1px solid #333;
+    }
+    body.high-contrast nav.language-switch button[aria-pressed="true"]{
+      background:var(--accent-color);
+      color:#fff;
     }
 
     /* Light mode */
@@ -196,8 +205,8 @@
       <button data-lang="es" aria-pressed="false">Español</button>
       <button data-lang="ru" aria-pressed="false">Русский</button>
       <button data-lang="zh" aria-pressed="false">中文</button>
-      <button id="contrast-toggle">High Contrast</button>
-      <button id="mode-toggle">Dark/Light</button>
+      <button id="contrast-toggle"><span id="contrast-icon">⬛</span> High Contrast</button>
+      <button id="mode-toggle"><span id="mode-icon">🌙</span> Dark/Light</button>
     </nav>
   </header>
 
@@ -225,20 +234,29 @@
     applyRandomTheme();
 
     // High contrast toggle
-    document.getElementById("contrast-toggle").addEventListener("click",()=>{
+    const contrastBtn = document.getElementById("contrast-toggle");
+    const contrastIcon = document.getElementById("contrast-icon");
+    contrastBtn.addEventListener("click",()=>{
       document.body.classList.toggle("high-contrast");
-      if(!document.body.classList.contains("high-contrast")){
+      if(document.body.classList.contains("high-contrast")){
+        contrastIcon.textContent = "⚪";
+      } else {
+        contrastIcon.textContent = "⬛";
         applyRandomTheme();
       }
     });
 
     // Dark / Light mode toggle
-    document.getElementById("mode-toggle").addEventListener("click",()=>{
+    const modeBtn = document.getElementById("mode-toggle");
+    const modeIcon = document.getElementById("mode-icon");
+    modeBtn.addEventListener("click",()=>{
       if(document.body.classList.contains("light")){
         document.body.classList.remove("light");
+        modeIcon.textContent = "🌙";
         applyRandomTheme();
       } else {
         document.body.classList.add("light");
+        modeIcon.textContent = "☀️";
       }
     });
 
