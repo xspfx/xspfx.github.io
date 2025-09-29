@@ -146,8 +146,8 @@
       padding:1rem 0;
     }
 
-    /* High contrast / accessibility theme */
-    body.high-contrast{
+    /* Light theme (früher high contrast) */
+    body.light{
       --background: #ffffff;
       --card-bg: #f5f5f5;
       --text: #111111;
@@ -156,31 +156,19 @@
       --accent-color: #cc0000;
       background-image: none !important;
     }
-    body.high-contrast *{
+    body.light *{
       text-shadow:none !important;
       box-shadow:none !important;
       backdrop-filter:none !important;
     }
-    body.high-contrast nav.language-switch button{
+    body.light nav.language-switch button{
       background:#ffffff;
       color:#000000;
       border:1px solid #333;
     }
-    body.high-contrast nav.language-switch button[aria-pressed="true"]{
+    body.light nav.language-switch button[aria-pressed="true"]{
       background:var(--accent-color);
       color:#fff;
-    }
-
-    /* Light mode */
-    body.light{
-      --background: #fafafa;
-      --card-bg: #ffffff;
-      --text: #1a1a1a;
-      --muted: #444444;
-      --primary-color: #0077ff;
-      --accent-color: #00b894;
-      background: linear-gradient(135deg, #f0f0f0, #ffffff);
-      text-shadow:none;
     }
 
     @media (max-width:600px){
@@ -205,7 +193,6 @@
       <button data-lang="es" aria-pressed="false">Español</button>
       <button data-lang="ru" aria-pressed="false">Русский</button>
       <button data-lang="zh" aria-pressed="false">中文</button>
-      <button id="contrast-toggle"><span id="contrast-icon">⬛</span> High Contrast</button>
       <button id="mode-toggle"><span id="mode-icon">🌙</span> Dark/Light</button>
     </nav>
   </header>
@@ -215,7 +202,7 @@
   <footer>&copy; 2025 Edusphere – Für eine neue Aufklärung</footer>
 
   <script>
-    // Cyberpunk Farbschemata
+    // Cyberpunk Themes
     const themes = [
       {bg:"linear-gradient(135deg, #0d0d0d, #1a0033)", primary:"#ff00ff", accent:"#00fff7"},
       {bg:"linear-gradient(135deg, #050510, #1a1a2e)", primary:"#39ff14", accent:"#ff3131"},
@@ -224,7 +211,7 @@
       {bg:"linear-gradient(135deg, #060606, #201020)", primary:"#ff6ec7", accent:"#33ffcc"}
     ];
     function applyRandomTheme(){
-      if(document.body.classList.contains("high-contrast") || document.body.classList.contains("light")) return;
+      if(document.body.classList.contains("light")) return;
       const theme = themes[Math.floor(Math.random()*themes.length)];
       document.documentElement.style.setProperty("--background", theme.bg);
       document.documentElement.style.setProperty("--primary-color", theme.primary);
@@ -233,20 +220,7 @@
     }
     applyRandomTheme();
 
-    // High contrast toggle
-    const contrastBtn = document.getElementById("contrast-toggle");
-    const contrastIcon = document.getElementById("contrast-icon");
-    contrastBtn.addEventListener("click",()=>{
-      document.body.classList.toggle("high-contrast");
-      if(document.body.classList.contains("high-contrast")){
-        contrastIcon.textContent = "⚪";
-      } else {
-        contrastIcon.textContent = "⬛";
-        applyRandomTheme();
-      }
-    });
-
-    // Dark / Light mode toggle
+    // Mode toggle (Dark / Light)
     const modeBtn = document.getElementById("mode-toggle");
     const modeIcon = document.getElementById("mode-icon");
     modeBtn.addEventListener("click",()=>{
@@ -260,7 +234,7 @@
       }
     });
 
-    // Markdown Converter
+    // Markdown
     function escapeHTML(str){
       return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
         .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
