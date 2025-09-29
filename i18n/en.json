@@ -5,32 +5,32 @@
       "id": "preamble",
       "title": "Preamble",
       "paragraphs": [
-        "We stand at a crossroads. While digital spaces once promised democratic discourse, free exchange of knowledge, and global understanding, they have also given rise to retreats of hate, intolerance, and anti-democratic thinking. In the echo chambers of the so-called *Manosphere*, the *Alt-Right*, and other neo-fascist movements, a new, digitally fueled reaction is growing against the achievements of Enlightenment, against feminism, human rights, and equality.",
-        "We respond with something different: **The Edusphere.**",
-        "A global, open network of people, initiatives, institutions, and ideas committed to freedom of thought, education as a human right, democracy as a way of life, and the dignity of every human being."
+        "We stand at a crossroads. While digital spaces were once seen as a promise of democratic discourse, free exchange of knowledge, and global understanding, they have also become havens of hate, intolerance, and anti-democratic thinking. In the echo chambers of the so-called *Manosphere*, the *Alt-Right*, and other neo-fascist movements, a new, digitally fueled reaction is growing against the achievements of the Enlightenment, against feminism, human rights, and equality.",
+        "We counter this with: **The Edusphere.**",
+        "A global, open network of people, initiatives, institutions, and ideas committed to freedom of thought, education as a human right, democracy as a way of life, and the dignity of every single person."
       ]
     },
     {
       "id": "new-enlightenment",
       "title": "1. A New Enlightenment",
       "paragraphs": [
-        "We call for a new era of Enlightenment. The Edusphere sees itself as the intellectual heir of the first Enlightenment of the 18th century – that movement which brought the light of reason against religious fanaticism, absolutism, and ignorance.",
-        "Today, however, we face new challenges: the enemies of freedom wear suits or memes, they use platforms instead of pulpits, and their weapons are disinformation, cynicism, and algorithmically amplified hate.",
+        "We call for a new era of Enlightenment. The Edusphere sees itself as the intellectual heir of the first Enlightenment of the 18th century – that movement which set the light of reason against religious fanaticism, absolutism, and ignorance.",
+        "But today we face a new challenge: The enemies of freedom wear suits or memes, they use platforms instead of pulpits, and their weapons are disinformation, cynicism, and algorithmically amplified hate.",
         "The Edusphere responds with the tools of Enlightenment: knowledge, dialogue, critical thinking, education, and networking.",
-        "We believe in the *maturity of the human being* – especially in the digital age."
+        "We believe in the *maturity of humankind* – especially in the digital age."
       ]
     },
     {
       "id": "education-resistance",
       "title": "2. Education as Resistance",
       "paragraphs": [
-        "Where ignorance rules, democracy withers.",
-        "The Edusphere understands **education not as mere transmission of knowledge**, but as a political, social, and cultural practice of liberation. It means:"
+        "Where ignorance rules, democracy is lost.",
+        "The Edusphere understands **education not as mere knowledge transfer**, but as a political, social, and cultural practice of liberation. It means:"
       ],
       "list": [
         "The ability to distinguish between truth and lies.",
         "The willingness to see the world through the eyes of others.",
-        "The responsibility to actively strive for a more just society."
+        "The responsibility to actively work for a more just society."
       ],
       "closing": "In a world full of polarization and conspiracy ideologies, education is the strongest act of resistance."
     },
@@ -38,28 +38,28 @@
       "id": "digital-spaces",
       "title": "3. Reclaiming Digital Spaces",
       "paragraphs": [
-        "The Edusphere is a call to **reclaim the Internet** – not through control, but through creativity, openness, and responsibility.",
-        "We envision a digital culture where:"
+        "The Edusphere is a call to **reclaim the internet** – not through control, but through creativity, openness, and responsibility.",
+        "We strive for a digital culture in which:"
       ],
       "list": [
-        "Algorithms are optimized for diversity and democratic discourse, not for anger and clicks.",
+        "Algorithms are optimized for diversity and democratic discourse, not for rage and clicks.",
         "Platforms take responsibility instead of monetizing hate.",
         "People are connected by shared values, not by enemy images."
       ],
-      "closing": "We demand transparent technology, digital ethics, and a public digital space designed democratically."
+      "closing": "We demand transparent technology, digital ethics, and a public digital space shaped democratically."
     },
     {
       "id": "values",
       "title": "4. Values of the Edusphere",
       "paragraphs": ["We stand for:"],
       "list": [
-        "**Democracy** as the ongoing practice of sharing power, protecting diversity, and tolerating dissent.",
-        "**Freedom** as the right to self-determination, but also as a duty to responsibility.",
+        "**Democracy** as the constant practice of sharing power, protecting diversity, and enduring dissent.",
+        "**Freedom** as the right to self-determination, but also as the duty of responsibility.",
         "**Tolerance**, not as indifference, but as active commitment to human rights.",
-        "**Integration** as a process of mutual approach, not assimilation.",
-        "**Human rights** as the indivisible foundation of every society.",
-        "**Exchange** as the antidote to isolation, mistrust, and hate.",
-        "**Education** as the foundation of an open, supportive, and learning society."
+        "**Integration** as a process of mutual approach, not of assimilation.",
+        "**Human rights** as the indivisible foundation of every social coexistence.",
+        "**Exchange** as a means against isolation, mistrust, and hate.",
+        "**Education** as the foundation of an open, solidaristic, and learning society."
       ]
     },
     {
@@ -70,18 +70,71 @@
         "We call on people worldwide to become part of this network:"
       ],
       "list": [
-        "Teachers who resist authoritarian tendencies.",
-        "Artists who paint new visions of the future.",
+        "Teachers who oppose authoritarian tendencies.",
+        "Artists who paint new images of the future.",
         "Journalists who remain committed to the truth.",
         "Activists who build bridges instead of walls.",
         "Technologists who write ethics and responsibility into code.",
-        "Students, parents, neighbors – **all who believe in another future.**"
+        "Pupils, students, parents, neighbors – **all who believe in another future.**"
       ],
-      "closing": "The Edusphere knows no national borders. It connects local initiatives into a **global movement** based on solidarity and dialogue. It is a digital agora – open, disputatious, and just."
+      "closing": "The Edusphere knows no national borders. It connects local initiatives into a **global movement**, based on solidarity and dialogue. It is a digital agora – open, disputatious, just."
+    },
+    {
+      "id": "praxis",
+      "title": "6. Paths to Practice",
+      "paragraphs": [
+        "For the Edusphere to be more than an idea, it needs concrete structures and fields of action."
+      ],
+      "subsections": [
+        {
+          "title": "a) Organization",
+          "list": [
+            "**Decentralized and networked**: Local initiatives in schools, universities, libraries, or online communities form nodes.",
+            "**Globally connected**: An open infrastructure links these nodes into a worldwide movement.",
+            "**Self-determined**: The Edusphere has no hierarchy but lives on shared principles."
+          ]
+        },
+        {
+          "title": "b) Fields of Action",
+          "list": [
+            "**Education & Maturity**: Media literacy, open-source knowledge, spaces for respectful dialogue.",
+            "**Technology & Responsibility**: Transparent algorithms, ethical code, platforms oriented toward the common good.",
+            "**Culture & Art**: Projects that create images of solidarity and spread “memes of Enlightenment.”",
+            "**Activism & Civil Society**: Grassroots campaigns, community projects, international solidarity."
+          ]
+        },
+        {
+          "title": "c) Tools",
+          "list": [
+            "A **digital agora** for exchange, learning materials, and projects.",
+            "An **Edusphere Academy** for critical thinking and democratic practice.",
+            "**Mentoring programs** between generations.",
+            "A shared **fact-checking network** against disinformation."
+          ]
+        },
+        {
+          "title": "d) Political Demands",
+          "list": [
+            "Recognize the **right to digital education** as a human right.",
+            "**Platform regulation**: transparency obligations for algorithms and limits on monetizing hate.",
+            "Build a **public digital infrastructure** as a democratic common good."
+          ]
+        },
+        {
+          "title": "e) Participation",
+          "list": [
+            "Create **learning circles**.",
+            "Produce **creative contributions** – texts, videos, art.",
+            "Develop **tools** for digital democracy.",
+            "Engage for **educational justice**.",
+            "Build **solidarity networks** across borders."
+          ]
+        }
+      ]
     },
     {
       "id": "promise",
-      "title": "6. Our Promise",
+      "title": "7. Our Promise",
       "list": [
         "We will not be silent when democracy is attacked.",
         "We will not look away when hate spreads.",
@@ -101,7 +154,7 @@
         "An invitation to create spaces where ideas can grow.",
         "An invitation to get involved.",
         "An invitation not only to watch, but to participate.",
-        "For the future will not be made by those who shout the loudest – but by those willing to learn, teach, and act."
+        "For the future is not made by those who shout the loudest – but by those who are willing to learn, to teach, and to act."
       ],
       "closing": [
         "**Welcome to the Edusphere.**",
@@ -110,4 +163,3 @@
     }
   ]
 }
-  
