@@ -1,280 +1,288 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Edusphere</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edusphere Manifest</title>
   <style>
     :root {
-      --bg-dark: #0d0d0d;
-      --card-bg: rgba(18,18,22,0.62);
-      --text: #e6eef2;
-      --muted: #9aa3ad;
-      --cyber-purple: #ff00ff;
-      --neon-blue: #00fff7;
-      --max-width: 1000px;
+      --bg-dark: #0a0a0f;
+      --bg-light: #f5f5fa;
+      --text-dark: #e0e0ff;
+      --text-light: #202020;
+      --accent: #8a2be2;
+      --highlight: #00ffff;
     }
-
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html,body { height:100%; }
     body {
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      font-family: system-ui, sans-serif;
       background: var(--bg-dark);
-      color: var(--text);
-      line-height:1.6;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      transition: background .25s ease, color .25s ease;
-      overflow-x:hidden;
+      color: var(--text-dark);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: var(--bg-light);
+      color: var(--text-light);
     }
 
+    /* Hintergrund Canvas */
     #wave-bg {
-      position:fixed;
-      inset:0;
-      z-index:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-      display:block;
-      filter: blur(30px);
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: transparent;
+      filter: blur(18px);
     }
 
     header {
-      max-width:var(--max-width);
-      margin:1.25rem auto 0.75rem;
-      text-align:center;
-      padding:0 1rem;
-      position:relative;
-      z-index:2;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
     }
     header h1 {
-      font-size:2.1rem;
-      letter-spacing:0.02em;
-      color:var(--neon-blue);
-      text-shadow:0 0 10px var(--neon-blue), 0 0 22px var(--cyber-purple);
-      margin:0.25rem 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+      color: var(--highlight);
+      text-shadow: 0 0 8px rgba(0,255,255,0.6);
+      transition: text-shadow 0.3s;
     }
-
-    .lang-buttons {
-      display:flex;
-      gap:0.5rem;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:0.5rem;
-    }
-    .lang-buttons button {
-      background: rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.08);
-      color:var(--text);
-      padding:0.4rem 0.7rem;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:0.85rem;
-      transition: all .18s ease;
-    }
-    .lang-buttons button[aria-pressed="true"] {
-      background: var(--neon-blue);
-      color: black;
-      border-color: transparent;
-    }
-    body.light .lang-buttons button[aria-pressed="true"] {
-      background: var(--cyber-purple);
-      color: white;
+    body.light header h1 {
+      text-shadow: none;
     }
 
     main {
-      max-width:var(--max-width);
-      margin:0.75rem auto;
-      width:100%;
-      position:relative;
-      z-index:1;
-      padding:0 1rem 1.5rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-
-    .card {
-      background: var(--card-bg);
-      border-radius:14px;
-      padding:1.5rem;
-      margin-bottom:1.2rem;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      border:1px solid rgba(255,255,255,0.04);
+    h2 {
+      color: var(--accent);
+      margin-top: 2rem;
+      font-size: 1.6rem;
     }
-
-    section h2 {
-      font-size:1.25rem;
-      margin:1rem 0 0.6rem;
-      color:var(--cyber-purple);
-      text-shadow:0 0 8px var(--cyber-purple);
+    h3 {
+      color: var(--highlight);
+      margin-top: 1rem;
+      font-size: 1.2rem;
     }
-    section h3 {
-      font-size:1.03rem;
-      margin:0.6rem 0;
-      color:var(--neon-blue);
-      text-shadow:0 0 6px var(--neon-blue);
+    ul {
+      margin: 0.5rem 0 1rem 1.5rem;
     }
-
-    section p { margin:0 0 0.9rem; font-size:1rem; }
-    section ul { margin:0.5rem 0 1rem 1.25rem; }
-    section li { margin-bottom:0.45rem; }
+    strong {
+      color: var(--highlight);
+    }
 
     footer {
-      margin-top:auto;
-      text-align:center;
-      color:var(--muted);
-      font-size:0.9rem;
-      padding:1rem 0;
-      position:relative;
-      z-index:2;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      margin: 3rem 0 1rem;
     }
-    footer .version { font-size:0.8rem; }
 
-    body.light {
-      --bg-dark: #ffffff;
-      --card-bg: rgba(250,250,252,0.88);
-      --text: #111827;
-      --muted: #6b7280;
-      --cyber-purple: #6b2b6b;
-      --neon-blue: #007ea7;
-      background: #ffffff;
-      color: var(--text);
+    /* Burger Menü */
+    .menu-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
     }
-    body.light .card { box-shadow: 0 8px 20px rgba(2,6,23,0.06); }
-    body.light #wave-bg { filter: blur(20px) brightness(1.04) saturate(0.6); }
-    body.light section h2,
-    body.light section h3 { text-shadow:none; }
-
-    @media (max-width:600px){
-      header h1 { font-size:1.6rem; }
-      section h2 { font-size:1.05rem; }
+    .burger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .burger span {
+      display: block;
+      height: 4px;
+      background: var(--highlight);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: rgba(20,20,30,0.95);
+      padding: 1rem;
+      border-radius: 8px;
+      min-width: 150px;
+    }
+    body.light .menu {
+      background: rgba(250,250,255,0.95);
+    }
+    .menu.open {
+      display: block;
+    }
+    .menu button {
+      display: block;
+      margin: 0.3rem 0;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+    .menu button:hover {
+      background: var(--highlight);
+      color: black;
     }
   </style>
 </head>
 <body>
   <canvas id="wave-bg"></canvas>
 
+  <div class="menu-container">
+    <button class="burger" id="burger-btn" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="menu" id="menu">
+      <button onclick="setLanguage('de')">Deutsch</button>
+      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('fr')">Français</button>
+      <button onclick="setLanguage('es')">Español</button>
+      <button onclick="setLanguage('ru')">Русский</button>
+      <button onclick="setLanguage('zh')">中文</button>
+      <hr>
+      <button onclick="toggleDarkMode()">🌙 Dark/Light</button>
+    </div>
+  </div>
+
   <header>
     <h1 id="manifest-title">Lade Manifest...</h1>
-    <div class="lang-buttons">
-      <button data-lang="de" aria-pressed="true">DE</button>
-      <button data-lang="en">EN</button>
-      <button data-lang="fr">FR</button>
-      <button data-lang="es">ES</button>
-      <button data-lang="ru">RU</button>
-      <button data-lang="zh">中文</button>
-    </div>
   </header>
-
   <main id="manifest-content"></main>
-
   <footer>
-    <span class="version">subscriptionsPass.js ver. 1.0.2</span>
+    <span id="version">subscriptionsPass.js ver. 1.0.3</span>
   </footer>
 
   <script>
-    const canvas = document.getElementById("wave-bg");
-    const ctx = canvas.getContext("2d");
-    let w,h;
-    function resize(){
-      w=canvas.width=window.innerWidth;
-      h=canvas.height=window.innerHeight;
-    }
-    window.addEventListener("resize",resize);
-    resize();
+    const lang = localStorage.getItem("lang") || document.documentElement.lang || "de";
+    document.documentElement.lang = lang;
+    const manifestPath = (lang) => `i18n/${lang}.json`;
 
-    const waves = [
-      {amp:40,len:0.015,speed:0.001,color:"rgba(0,255,247,0.6)"},
-      {amp:60,len:0.02,speed:0.0008,color:"rgba(255,0,255,0.5)"}
-    ];
-    let start=performance.now();
-    function animate(t){
-      ctx.clearRect(0,0,w,h);
-      let time=t-start;
-      waves.forEach(wv=>{
-        ctx.beginPath();
-        ctx.moveTo(0,h/2);
-        for(let x=0;x<w;x+=10){
-          let y=h/2 + Math.sin(x*wv.len + time*wv.speed)*wv.amp;
-          ctx.lineTo(x,y);
-        }
-        ctx.strokeStyle=wv.color;
-        ctx.lineWidth=3;
-        ctx.shadowBlur=15;
-        ctx.shadowColor=wv.color;
-        ctx.stroke();
-      });
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-
-    // Manifest Loader
-    let currentLang="de";
-    const buttons=document.querySelectorAll(".lang-buttons button");
-    buttons.forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        buttons.forEach(b=>b.setAttribute("aria-pressed","false"));
-        btn.setAttribute("aria-pressed","true");
-        currentLang=btn.dataset.lang;
-        loadManifest();
-      });
-    });
-
-    async function loadManifest(){
-      const manifestPath=`i18n/${currentLang}.json`;
-      try{
-        const res=await fetch(manifestPath);
-        if(!res.ok) throw new Error("Manifest konnte nicht geladen werden");
-        const manifest=await res.json();
-        document.getElementById("manifest-title").textContent=manifest.title;
-        document.getElementById("manifest-content").innerHTML=manifest.sections.map(renderSection).join("");
-      } catch(err){
-        document.getElementById("manifest-title").textContent="Manifest konnte nicht geladen werden";
+    async function loadManifest(language) {
+      try {
+        const res = await fetch(manifestPath(language));
+        if (!res.ok) throw new Error("Manifest konnte nicht geladen werden");
+        const manifest = await res.json();
+        document.getElementById("manifest-title").textContent = manifest.title;
+        document.getElementById("manifest-content").innerHTML = manifest.sections.map(renderSection).join("");
+      } catch (err) {
+        document.getElementById("manifest-title").textContent = "Manifest konnte nicht geladen werden";
         console.error(err);
       }
     }
 
-    function renderSection(sec){
-      let html=`<section id="${sec.id}" class="card">`;
-      html+=`<h2>${sec.title}</h2>`;
-      if(sec.paragraphs){
-        html+=sec.paragraphs.map(p=>`<p>${renderMarkdown(p)}</p>`).join("");
+    function renderSection(sec) {
+      let html = `<section id="${sec.id}">`;
+      html += `<h2>${sec.title}</h2>`;
+      if (sec.paragraphs) {
+        html += sec.paragraphs.map(p => `<p>${p}</p>`).join("");
       }
-      if(sec.list){
-        html+="<ul>"+sec.list.map(li=>`<li>${renderMarkdown(li)}</li>`).join("")+"</ul>";
+      if (sec.list) {
+        html += "<ul>" + sec.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
       }
-      if(sec.subsections){
-        html+=sec.subsections.map(sub=>{
-          let subHtml=`<div class="subsection"><h3>${sub.title}</h3>`;
-          if(sub.paragraphs){
-            subHtml+=sub.paragraphs.map(p=>`<p>${renderMarkdown(p)}</p>`).join("");
-          }
-          if(sub.list){
-            subHtml+="<ul>"+sub.list.map(li=>`<li>${renderMarkdown(li)}</li>`).join("")+"</ul>";
-          }
-          return subHtml+"</div>";
+      if (sec.subsections) {
+        html += sec.subsections.map(sub => {
+          let subHtml = `<h3>${sub.title}</h3>`;
+          if (sub.paragraphs) subHtml += sub.paragraphs.map(p => `<p>${p}</p>`).join("");
+          if (sub.list) subHtml += "<ul>" + sub.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
+          return subHtml;
         }).join("");
       }
-      if(sec.closing){
-        if(Array.isArray(sec.closing)){
-          html+=sec.closing.map(c=>`<p><strong>${renderMarkdown(c)}</strong></p>`).join("");
+      if (sec.closing) {
+        if (Array.isArray(sec.closing)) {
+          html += sec.closing.map(c => `<p><strong>${c}</strong></p>`).join("");
         } else {
-          html+=`<p><strong>${renderMarkdown(sec.closing)}</strong></p>`;
+          html += `<p><strong>${sec.closing}</strong></p>`;
         }
       }
-      html+="</section>";
+      html += "</section>";
       return html;
     }
 
-    function renderMarkdown(text){
-      if(!text) return "";
-      return text
-        .replace(/\*\*(.*?)\*\*/g,'<strong class="md-strong">$1</strong>')
-        .replace(/\*(.*?)\*/g,'<em class="md-em">$1</em>');
+    function setLanguage(language) {
+      localStorage.setItem("lang", language);
+      document.documentElement.lang = language;
+      loadManifest(language);
     }
 
-    loadManifest();
+    function toggleDarkMode() {
+      document.body.classList.toggle("light");
+    }
+
+    // Burger Menü Logik
+    const burgerBtn = document.getElementById("burger-btn");
+    const menu = document.getElementById("menu");
+    burgerBtn.addEventListener("click", () => {
+      menu.classList.toggle("open");
+    });
+
+    // Init
+    loadManifest(lang);
+  </script>
+
+  <script>
+    const canvas = document.getElementById('wave-bg');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const waves = [
+      { amp: 40, len: 0.008, speed: 0.002, phase: 0 },
+      { amp: 25, len: 0.012, speed: 0.0016, phase: 2 },
+      { amp: 55, len: 0.006, speed: 0.0023, phase: 4 }
+    ];
+
+    function drawWave({ amp, len, speed, phase }, time, color) {
+      ctx.beginPath();
+      for (let x = 0; x <= width; x += 6) {
+        const y = height/2 + amp * Math.sin(x * len + time * speed + phase);
+        ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function animate(time) {
+      ctx.clearRect(0, 0, width, height);
+      const isLight = document.body.classList.contains("light");
+
+      waves.forEach((wave, i) => {
+        const darkColors = [
+          "rgba(0,255,255,0.35)",
+          "rgba(255,0,255,0.28)",
+          "rgba(0,200,255,0.32)"
+        ];
+        const lightColors = [
+          "rgba(0,120,180,0.18)",
+          "rgba(150,0,150,0.15)",
+          "rgba(0,100,150,0.2)"
+        ];
+        const color = isLight ? lightColors[i] : darkColors[i];
+        drawWave(wave, time, color);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
   </script>
 </body>
 </html>
