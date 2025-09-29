@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Edusphere</title>
   <style>
-    :root{
+    :root {
       --bg-dark: #0d0d0d;
       --card-bg: rgba(18,18,22,0.62);
       --text: #e6eef2;
@@ -15,9 +15,9 @@
       --max-width: 1000px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body { height:100%; }
+    body {
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: var(--bg-dark);
       color: var(--text);
@@ -25,13 +25,11 @@
       display:flex;
       flex-direction:column;
       min-height:100vh;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
       transition: background .25s ease, color .25s ease;
       overflow-x:hidden;
     }
 
-    #wave-bg{
+    #wave-bg {
       position:fixed;
       inset:0;
       z-index:0;
@@ -39,10 +37,10 @@
       height:100%;
       pointer-events:none;
       display:block;
-      filter: blur(40px);
+      filter: blur(30px);
     }
 
-    header{
+    header {
       max-width:var(--max-width);
       margin:1.25rem auto 0.75rem;
       text-align:center;
@@ -50,14 +48,7 @@
       position:relative;
       z-index:2;
     }
-    header .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-      margin-bottom:0.6rem;
-    }
-    header h1{
+    header h1 {
       font-size:2.1rem;
       letter-spacing:0.02em;
       color:var(--neon-blue);
@@ -65,16 +56,14 @@
       margin:0.25rem 0;
     }
 
-    .controls{
+    .lang-buttons {
       display:flex;
       gap:0.5rem;
-      align-items:center;
-      justify-content:center;
       flex-wrap:wrap;
+      justify-content:center;
       margin-top:0.5rem;
     }
-    .lang-buttons{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;}
-    .lang-buttons button, .control-btn {
+    .lang-buttons button {
       background: rgba(255,255,255,0.04);
       border:1px solid rgba(255,255,255,0.08);
       color:var(--text);
@@ -83,36 +72,28 @@
       cursor:pointer;
       font-weight:600;
       font-size:0.85rem;
-      backdrop-filter: blur(6px);
       transition: all .18s ease;
-      display:inline-flex;
-      gap:0.35rem;
-      align-items:center;
     }
-    /* Aktive Sprache: nur solid color */
-    .lang-buttons button[aria-pressed="true"]{
+    .lang-buttons button[aria-pressed="true"] {
       background: var(--neon-blue);
       color: black;
       border-color: transparent;
     }
-    body.light .lang-buttons button[aria-pressed="true"]{
+    body.light .lang-buttons button[aria-pressed="true"] {
       background: var(--cyber-purple);
       color: white;
     }
 
-    .control-btn { background: rgba(0,0,0,0.25); border-color: rgba(255,255,255,0.06); }
-    .control-btn.active { box-shadow:0 0 18px rgba(0,0,0,0.6) inset; }
-
-    main{
+    main {
       max-width:var(--max-width);
-      margin: 0.75rem auto;
+      margin:0.75rem auto;
       width:100%;
       position:relative;
       z-index:1;
       padding:0 1rem 1.5rem;
     }
 
-    .card{
+    .card {
       background: var(--card-bg);
       border-radius:14px;
       padding:1.5rem;
@@ -122,36 +103,24 @@
       border:1px solid rgba(255,255,255,0.04);
     }
 
-    section{margin:1.1rem 0}
-    section h2{
+    section h2 {
       font-size:1.25rem;
-      margin-bottom:0.6rem;
+      margin:1rem 0 0.6rem;
       color:var(--cyber-purple);
       text-shadow:0 0 8px var(--cyber-purple);
-      padding-bottom:0.15rem;
-      display:inline-block;
     }
-
-    section p{margin:0 0 0.9rem;font-size:1rem;color:var(--text)}
-    section ul{margin:0.5rem 0 1rem 1.25rem}
-    section li{margin-bottom:0.45rem}
-
-    .subsection{
-      margin:0.9rem 0;
-      padding-left:1rem;
-      border-left:3px solid rgba(0,255,247,0.08);
-    }
-    .subsection h3{
+    section h3 {
       font-size:1.03rem;
-      margin:0 0 0.5rem;
+      margin:0.6rem 0;
       color:var(--neon-blue);
       text-shadow:0 0 6px var(--neon-blue);
     }
 
-    strong.md-strong{ color:var(--neon-blue); font-weight:700; text-shadow:0 0 10px rgba(0,255,247,0.12); }
-    em.md-em{ color:var(--cyber-purple); font-style:italic; text-shadow:0 0 8px rgba(255,0,255,0.06); }
+    section p { margin:0 0 0.9rem; font-size:1rem; }
+    section ul { margin:0.5rem 0 1rem 1.25rem; }
+    section li { margin-bottom:0.45rem; }
 
-    footer{
+    footer {
       margin-top:auto;
       text-align:center;
       color:var(--muted);
@@ -160,9 +129,9 @@
       position:relative;
       z-index:2;
     }
-    footer .version{ font-size:0.8rem; color:var(--muted); opacity:0.9; }
+    footer .version { font-size:0.8rem; }
 
-    body.light{
+    body.light {
       --bg-dark: #ffffff;
       --card-bg: rgba(250,250,252,0.88);
       --text: #111827;
@@ -174,22 +143,138 @@
     }
     body.light .card { box-shadow: 0 8px 20px rgba(2,6,23,0.06); }
     body.light #wave-bg { filter: blur(20px) brightness(1.04) saturate(0.6); }
-    /* Kein Blur/Glow an Überschriften im Light Mode */
     body.light section h2,
-    body.light .subsection h3 {
-      text-shadow:none;
-    }
+    body.light section h3 { text-shadow:none; }
 
     @media (max-width:600px){
-      header h1{ font-size:1.6rem }
-      section h2{ font-size:1.05rem }
-      .lang-buttons button{ font-size:0.8rem; padding:0.35rem 0.5rem }
-      .control-btn{ font-size:0.8rem; padding:0.35rem 0.5rem }
-      .card{ padding:1rem }
+      header h1 { font-size:1.6rem; }
+      section h2 { font-size:1.05rem; }
     }
   </style>
 </head>
 <body>
-  <!-- ... Rest des Codes bleibt unverändert (Canvas, Header, Main, Footer, Script) ... -->
+  <canvas id="wave-bg"></canvas>
+
+  <header>
+    <h1 id="manifest-title">Lade Manifest...</h1>
+    <div class="lang-buttons">
+      <button data-lang="de" aria-pressed="true">DE</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="fr">FR</button>
+      <button data-lang="es">ES</button>
+      <button data-lang="ru">RU</button>
+      <button data-lang="zh">中文</button>
+    </div>
+  </header>
+
+  <main id="manifest-content"></main>
+
+  <footer>
+    <span class="version">subscriptionsPass.js ver. 1.0.2</span>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("wave-bg");
+    const ctx = canvas.getContext("2d");
+    let w,h;
+    function resize(){
+      w=canvas.width=window.innerWidth;
+      h=canvas.height=window.innerHeight;
+    }
+    window.addEventListener("resize",resize);
+    resize();
+
+    const waves = [
+      {amp:40,len:0.015,speed:0.001,color:"rgba(0,255,247,0.6)"},
+      {amp:60,len:0.02,speed:0.0008,color:"rgba(255,0,255,0.5)"}
+    ];
+    let start=performance.now();
+    function animate(t){
+      ctx.clearRect(0,0,w,h);
+      let time=t-start;
+      waves.forEach(wv=>{
+        ctx.beginPath();
+        ctx.moveTo(0,h/2);
+        for(let x=0;x<w;x+=10){
+          let y=h/2 + Math.sin(x*wv.len + time*wv.speed)*wv.amp;
+          ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle=wv.color;
+        ctx.lineWidth=3;
+        ctx.shadowBlur=15;
+        ctx.shadowColor=wv.color;
+        ctx.stroke();
+      });
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // Manifest Loader
+    let currentLang="de";
+    const buttons=document.querySelectorAll(".lang-buttons button");
+    buttons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        buttons.forEach(b=>b.setAttribute("aria-pressed","false"));
+        btn.setAttribute("aria-pressed","true");
+        currentLang=btn.dataset.lang;
+        loadManifest();
+      });
+    });
+
+    async function loadManifest(){
+      const manifestPath=`i18n/${currentLang}.json`;
+      try{
+        const res=await fetch(manifestPath);
+        if(!res.ok) throw new Error("Manifest konnte nicht geladen werden");
+        const manifest=await res.json();
+        document.getElementById("manifest-title").textContent=manifest.title;
+        document.getElementById("manifest-content").innerHTML=manifest.sections.map(renderSection).join("");
+      } catch(err){
+        document.getElementById("manifest-title").textContent="Manifest konnte nicht geladen werden";
+        console.error(err);
+      }
+    }
+
+    function renderSection(sec){
+      let html=`<section id="${sec.id}" class="card">`;
+      html+=`<h2>${sec.title}</h2>`;
+      if(sec.paragraphs){
+        html+=sec.paragraphs.map(p=>`<p>${renderMarkdown(p)}</p>`).join("");
+      }
+      if(sec.list){
+        html+="<ul>"+sec.list.map(li=>`<li>${renderMarkdown(li)}</li>`).join("")+"</ul>";
+      }
+      if(sec.subsections){
+        html+=sec.subsections.map(sub=>{
+          let subHtml=`<div class="subsection"><h3>${sub.title}</h3>`;
+          if(sub.paragraphs){
+            subHtml+=sub.paragraphs.map(p=>`<p>${renderMarkdown(p)}</p>`).join("");
+          }
+          if(sub.list){
+            subHtml+="<ul>"+sub.list.map(li=>`<li>${renderMarkdown(li)}</li>`).join("")+"</ul>";
+          }
+          return subHtml+"</div>";
+        }).join("");
+      }
+      if(sec.closing){
+        if(Array.isArray(sec.closing)){
+          html+=sec.closing.map(c=>`<p><strong>${renderMarkdown(c)}</strong></p>`).join("");
+        } else {
+          html+=`<p><strong>${renderMarkdown(sec.closing)}</strong></p>`;
+        }
+      }
+      html+="</section>";
+      return html;
+    }
+
+    function renderMarkdown(text){
+      if(!text) return "";
+      return text
+        .replace(/\*\*(.*?)\*\*/g,'<strong class="md-strong">$1</strong>')
+        .replace(/\*(.*?)\*/g,'<em class="md-em">$1</em>');
+    }
+
+    loadManifest();
+  </script>
 </body>
 </html>
