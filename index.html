@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Edusphere</title>
   <style>
-    :root {
+    :root{
       --background: #0d0d0d;
-      --card-bg: rgba(18,18,22,0.6);
+      --card-bg: rgba(18,18,22,0.64);
       --text: #e0e0e0;
       --muted: #9ca3af;
-      --primary-color: #ff00ff; /* cyberpunk lila */
+      --primary-color: #ff00ff; /* lila */
       --accent-color: #00fff7;  /* neonblau */
       --max-width: 950px;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; }
-
-    body {
-      font-family: "Inter", system-ui, sans-serif;
-      background: var(--background);
-      color: var(--text);
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--background);
+      color:var(--text);
       display:flex;
       flex-direction:column;
       min-height:100vh;
@@ -29,194 +28,507 @@
     }
 
     /* Canvas Hintergrund */
-    #wave-bg {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      display: block;
+    #wave-bg{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0; /* zwischen background und content */
+      pointer-events:none;
+      display:block;
     }
 
     /* Content über Canvas */
-    header, main, footer {
-      position: relative;
-      z-index: 1;
-    }
+    header, main, footer { position: relative; z-index: 1; }
 
-    header {
+    header{
       text-align:center;
-      margin:2rem auto 1.5rem;
+      margin: 2rem auto 1rem;
     }
 
-    /* Cyberpunk Glitch Effekt für Titel */
-    header h1 {
-      font-size:3rem;
-      font-weight:900;
-      color: var(--accent-color);
-      position: relative;
+    /* Titel-Wrapper - Wir erstellen hier die Slices via JS */
+    #title-wrap{
+      display:inline-block;
+      position:relative;
+      line-height:1;
+    }
+    /* unsichtbare Basisüberschrift (nimmt Platz ein) */
+    #site-title {
+      margin:0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      animation: glitch-skew 2s infinite linear alternate-reverse;
+      letter-spacing: 0.06em;
+      color: var(--accent-color);
+      text-shadow: 0 0 12px var(--accent-color);
+      visibility: hidden; /* sichtbarkeits-Reservoir — visuelle Darstellung kommt aus den Slices */
+      -webkit-font-smoothing: antialiased;
     }
 
-    header h1::before,
-    header h1::after {
-      content: "Edusphere";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      color: var(--primary-color);
-      clip: rect(0, 900px, 0, 0);
+    /* Slices container (absolute inside title-wrap) */
+    .title-slices {
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      overflow:visible;
+    }
+    .title-slice{
+      position:absolute;
+      left:0;
+      width:100%;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .title-slice .slice-text{
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      white-space:nowrap;
+      font: inherit;
+      font-weight: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      -webkit-font-smoothing: antialiased;
+      transition: transform 180ms cubic-bezier(.2,.8,.2,1);
+      will-change: transform;
+      text-align:center;
+      display:block;
+      /* neon glow */
+      text-shadow:
+        0 0 6px rgba(255,255,255,0.05),
+        0 0 12px rgba(0,255,255,0.02);
     }
 
-    header h1::before {
-      animation: glitch-top 3s infinite linear alternate-reverse;
-      text-shadow: 2px 0 var(--primary-color);
-    }
-    header h1::after {
-      animation: glitch-bottom 2.5s infinite linear alternate-reverse;
-      text-shadow: -2px 0 var(--accent-color);
-    }
-
-    @keyframes glitch-skew {
-      0% { transform: skew(0deg); }
-      20% { transform: skew(1deg); }
-      40% { transform: skew(-1deg); }
-      60% { transform: skew(0.5deg); }
-      80% { transform: skew(-0.5deg); }
-      100% { transform: skew(0deg); }
-    }
-
-    @keyframes glitch-top {
-      0% { clip: rect(0, 9999px, 0, 0); }
-      10% { clip: rect(0, 9999px, 5px, 0); }
-      20% { clip: rect(0, 9999px, 15px, 0); }
-      40% { clip: rect(0, 9999px, 8px, 0); }
-      60% { clip: rect(0, 9999px, 20px, 0); }
-      80% { clip: rect(0, 9999px, 3px, 0); }
-      100% { clip: rect(0, 9999px, 0, 0); }
-    }
-
-    @keyframes glitch-bottom {
-      0% { clip: rect(100px, 9999px, 100px, 0); }
-      20% { clip: rect(80px, 9999px, 120px, 0); }
-      40% { clip: rect(110px, 9999px, 140px, 0); }
-      60% { clip: rect(90px, 9999px, 130px, 0); }
-      80% { clip: rect(100px, 9999px, 150px, 0); }
-      100% { clip: rect(100px, 9999px, 100px, 0); }
-    }
-
-    .card {
+    /* small layout card for content */
+    .card{
       background: var(--card-bg);
       border-radius: 14px;
       padding: 1.5rem;
-      margin: 0 auto 1.5rem;
+      margin: 1rem auto;
       max-width: var(--max-width);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
-    footer {
+    footer{
       margin-top:auto;
       text-align:center;
-      color: var(--muted);
+      color:var(--muted);
       font-size:0.9rem;
       padding:1rem 0;
-      position: relative;
     }
-    footer small {
-      display:block;
-      font-size:0.75rem;
-      margin-top:0.3rem;
-      color: var(--muted);
+    footer small{ display:block; font-size:0.75rem; color:var(--muted); margin-top:0.3rem }
+
+    /* language / mode UI */
+    nav.language-switch{
+      display:flex;
+      justify-content:center;
+      gap:0.5rem;
+      margin-top:0.75rem;
+    }
+    nav.language-switch button{
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color:var(--text);
+      padding:0.4rem 0.75rem;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.9rem;
+      backdrop-filter: blur(6px);
+    }
+    nav.language-switch button[aria-pressed="true"]{
+      background: var(--primary-color);
+      color: #000;
+      border-color: transparent;
+    }
+
+    /* Light Mode (keine komplett ausgeblendete Canvas) */
+    body.light{
+      --background: #ffffff;
+      --card-bg: #f8f8fa;
+      --text: #111111;
+      --muted: #5b6770;
+      --primary-color: #7b2d7b;
+      --accent-color: #007ea7;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    @media (max-width:600px){
+      .card{ padding:1rem }
     }
   </style>
 </head>
 <body>
   <!-- Canvas -->
-  <canvas id="wave-bg"></canvas>
+  <canvas id="wave-bg" aria-hidden="true"></canvas>
 
   <header>
-    <h1>Edusphere</h1>
+    <div id="title-wrap">
+      <h1 id="site-title">Edusphere</h1>
+      <!-- JS erzeugt hier .title-slices -->
+    </div>
+
+    <nav class="language-switch" role="navigation" aria-label="Schalter" style="margin-top:1rem;">
+      <button data-lang="de" aria-pressed="true">Deutsch</button>
+      <button data-lang="en" aria-pressed="false">English</button>
+      <button data-lang="fr" aria-pressed="false">Français</button>
+      <button data-lang="es" aria-pressed="false">Español</button>
+      <button id="mode-toggle"><span id="mode-icon">🌙</span> Dark/Light</button>
+    </nav>
   </header>
 
-  <main class="card" role="main">
-    <p>Manifest-Inhalt wird hier geladen …</p>
+  <main id="manifest-content" class="card" role="main" aria-live="polite">
+    Manifest-Inhalt wird geladen …
   </main>
 
   <footer>
     &copy; 2025 Edusphere – Für eine neue Aufklärung
-    <small id="version">Version …</small>
+    <small id="version">Version: …</small>
   </footer>
 
   <script>
-    // --- Canvas Setup ---
-    const canvas = document.getElementById("wave-bg");
-    const ctx = canvas.getContext("2d", { alpha: true });
-    let w, h, dpr;
+  /*******************************
+   * 1) Titel: Scanline-Slicing + Zeilen-Zittern
+   *******************************/
+  (function(){
+    const title = document.getElementById('site-title');
+    const wrap = document.getElementById('title-wrap');
 
-    function resizeCanvas() {
-      dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      w = window.innerWidth;
-      h = window.innerHeight;
+    let sliceContainer = null;
+    let jitterTimer = null;
+
+    function buildSlices(){
+      // entferne alte Slices
+      if(sliceContainer){
+        sliceContainer.remove();
+        sliceContainer = null;
+      }
+      // Sichtbarkeits-Reservoir: title nimmt Platz ein, aber ist selbst hidden
+      title.style.visibility = 'hidden';
+
+      // messe die reale Höhe/Breite
+      const rect = title.getBoundingClientRect();
+      const height = Math.max(24, rect.height || parseFloat(getComputedStyle(title).fontSize) * 1.2);
+      const width = rect.width || title.parentElement.clientWidth;
+
+      // erzeuge container
+      sliceContainer = document.createElement('div');
+      sliceContainer.className = 'title-slices';
+      sliceContainer.style.width = width + 'px';
+      sliceContainer.style.height = height + 'px';
+      sliceContainer.style.left = '0px';
+      sliceContainer.style.top = '0px';
+      wrap.appendChild(sliceContainer);
+
+      // number of slices: depending on height; more slices -> finer scanlines
+      const numSlices = Math.min(30, Math.max(8, Math.round(height / 4)));
+      const sliceH = height / numSlices;
+
+      for(let i=0;i<numSlices;i++){
+        const s = document.createElement('div');
+        s.className = 'title-slice';
+        s.style.top = (i * sliceH) + 'px';
+        s.style.height = Math.ceil(sliceH) + 'px';
+
+        const span = document.createElement('span');
+        span.className = 'slice-text';
+        span.textContent = title.textContent;
+        // keep centered text: we'll set left 50% translateX -50% so alignment consistent
+        span.style.left = '50%';
+        span.style.transform = 'translateX(-50%) translateY(0)';
+        // alternate color tint a bit for mixing
+        if (i % 3 === 0) {
+          span.style.color = 'var(--primary-color)';
+          span.style.textShadow = '0 0 10px var(--primary-color), 0 0 24px rgba(255,0,255,0.12)';
+        } else {
+          span.style.color = 'var(--accent-color)';
+          span.style.textShadow = '0 0 10px var(--accent-color), 0 0 24px rgba(0,255,247,0.12)';
+        }
+        // ensure font size/weight match
+        span.style.fontSize = getComputedStyle(title).fontSize;
+        span.style.fontWeight = getComputedStyle(title).fontWeight;
+        span.style.letterSpacing = getComputedStyle(title).letterSpacing;
+        span.style.textTransform = getComputedStyle(title).textTransform;
+        span.style.lineHeight = getComputedStyle(title).lineHeight;
+
+        s.appendChild(span);
+        sliceContainer.appendChild(s);
+      }
+
+      // start jitter loop
+      startJitter();
     }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
 
-    // --- Wellen: nur vertikal schwingen, kein horizontaler Lauf ---
+    function startJitter(){
+      if(jitterTimer) clearInterval(jitterTimer);
+      jitterTimer = setInterval(()=>{
+        if(!sliceContainer) return;
+        const slices = Array.from(sliceContainer.children);
+        // pick random subset to jitter (10-25%)
+        const count = Math.max(1, Math.round(slices.length * (0.08 + Math.random()*0.18)));
+        const maxJitter = Math.max(6, Math.round(Math.min(window.innerWidth, 1400) * 0.008)); // px
+        // reset all small transforms first (soft)
+        slices.forEach(s => {
+          const span = s.firstElementChild;
+          if(Math.random() < 0.35) span.style.transform = 'translateX(-50%) translateY(0)'; // some reset
+        });
+        for(let k=0;k<count;k++){
+          const idx = Math.floor(Math.random()*slices.length);
+          const s = slices[idx];
+          if(!s) continue;
+          const span = s.firstElementChild;
+          const jitter = Math.round((Math.random()*2-1) * maxJitter);
+          const jitterY = Math.round((Math.random()*2-1) * 1.5); // slight vertical micro-shift
+          span.style.transition = 'transform 160ms cubic-bezier(.2,.8,.2,1)';
+          span.style.transform = `translateX(calc(-50% + ${jitter}px)) translateY(${jitterY}px)`;
+          // occasionally hold a stronger glitch on a group of slices
+          if(Math.random() < 0.08){
+            // apply a larger offset briefly then release
+            setTimeout(()=> {
+              span.style.transform = `translateX(calc(-50% + ${jitter * 1.8}px)) translateY(${jitterY}px)`;
+            }, 40);
+            setTimeout(()=> {
+              span.style.transform = 'translateX(-50%) translateY(0)';
+            }, 260 + Math.random()*180);
+          } else {
+            // revert after a short time
+            setTimeout(()=> {
+              span.style.transform = 'translateX(-50%) translateY(0)';
+            }, 220 + Math.random()*260);
+          }
+        }
+      }, 180); // frequency of jitter events
+    }
+
+    // rebuild on resize (throttle)
+    let rebuildTO = null;
+    function onResize(){
+      if(rebuildTO) clearTimeout(rebuildTO);
+      rebuildTO = setTimeout(()=> {
+        buildSlices();
+      }, 120);
+    }
+    window.addEventListener('resize', onResize);
+
+    // init
+    // wait a tick so fonts are applied
+    requestAnimationFrame(()=> {
+      buildSlices();
+    });
+
+  })();
+
+  /*******************************
+   * 2) Canvas-Waves: pulsieren (keine horizontale Bewegung),
+   *    großer Blur, additive blending für Farbvermischung
+   *******************************/
+  (function(){
+    const canvas = document.getElementById('wave-bg');
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    let dpr = Math.max(window.devicePixelRatio || 1, 1);
+    let W = 0, H = 0;
+
+    function resize(){
+      dpr = Math.max(window.devicePixelRatio || 1, 1);
+      const cssW = window.innerWidth;
+      const cssH = window.innerHeight;
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssH + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      W = cssW;
+      H = cssH;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // wave definitions: alternate lila / neonblau, different frequencies & pulsation speeds
     const waves = [
-      { amplitude: 80, frequency: 0.003, speed: 1.5, color: "#ff00ff" },
-      { amplitude: 60, frequency: 0.002, speed: 1.0, color: "#00fff7" }
+      { baseAmp: 70, freq: 0.0042, phase: Math.random()*Math.PI*2, pulseSpeed: 0.8, color: '#ff00ff', alpha: 0.32, lineWidth: 6 },
+      { baseAmp: 46, freq: 0.0022, phase: Math.random()*Math.PI*2, pulseSpeed: 1.15, color: '#00fff7', alpha: 0.30, lineWidth: 6 },
+      { baseAmp: 28, freq: 0.0060, phase: Math.random()*Math.PI*2, pulseSpeed: 1.9, color: '#ff00ff', alpha: 0.22, lineWidth: 4 }
     ];
 
-    const BIG_BLUR = 180;
+    const BIG_BLUR = 200;
 
-    function drawWaves(t) {
-      ctx.clearRect(0,0,w,h);
-      ctx.globalCompositeOperation = "lighter";
+    function draw(timestamp){
+      const t = (timestamp || 0) / 1000; // seconds
 
-      waves.forEach(wv => {
+      // clear
+      ctx.clearRect(0,0,W,H);
+      // additive blending
+      ctx.globalCompositeOperation = 'lighter';
+
+      // draw each wave; amplitude pulsates over time (no phase shift that causes lateral movement)
+      for(const wv of waves){
+        // amplitude modulation only (pulsation)
+        const ampFactor = 1 + 0.45 * Math.sin(t * wv.pulseSpeed + wv.phase);
+        const amplitude = wv.baseAmp * ampFactor;
+
+        // path
         ctx.beginPath();
-        const step = 3; // Schrittweite in Pixel
-        for (let x=0; x<=w; x+=step) {
-          // Nur vertikale Schwingung, Zeitabhängig -> pulsieren
-          const y = h/2 + Math.sin(x * wv.frequency + t*0.001*wv.speed) * wv.amplitude;
-          if (x===0) ctx.moveTo(x,y);
+        const step = Math.max(2, Math.round(W / 1400));
+        for(let x=0; x<=W; x+=step){
+          // static spatial phase (x * freq + phase) -> shape remains horizontally anchored
+          const y = H*0.5 + Math.sin(x * wv.freq * Math.PI * 2 + wv.phase) * amplitude;
+          if(x===0) ctx.moveTo(x,y);
           else ctx.lineTo(x,y);
         }
+
+        // draw several strokes to create a soft, blurred, diffusing line and mixing
+        // outer wider faint stroke
+        ctx.lineWidth = wv.lineWidth * 3.2;
         ctx.strokeStyle = wv.color;
-        ctx.globalAlpha = 0.35;
-        ctx.lineWidth = 4;
+        ctx.globalAlpha = Math.min(0.12, wv.alpha * 0.5);
         ctx.shadowBlur = BIG_BLUR;
         ctx.shadowColor = wv.color;
         ctx.stroke();
-      });
 
-      requestAnimationFrame(drawWaves);
-    }
-    requestAnimationFrame(drawWaves);
-
-    // --- Version aus JSON laden ---
-    async function loadVersion() {
-      try {
-        const res = await fetch("./version.json", {cache:"no-cache"});
-        if(res.ok) {
-          const data = await res.json();
-          document.getElementById("version").textContent = "Version " + data.version;
+        // mid stroke
+        ctx.beginPath();
+        for(let x=0; x<=W; x+=step){
+          const y = H*0.5 + Math.sin(x * wv.freq * Math.PI * 2 + wv.phase) * amplitude;
+          if(x===0) ctx.moveTo(x,y);
+          else ctx.lineTo(x,y);
         }
-      } catch(e) {
-        document.getElementById("version").textContent = "Version ?";
+        ctx.lineWidth = wv.lineWidth * 1.2;
+        ctx.globalAlpha = Math.min(0.28, wv.alpha);
+        ctx.shadowBlur = BIG_BLUR * 0.9;
+        ctx.shadowColor = wv.color;
+        ctx.stroke();
+
+        // inner bright core
+        ctx.beginPath();
+        for(let x=0; x<=W; x+=step){
+          const y = H*0.5 + Math.sin(x * wv.freq * Math.PI * 2 + wv.phase) * amplitude;
+          if(x===0) ctx.moveTo(x,y);
+          else ctx.lineTo(x,y);
+        }
+        ctx.lineWidth = Math.max(1.2, wv.lineWidth * 0.6);
+        ctx.globalAlpha = Math.min(0.6, wv.alpha * 1.5);
+        ctx.shadowBlur = BIG_BLUR * 0.7;
+        ctx.shadowColor = wv.color;
+        ctx.stroke();
+      }
+
+      // reset alpha
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  /*******************************
+   * 3) Manifest Loading + Fallback
+   *******************************/
+  (function(){
+    const fallbackManifest = {
+      title: "Manifest der Edusphere",
+      sections: [
+        { id: "intro", title: "Einleitung", paragraphs: ["Willkommen zur Edusphere. Dies ist ein Platz für eine neue Aufklärung.", "Dieses Manifest beschreibt Grundsätze für freies, öffentliches Lernen."]},
+        { id: "werte", title: "Werte", list: ["Transparenz", "Zugänglichkeit", "Kritisches Denken", "Gemeinwohlorientierung"]},
+        { id: "schluss", title: "Schluss", closing: "Lasst uns gemeinsam eine Welt bilden, die Wissen teilt und Menschlichkeit fördert."}
+      ]
+    };
+
+    async function loadManifest(lang){
+      try{
+        const res = await fetch(`./i18n/${lang}.json`, { cache: "no-cache" });
+        if(!res.ok) throw new Error("not found");
+        return await res.json();
+      }catch(e){
+        // Fallback
+        return fallbackManifest;
       }
     }
+
+    function escapeHTML(str){
+      return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    }
+    function markdownInlineToHtml(s){
+      if(!s) return s;
+      s = s.replace(/\*\*([\s\S]+?)\*\*/g,'<strong class="md-strong">$1</strong>');
+      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g,'$1<em class="md-em">$2</em>');
+      return s;
+    }
+
+    function renderSection(sec){
+      let html = `<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
+      if(sec.paragraphs) html += sec.paragraphs.map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+      if(sec.list) html += "<ul>" + sec.list.map(i => `<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("") + "</ul>";
+      if(sec.closing) html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+      html += "</section>";
+      return html;
+    }
+
+    async function renderManifest(lang="de"){
+      const data = await loadManifest(lang);
+      const container = document.getElementById('manifest-content');
+      let html = `<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color)">${escapeHTML(data.title)}</h1>`;
+      html += data.sections.map(renderSection).join("");
+      container.innerHTML = html;
+      // update language buttons aria-pressed
+      document.querySelectorAll(".language-switch button[data-lang]").forEach(b=>{
+        b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false");
+      });
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    // attach language button handlers
+    document.querySelectorAll(".language-switch button[data-lang]").forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const lang = btn.dataset.lang;
+        if(!lang) return;
+        const already = btn.getAttribute('aria-pressed') === 'true';
+        if(already) return;
+        renderManifest(lang);
+      });
+    });
+
+    // initial
+    renderManifest('de');
+  })();
+
+  /*******************************
+   * 4) Version loader & mode toggle
+   *******************************/
+  (function(){
+    async function loadVersion(){
+      try{
+        const res = await fetch('./version.json', { cache: "no-cache" });
+        if(res.ok){
+          const data = await res.json();
+          document.getElementById('version').textContent = 'Version ' + (data.version || '?.?');
+          return;
+        }
+      }catch(e){}
+      document.getElementById('version').textContent = 'Version ?.?';
+    }
     loadVersion();
+
+    // mode toggle
+    const modeBtn = document.getElementById('mode-toggle');
+    const modeIcon = document.getElementById('mode-icon');
+    modeBtn.addEventListener('click', ()=>{
+      if(document.body.classList.contains('light')){
+        document.body.classList.remove('light');
+        modeIcon.textContent = '🌙';
+      } else {
+        document.body.classList.add('light');
+        modeIcon.textContent = '☀️';
+      }
+    });
+  })();
   </script>
 </body>
 </html>
