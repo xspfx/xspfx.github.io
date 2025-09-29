@@ -6,150 +6,156 @@
   <title>Manifest der Edusphere</title>
   <style>
     :root{
-      --background: #f6f7f9;
-      --card-bg: #ffffff;
-      --text: #0f1724;
-      --muted: #6b7280;
-      --primary-color: #0ea5a4; /* kann überschrieben werden */
-      --accent-color: #ff2d95;  /* akzent für starke Hervorhebungen */
-      --max-width: 900px;
+      --background: #0d0d0d;
+      --card-bg: rgba(18,18,22,0.6);
+      --text: #e0e0e0;
+      --muted: #9ca3af;
+      --primary-color: #ff00ff;
+      --accent-color: #00fff7;
+      --max-width: 950px;
     }
 
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--background);
-      color:var(--text);
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height:1.7;
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.6;
-      padding:1.25rem;
       display:flex;
       flex-direction:column;
       min-height:100vh;
+      background-image: radial-gradient(at 20% 20%, rgba(255,0,255,0.15), transparent 40%),
+                        radial-gradient(at 80% 80%, rgba(0,255,247,0.12), transparent 40%);
     }
 
     header{
       max-width:var(--max-width);
-      margin:0 auto 1.25rem;
-      width:100%;
+      margin:0 auto 1.5rem;
       text-align:center;
+      padding-top:1rem;
     }
     header .brand{
       display:flex;
-      gap:0.75rem;
       align-items:center;
       justify-content:center;
+      gap:0.75rem;
       margin-bottom:0.5rem;
     }
-    header h1{margin:0;font-size:1.25rem;letter-spacing: -0.01em;}
+    header h1{
+      font-size:1.5rem;
+      letter-spacing:-0.01em;
+      color:var(--accent-color);
+      text-shadow:0 0 12px var(--accent-color);
+    }
     nav.language-switch{
-      display:inline-flex;
-      gap:0.375rem;
-      margin-top:0.75rem;
-      flex-wrap:wrap;
+      display:flex;
       justify-content:center;
+      flex-wrap:wrap;
+      gap:0.5rem;
+      margin-top:0.75rem;
     }
     nav.language-switch button{
-      background:none;
-      border:1px solid rgba(15,23,36,0.08);
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.15);
       color:var(--text);
-      padding:0.35rem 0.6rem;
-      border-radius:6px;
+      padding:0.4rem 0.75rem;
+      border-radius:8px;
       cursor:pointer;
       font-weight:600;
       font-size:0.9rem;
-      transition: background-color .18s ease, color .18s ease, transform .12s ease;
+      backdrop-filter: blur(6px);
+      transition: all .25s ease;
     }
     nav.language-switch button[aria-pressed="true"]{
       background:var(--primary-color);
-      color:white;
+      color:black;
       border-color:transparent;
-      cursor:default;
-      transform:translateY(-1px);
+      text-shadow:0 0 6px rgba(0,0,0,0.5);
     }
-    nav.language-switch button:focus{outline:3px solid color-mix(in srgb, var(--primary-color) 20%, transparent);}
+    nav.language-switch button:hover:not([aria-pressed="true"]){
+      background:rgba(255,255,255,0.12);
+    }
 
     main{
       max-width:var(--max-width);
       margin:0 auto;
       width:100%;
-      display:block;
     }
 
     .card{
       background:var(--card-bg);
-      border-radius:12px;
-      padding:1.25rem 1.25rem 1.75rem;
-      box-shadow:0 6px 22px rgba(12,16,21,0.06);
-      margin-bottom:1.25rem;
+      border-radius:14px;
+      padding:1.5rem 1.5rem 2rem;
+      margin-bottom:1.5rem;
+      box-shadow:0 0 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05) inset;
+      backdrop-filter: blur(12px);
+      border:1px solid rgba(255,255,255,0.08);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 30px rgba(0,0,0,0.7), 0 0 18px var(--primary-color);
     }
 
-    /* Überschriften / Linien */
-    section{margin:1.25rem 0; padding-bottom:0.75rem;}
+    section{margin:1.5rem 0}
     section h2{
-      margin:0 0 0.5rem 0;
-      font-size:1.15rem;
+      font-size:1.2rem;
+      margin-bottom:0.6rem;
       position:relative;
       display:inline-block;
-      padding-bottom:0.75rem;
-      color:var(--text);
+      color:var(--primary-color);
+      text-shadow:0 0 10px var(--primary-color);
+      padding-bottom:0.5rem;
     }
     section h2::after{
       content:"";
       position:absolute;
       left:0;
       bottom:0;
-      width:48px;
+      width:60px;
       height:3px;
       border-radius:3px;
       background:var(--accent-color);
-      transform-origin:left center;
       transform:scaleX(1);
-      transition: transform 420ms cubic-bezier(.2,.9,.22,1), height 260ms ease;
+      transform-origin:left;
+      transition:transform .4s ease, height .3s ease;
+      box-shadow:0 0 8px var(--accent-color);
     }
-
-    /* Hover/aktiv (IntersectionObserver) */
     section:hover h2::after,
     section.in-view h2::after{
-      transform:scaleX(2.6);
+      transform:scaleX(2.5);
       height:5px;
     }
 
-    /* reduzierte Bewegung respektieren */
-    @media (prefers-reduced-motion: reduce){
-      section h2::after { transition:none; }
-    }
+    p{margin:0 0 1rem;font-size:1rem}
+    ul{margin:0.5rem 0 1rem 1.25rem}
+    li{margin-bottom:0.5rem}
 
-    p{margin:0 0 0.85rem 0; color:var(--text); font-size:1rem;}
-    ul{margin:0.5rem 0 0.85rem 1.25rem;}
-    li{margin-bottom:0.5rem;}
-
-    /* Inline-Formatierung aus Markdown */
-    strong.md-strong{ font-weight:700; color:var(--accent-color); }
-    em.md-em{ font-style:italic; color:var(--primary-color); }
+    strong.md-strong{color:var(--accent-color);font-weight:700;text-shadow:0 0 8px var(--accent-color)}
+    em.md-em{color:var(--primary-color);font-style:italic;text-shadow:0 0 6px var(--primary-color)}
 
     footer{
       margin-top:auto;
       text-align:center;
       color:var(--muted);
       font-size:0.9rem;
-      padding:1rem 0 0;
+      padding:1rem 0;
     }
 
-    /* responsive */
-    @media (max-width:560px){
-      body{padding:0.75rem}
+    @media (max-width:600px){
       .card{padding:1rem}
+      header h1{font-size:1.25rem}
     }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--primary-color)"/></svg>
+      <svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="var(--primary-color)" />
+      </svg>
       <h1>Manifest der Edusphere</h1>
     </div>
 
@@ -163,149 +169,87 @@
     </nav>
   </header>
 
-  <main id="manifest-content" class="card" role="main" aria-live="polite">
-    <!-- Manifest wird hier dynamisch eingefügt -->
-  </main>
+  <main id="manifest-content" class="card" role="main" aria-live="polite"></main>
 
-  <footer>
-    &copy; 2025 Edusphere – Für eine neue Aufklärung
-  </footer>
+  <footer>&copy; 2025 Edusphere – Für eine neue Aufklärung</footer>
 
   <script>
-    // --- Hilfsfunktionen: Escape + einfache Markdown-zu-HTML-Konvertierung ---
-    function escapeHTML(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
+    // Cyberpunk Farbschemata
+    const themes = [
+      {bg:"#0d0d0d", primary:"#ff00ff", accent:"#00fff7"},
+      {bg:"#050510", primary:"#39ff14", accent:"#ff3131"},
+      {bg:"#0b0b14", primary:"#00f0ff", accent:"#ff00a0"},
+      {bg:"#111", primary:"#f5f242", accent:"#ff007f"},
+      {bg:"#060606", primary:"#ff6ec7", accent:"#33ffcc"}
+    ];
+    function applyRandomTheme(){
+      const theme = themes[Math.floor(Math.random()*themes.length)];
+      document.documentElement.style.setProperty("--background", theme.bg);
+      document.documentElement.style.setProperty("--primary-color", theme.primary);
+      document.documentElement.style.setProperty("--accent-color", theme.accent);
     }
+    applyRandomTheme();
 
-    /**
-     * Wandelt einfache Markdown-ähnliche Marker in HTML um:
-     * - **bold** -> <strong class="md-strong">...</strong>
-     * - *italic* -> <em class="md-em">...</em>
-     *
-     * Achtung: Gender-Sternchen wie Künstler*innen bleiben unberührt,
-     * weil hier kein schließender '*' existiert.
-     */
-    function markdownInlineToHtml(s) {
-      if (!s) return s;
-      // zuerst **bold**
-      s = s.replace(/\*\*([\s\S]+?)\*\*/g, function(_, inner){
-        return '<strong class="md-strong">' + inner + '</strong>';
-      });
-
-      // dann einzelne *italic* - wir stellen sicher, dass es sich um ein Paar handelt (kein Teil eines Wortes)
-      // Pattern: (nicht-*) *content* (nicht-*) - wir behalten die Umschließung (evt. Leerzeichen) bei
-      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, function(_, before, inner){
-        return before + '<em class="md-em">' + inner + '</em>';
-      });
-
+    // Markdown Converter
+    function escapeHTML(str){
+      return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    }
+    function markdownInlineToHtml(s){
+      if(!s) return s;
+      s = s.replace(/\*\*([\s\S]+?)\*\*/g,'<strong class="md-strong">$1</strong>');
+      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g,'$1<em class="md-em">$2</em>');
       return s;
     }
 
-    // --- Laden der JSON Sprachdatei ---
-    async function loadManifest(lang) {
-      try {
-        const res = await fetch(`./i18n/${lang}.json`, {cache: "no-cache"});
-        if (!res.ok) throw new Error("Sprache nicht gefunden: " + lang);
+    async function loadManifest(lang){
+      try{
+        const res=await fetch(`./i18n/${lang}.json`,{cache:"no-cache"});
+        if(!res.ok) throw new Error("Not found");
         return await res.json();
-      } catch (err) {
-        console.warn("Fehler beim Laden der Sprachdatei:", err);
-        // Fallback Deutsch
-        const fallback = await fetch("./i18n/de.json").then(r => r.json());
-        return fallback;
+      }catch(e){
+        return await fetch("./i18n/de.json").then(r=>r.json());
       }
     }
 
-    // IntersectionObserver für "in-view"
-    let sectionObserver = null;
-    function createSectionObserver() {
-      if (sectionObserver) sectionObserver.disconnect();
-      const options = { root: null, rootMargin: "0px 0px -30% 0px", threshold: 0.6 };
-      sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add("in-view");
+    let observer=null;
+    function observeSections(){
+      if(observer) observer.disconnect();
+      observer=new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting) entry.target.classList.add("in-view");
           else entry.target.classList.remove("in-view");
         });
-      }, options);
+      },{threshold:0.6});
+      document.querySelectorAll("main section").forEach(s=>observer.observe(s));
     }
 
-    function observeSections() {
-      createSectionObserver();
-      document.querySelectorAll("main section").forEach(sec => {
-        sectionObserver.observe(sec);
-      });
+    function renderSection(sec){
+      let html=`<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
+      if(sec.paragraphs) html+=sec.paragraphs.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+      if(sec.list){html+="<ul>"+sec.list.map(i=>`<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("")+"</ul>";}
+      if(sec.closing){
+        if(Array.isArray(sec.closing)) html+=sec.closing.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+        else html+=`<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+      }
+      return html+"</section>";
     }
 
-    // Rendermethoden
-    function renderSection(sec) {
-      let html = `<section id="${sec.id || ""}"><h2>${escapeHTML(sec.title)}</h2>`;
-      // Paragraphs
-      if (sec.paragraphs && Array.isArray(sec.paragraphs)) {
-        html += sec.paragraphs.map(p => {
-          // escape -> markdown -> insert
-          const processed = markdownInlineToHtml( escapeHTML(p) );
-          return `<p>${processed}</p>`;
-        }).join("");
-      }
-      // List
-      if (sec.list && Array.isArray(sec.list)) {
-        html += "<ul>";
-        html += sec.list.map(item => {
-          const processed = markdownInlineToHtml( escapeHTML(item) );
-          return `<li>${processed}</li>`;
-        }).join("");
-        html += "</ul>";
-      }
-      // Closing
-      if (sec.closing) {
-        if (Array.isArray(sec.closing)) {
-          html += sec.closing.map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-        } else {
-          html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
-        }
-      }
-      html += "</section>";
-      return html;
-    }
-
-    async function renderManifest(lang = "de") {
-      const data = await loadManifest(lang);
-      // Title
-      let html = `<h1 style="margin-top:0;margin-bottom:1rem;font-size:1.05rem;">${escapeHTML(data.title)}</h1>`;
-      html += (data.sections || []).map(renderSection).join("");
-      const container = document.getElementById("manifest-content");
-      container.innerHTML = html;
-
-      // Sprache setzen (aria-pressed)
-      document.querySelectorAll(".language-switch button").forEach(btn => {
-        btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
-      });
-
-      // Observer neu starten für die frisch gerenderten Sections
+    async function renderManifest(lang="de"){
+      const data=await loadManifest(lang);
+      let html=`<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color);text-shadow:0 0 8px var(--accent-color)">${escapeHTML(data.title)}</h1>`;
+      html+=data.sections.map(renderSection).join("");
+      document.getElementById("manifest-content").innerHTML=html;
+      document.querySelectorAll(".language-switch button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
       observeSections();
-
-      // Scroll optional: bringe den Anfang der Seite in Ansicht (nützlich beim Sprachenwechsel)
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({top:0,behavior:"smooth"});
     }
 
-    // Init
-    (function init() {
-      // Eventlistener Sprache
-      document.querySelectorAll(".language-switch button").forEach(btn => {
-        btn.addEventListener("click", (ev) => {
-          const lang = btn.dataset.lang;
-          if (btn.getAttribute("aria-pressed") === "true") return;
-          renderManifest(lang);
-        });
-      });
+    document.querySelectorAll(".language-switch button").forEach(btn=>{
+      btn.addEventListener("click",()=>{ if(btn.getAttribute("aria-pressed")==="true") return; renderManifest(btn.dataset.lang); });
+    });
 
-      // Erst-Render: Deutsch
-      renderManifest("de");
-    })();
+    renderManifest("de");
   </script>
 </body>
 </html>
