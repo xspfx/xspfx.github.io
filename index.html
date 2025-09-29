@@ -1,82 +1,159 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Manifest der Edusphere</title>
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #222;
+    :root{
+      --background: #f6f7f9;
+      --card-bg: #ffffff;
+      --text: #0f1724;
+      --muted: #6b7280;
+      --primary-color: #0ea5a4; /* kann überschrieben werden */
+      --accent-color: #ff2d95;  /* akzent für starke Hervorhebungen */
+      --max-width: 900px;
     }
-    header {
-      background: #111827;
-      color: #fff;
-      padding: 1.5rem;
-      text-align: center;
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--background);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      padding:1.25rem;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
+
+    header{
+      max-width:var(--max-width);
+      margin:0 auto 1.25rem;
+      width:100%;
+      text-align:center;
     }
-    nav.language-switch {
-      margin-top: 1rem;
+    header .brand{
+      display:flex;
+      gap:0.75rem;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:0.5rem;
     }
-    nav.language-switch button {
-      background: #374151;
-      border: none;
-      color: #fff;
-      margin: 0 0.25rem;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 0.25rem;
-      transition: background 0.3s;
+    header h1{margin:0;font-size:1.25rem;letter-spacing: -0.01em;}
+    nav.language-switch{
+      display:inline-flex;
+      gap:0.375rem;
+      margin-top:0.75rem;
+      flex-wrap:wrap;
+      justify-content:center;
     }
-    nav.language-switch button:hover {
-      background: #4b5563;
+    nav.language-switch button{
+      background:none;
+      border:1px solid rgba(15,23,36,0.08);
+      color:var(--text);
+      padding:0.35rem 0.6rem;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.9rem;
+      transition: background-color .18s ease, color .18s ease, transform .12s ease;
     }
-    nav.language-switch button[aria-pressed="true"] {
-      background: #2563eb;
+    nav.language-switch button[aria-pressed="true"]{
+      background:var(--primary-color);
+      color:white;
+      border-color:transparent;
+      cursor:default;
+      transform:translateY(-1px);
     }
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: #fff;
-      border-radius: 0.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    nav.language-switch button:focus{outline:3px solid color-mix(in srgb, var(--primary-color) 20%, transparent);}
+
+    main{
+      max-width:var(--max-width);
+      margin:0 auto;
+      width:100%;
+      display:block;
     }
-    section {
-      margin-bottom: 2rem;
+
+    .card{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:1.25rem 1.25rem 1.75rem;
+      box-shadow:0 6px 22px rgba(12,16,21,0.06);
+      margin-bottom:1.25rem;
     }
-    section h2 {
-      font-size: 1.4rem;
-      margin-top: 0;
-      color: #111827;
+
+    /* Überschriften / Linien */
+    section{margin:1.25rem 0; padding-bottom:0.75rem;}
+    section h2{
+      margin:0 0 0.5rem 0;
+      font-size:1.15rem;
+      position:relative;
+      display:inline-block;
+      padding-bottom:0.75rem;
+      color:var(--text);
     }
-    ul {
-      margin: 1rem 0;
-      padding-left: 1.5rem;
+    section h2::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:48px;
+      height:3px;
+      border-radius:3px;
+      background:var(--accent-color);
+      transform-origin:left center;
+      transform:scaleX(1);
+      transition: transform 420ms cubic-bezier(.2,.9,.22,1), height 260ms ease;
     }
-    ul li {
-      margin-bottom: 0.5rem;
+
+    /* Hover/aktiv (IntersectionObserver) */
+    section:hover h2::after,
+    section.in-view h2::after{
+      transform:scaleX(2.6);
+      height:5px;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #555;
+
+    /* reduzierte Bewegung respektieren */
+    @media (prefers-reduced-motion: reduce){
+      section h2::after { transition:none; }
+    }
+
+    p{margin:0 0 0.85rem 0; color:var(--text); font-size:1rem;}
+    ul{margin:0.5rem 0 0.85rem 1.25rem;}
+    li{margin-bottom:0.5rem;}
+
+    /* Inline-Formatierung aus Markdown */
+    strong.md-strong{ font-weight:700; color:var(--accent-color); }
+    em.md-em{ font-style:italic; color:var(--primary-color); }
+
+    footer{
+      margin-top:auto;
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+      padding:1rem 0 0;
+    }
+
+    /* responsive */
+    @media (max-width:560px){
+      body{padding:0.75rem}
+      .card{padding:1rem}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Edusphere</h1>
-    <nav class="language-switch">
+    <div class="brand">
+      <svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--primary-color)"/></svg>
+      <h1>Manifest der Edusphere</h1>
+    </div>
+
+    <nav class="language-switch" role="navigation" aria-label="Sprachumschalter">
       <button data-lang="de" aria-pressed="true">Deutsch</button>
       <button data-lang="en" aria-pressed="false">English</button>
       <button data-lang="fr" aria-pressed="false">Français</button>
@@ -86,7 +163,7 @@
     </nav>
   </header>
 
-  <main id="manifest-content">
+  <main id="manifest-content" class="card" role="main" aria-live="polite">
     <!-- Manifest wird hier dynamisch eingefügt -->
   </main>
 
@@ -95,59 +172,140 @@
   </footer>
 
   <script>
-  async function loadManifest(lang) {
-    try {
-      const res = await fetch(`./i18n/${lang}.json`);
-      if (!res.ok) throw new Error("Sprache nicht gefunden");
-      return await res.json();
-    } catch (e) {
-      console.error(e);
-      const res = await fetch("./i18n/de.json");
-      return res.json();
+    // --- Hilfsfunktionen: Escape + einfache Markdown-zu-HTML-Konvertierung ---
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
-  }
 
-  function renderSection(sec) {
-    let html = `<section><h2>${sec.title}</h2>`;
-    if (sec.paragraphs) {
-      html += sec.paragraphs.map(p => `<p>${p}</p>`).join("");
+    /**
+     * Wandelt einfache Markdown-ähnliche Marker in HTML um:
+     * - **bold** -> <strong class="md-strong">...</strong>
+     * - *italic* -> <em class="md-em">...</em>
+     *
+     * Achtung: Gender-Sternchen wie Künstler*innen bleiben unberührt,
+     * weil hier kein schließender '*' existiert.
+     */
+    function markdownInlineToHtml(s) {
+      if (!s) return s;
+      // zuerst **bold**
+      s = s.replace(/\*\*([\s\S]+?)\*\*/g, function(_, inner){
+        return '<strong class="md-strong">' + inner + '</strong>';
+      });
+
+      // dann einzelne *italic* - wir stellen sicher, dass es sich um ein Paar handelt (kein Teil eines Wortes)
+      // Pattern: (nicht-*) *content* (nicht-*) - wir behalten die Umschließung (evt. Leerzeichen) bei
+      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, function(_, before, inner){
+        return before + '<em class="md-em">' + inner + '</em>';
+      });
+
+      return s;
     }
-    if (sec.list) {
-      html += "<ul>" + sec.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
-    }
-    if (sec.closing) {
-      if (Array.isArray(sec.closing)) {
-        html += sec.closing.map(p => `<p>${p}</p>`).join("");
-      } else {
-        html += `<p>${sec.closing}</p>`;
+
+    // --- Laden der JSON Sprachdatei ---
+    async function loadManifest(lang) {
+      try {
+        const res = await fetch(`./i18n/${lang}.json`, {cache: "no-cache"});
+        if (!res.ok) throw new Error("Sprache nicht gefunden: " + lang);
+        return await res.json();
+      } catch (err) {
+        console.warn("Fehler beim Laden der Sprachdatei:", err);
+        // Fallback Deutsch
+        const fallback = await fetch("./i18n/de.json").then(r => r.json());
+        return fallback;
       }
     }
-    html += "</section>";
-    return html;
-  }
 
-  async function renderManifest(lang = "de") {
-    const data = await loadManifest(lang);
-    let html = `<h1>${data.title}</h1>`;
-    html += data.sections.map(renderSection).join("");
-    document.getElementById("manifest-content").innerHTML = html;
+    // IntersectionObserver für "in-view"
+    let sectionObserver = null;
+    function createSectionObserver() {
+      if (sectionObserver) sectionObserver.disconnect();
+      const options = { root: null, rootMargin: "0px 0px -30% 0px", threshold: 0.6 };
+      sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add("in-view");
+          else entry.target.classList.remove("in-view");
+        });
+      }, options);
+    }
 
-    // Sprachumschalter aktualisieren
-    document.querySelectorAll(".language-switch button").forEach(btn => {
-      btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
-    });
-  }
+    function observeSections() {
+      createSectionObserver();
+      document.querySelectorAll("main section").forEach(sec => {
+        sectionObserver.observe(sec);
+      });
+    }
 
-  // Initial Deutsch laden
-  renderManifest();
+    // Rendermethoden
+    function renderSection(sec) {
+      let html = `<section id="${sec.id || ""}"><h2>${escapeHTML(sec.title)}</h2>`;
+      // Paragraphs
+      if (sec.paragraphs && Array.isArray(sec.paragraphs)) {
+        html += sec.paragraphs.map(p => {
+          // escape -> markdown -> insert
+          const processed = markdownInlineToHtml( escapeHTML(p) );
+          return `<p>${processed}</p>`;
+        }).join("");
+      }
+      // List
+      if (sec.list && Array.isArray(sec.list)) {
+        html += "<ul>";
+        html += sec.list.map(item => {
+          const processed = markdownInlineToHtml( escapeHTML(item) );
+          return `<li>${processed}</li>`;
+        }).join("");
+        html += "</ul>";
+      }
+      // Closing
+      if (sec.closing) {
+        if (Array.isArray(sec.closing)) {
+          html += sec.closing.map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+        } else {
+          html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+        }
+      }
+      html += "</section>";
+      return html;
+    }
 
-  // Sprachumschaltung
-  document.querySelectorAll(".language-switch button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (btn.getAttribute("aria-pressed") === "true") return;
-      renderManifest(btn.dataset.lang);
-    });
-  });
+    async function renderManifest(lang = "de") {
+      const data = await loadManifest(lang);
+      // Title
+      let html = `<h1 style="margin-top:0;margin-bottom:1rem;font-size:1.05rem;">${escapeHTML(data.title)}</h1>`;
+      html += (data.sections || []).map(renderSection).join("");
+      const container = document.getElementById("manifest-content");
+      container.innerHTML = html;
+
+      // Sprache setzen (aria-pressed)
+      document.querySelectorAll(".language-switch button").forEach(btn => {
+        btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+      });
+
+      // Observer neu starten für die frisch gerenderten Sections
+      observeSections();
+
+      // Scroll optional: bringe den Anfang der Seite in Ansicht (nützlich beim Sprachenwechsel)
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Init
+    (function init() {
+      // Eventlistener Sprache
+      document.querySelectorAll(".language-switch button").forEach(btn => {
+        btn.addEventListener("click", (ev) => {
+          const lang = btn.dataset.lang;
+          if (btn.getAttribute("aria-pressed") === "true") return;
+          renderManifest(lang);
+        });
+      });
+
+      // Erst-Render: Deutsch
+      renderManifest("de");
+    })();
   </script>
 </body>
 </html>
