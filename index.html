@@ -204,6 +204,17 @@
     body.light .menu { background: #f0f0f0; border-color: #ccc; }
     body.light .menu-toggle span { background: #003366; }
 
+    /* ✅ Fix: Sprachbuttons Light Mode */
+    body.light nav.language-switch button {
+      background: #003366;
+      color: #ffffff;
+    }
+    body.light nav.language-switch button[aria-pressed="true"] {
+      background: #000000;
+      color: #ffffff;
+    }
+
+
     @media (max-width:600px){
       .card { padding: 1rem; }
       header h1 { font-size: 1.5rem; }
