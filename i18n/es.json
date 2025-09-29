@@ -1,0 +1,112 @@
+{
+  "title": "Manifiesto de la Edusphere: Por una nueva Ilustración en la era digital",
+  "sections": [
+    {
+      "id": "preamble",
+      "title": "Preámbulo",
+      "paragraphs": [
+        "Estamos en una encrucijada. Mientras que los espacios digitales fueron alguna vez promesa de discurso democrático, libre intercambio de conocimiento y entendimiento global, en sus sombras han surgido refugios de odio, intolerancia y pensamiento antidemocrático. En las cámaras de eco de la llamada *Manosphere*, la *Alt-Right* y otros movimientos neofascistas, crece una nueva reacción digital contra los logros de la Ilustración, contra el feminismo, los derechos humanos y la igualdad.",
+        "Frente a ello, proponemos algo diferente: **la Edusphere.**",
+        "Una red global y abierta de personas, iniciativas, instituciones e ideas comprometidas con la libertad de pensamiento, la educación como derecho humano, la democracia como forma de vida y la dignidad de cada ser humano."
+      ]
+    },
+    {
+      "id": "new-enlightenment",
+      "title": "1. Una nueva Ilustración",
+      "paragraphs": [
+        "Llamamos a una nueva era de Ilustración. La Edusphere se entiende como heredera intelectual de la primera Ilustración del siglo XVIII – aquel movimiento que llevó la luz de la razón contra el fanatismo religioso, el absolutismo y la ignorancia.",
+        "Hoy, sin embargo, enfrentamos nuevos desafíos: los enemigos de la libertad visten trajes o memes, utilizan plataformas en lugar de púlpitos, y sus armas son la desinformación, el cinismo y el odio amplificado por algoritmos.",
+        "La Edusphere responde con las herramientas de la Ilustración: conocimiento, diálogo, pensamiento crítico, educación y redes.",
+        "Creemos en la *madurez del ser humano* – especialmente en la era digital."
+      ]
+    },
+    {
+      "id": "education-resistance",
+      "title": "2. La educación como resistencia",
+      "paragraphs": [
+        "Donde reina la ignorancia, la democracia se marchita.",
+        "La Edusphere entiende **la educación no como mera transmisión de conocimiento**, sino como práctica política, social y cultural de liberación. Significa:"
+      ],
+      "list": [
+        "La capacidad de distinguir entre verdad y mentira.",
+        "La disposición de ver el mundo a través de los ojos de otros.",
+        "La responsabilidad de luchar activamente por una sociedad más justa."
+      ],
+      "closing": "En un mundo lleno de polarización e ideologías conspirativas, la educación es el acto de resistencia más poderoso."
+    },
+    {
+      "id": "digital-spaces",
+      "title": "3. Recuperar los espacios digitales",
+      "paragraphs": [
+        "La Edusphere es un llamado a **recuperar Internet** – no mediante el control, sino mediante la creatividad, la apertura y la responsabilidad.",
+        "Aspiramos a una cultura digital donde:"
+      ],
+      "list": [
+        "Los algoritmos se optimicen para la diversidad y el discurso democrático, no para la ira y los clics.",
+        "Las plataformas asuman responsabilidad en lugar de monetizar el odio.",
+        "Las personas estén conectadas por valores compartidos, no por imágenes de enemigos."
+      ],
+      "closing": "Exigimos tecnología transparente, ética digital y un espacio digital público diseñado democráticamente."
+    },
+    {
+      "id": "values",
+      "title": "4. Valores de la Edusphere",
+      "paragraphs": ["Defendemos:"],
+      "list": [
+        "**La democracia** como práctica constante de compartir poder, proteger la diversidad y aceptar el disenso.",
+        "**La libertad** como derecho a la autodeterminación, pero también como deber de responsabilidad.",
+        "**La tolerancia**, no como indiferencia, sino como compromiso activo con los derechos humanos.",
+        "**La integración** como proceso de acercamiento mutuo, no de asimilación.",
+        "**Los derechos humanos** como fundamento indivisible de toda sociedad.",
+        "**El intercambio** como antídoto contra el aislamiento, la desconfianza y el odio.",
+        "**La educación** como fundamento de una sociedad abierta, solidaria y en constante aprendizaje."
+      ]
+    },
+    {
+      "id": "movement",
+      "title": "5. La Edusphere como movimiento global",
+      "paragraphs": [
+        "La Edusphere no es un sistema cerrado – es un **espacio vivo de pensamiento, aprendizaje y acción**.",
+        "Convocamos a personas en todo el mundo a formar parte de esta red:"
+      ],
+      "list": [
+        "Docentes que resisten las tendencias autoritarias.",
+        "Artistas que pintan nuevas visiones de futuro.",
+        "Periodistas comprometidos con la verdad.",
+        "Activistas que construyen puentes en lugar de muros.",
+        "Tecnólogos que escriben ética y responsabilidad en el código.",
+        "Estudiantes, madres, padres, vecinas y vecinos – **todas las personas que creen en otro futuro.**"
+      ],
+      "closing": "La Edusphere no conoce fronteras nacionales. Conecta iniciativas locales en un **movimiento global** basado en la solidaridad y el diálogo. Es una ágora digital – abierta, plural, justa."
+    },
+    {
+      "id": "promise",
+      "title": "6. Nuestra promesa",
+      "list": [
+        "No guardaremos silencio cuando la democracia sea atacada.",
+        "No miraremos hacia otro lado cuando el odio se propague.",
+        "No permaneceremos neutrales cuando se violen los derechos humanos."
+      ],
+      "closing": [
+        "Elegimos educación en lugar de propaganda.",
+        "Razón en lugar de fanatismo.",
+        "Humanidad en lugar de cinismo."
+      ]
+    },
+    {
+      "id": "epilog",
+      "title": "Epílogo: El futuro es educable",
+      "paragraphs": [
+        "La Edusphere no es una utopía. Es una invitación.",
+        "Una invitación a crear espacios donde las ideas puedan crecer.",
+        "Una invitación a involucrarse.",
+        "Una invitación no solo a observar, sino a participar.",
+        "Porque el futuro no lo harán quienes más griten – sino quienes estén dispuestos a aprender, enseñar y actuar."
+      ],
+      "closing": [
+        "**Bienvenidos a la Edusphere.**",
+        "*Por una nueva Ilustración. Por un mundo abierto.*"
+      ]
+    }
+  ]
+}
