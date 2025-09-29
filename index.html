@@ -25,30 +25,20 @@
       display:flex;
       flex-direction:column;
       min-height:100vh;
+      background-attachment: fixed;
+      background-size: cover;
       transition: background .3s ease, color .3s ease;
+      overflow-x: hidden;
     }
 
-    /* Hintergrund Canvas - Z-Index >= 0, Content liegt darüber */
+    /* Hintergrund Canvas */
     #wave-bg {
       position: fixed;
       inset: 0;
+      z-index: -1;
       width: 100%;
       height: 100%;
-      z-index: 0;               /* <- wichtig: nicht -1 */
-      filter: blur(60px) saturate(120%);
-      opacity: 0.72;
-      background: transparent;
-      pointer-events: none;
-      transition: opacity 0.6s ease;
-    }
-    /* Content sichtbar über dem Canvas */
-    header, main, footer, .card, nav.language-switch {
-      position: relative;
-      z-index: 1;
-    }
-
-    body.light #wave-bg {
-      display: none;
+      display: block;
     }
 
     header{
@@ -158,6 +148,15 @@
       color:var(--muted);
       font-size:0.9rem;
       padding:1rem 0;
+      position: relative;
+    }
+    footer .version {
+      position: absolute;
+      right: 1rem;
+      bottom: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.8;
     }
 
     /* Light Mode */
@@ -168,6 +167,7 @@
       --muted: #333333;
       --primary-color: #000000;
       --accent-color: #003366;
+      background-image: none !important;
     }
     body.light *{
       text-shadow:none !important;
@@ -185,6 +185,9 @@
     }
     body.light section h2::after{
       box-shadow:none !important;
+    }
+    body.light #wave-bg {
+      display: none;
     }
 
     @media (max-width:600px){
@@ -212,33 +215,48 @@
 
   <main id="manifest-content" class="card" role="main" aria-live="polite"></main>
 
-  <footer>&copy; 2025 Edusphere – Für eine neue Aufklärung</footer>
+  <footer>
+    &copy; 2025 Edusphere – Für eine neue Aufklärung
+    <span class="version" id="version"></span>
+  </footer>
 
   <script>
-    // ------- Theme (kein statisches backgroundImage mehr) -------
+    // ---------------- Versionsnummer aus JSON laden ----------------
+    async function loadVersion() {
+      try {
+        const res = await fetch("./version.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error("Version.json nicht gefunden");
+        const data = await res.json();
+        document.getElementById("version").textContent = data.version || "";
+      } catch (e) {
+        console.error("Fehler beim Laden der Version:", e);
+        document.getElementById("version").textContent = "v?.?";
+      }
+    }
+    loadVersion();
+
+    // ---------------- Cyberpunk Themes ----------------
     const themes = [
-      {primary:"#ff00ff", accent:"#00fff7"},
-      {primary:"#39ff14", accent:"#ff3131"},
-      {primary:"#00f0ff", accent:"#ff00a0"},
-      {primary:"#f5f242", accent:"#ff007f"},
-      {primary:"#ff6ec7", accent:"#33ffcc"}
+      { primary:"#ff00ff", accent:"#00fff7" },
+      { primary:"#39ff14", accent:"#ff3131" },
+      { primary:"#00f0ff", accent:"#ff00a0" },
+      { primary:"#f5f242", accent:"#ff007f" },
+      { primary:"#ff6ec7", accent:"#33ffcc" }
     ];
     const lightAccents = ["#003366","#004080","#00509e","#0066cc","#000099"];
 
     function applyRandomTheme(){
       if(document.body.classList.contains("light")) return;
       const theme = themes[Math.floor(Math.random()*themes.length)];
-      document.documentElement.style.setProperty("--background", "#0d0d0d");
       document.documentElement.style.setProperty("--primary-color", theme.primary);
       document.documentElement.style.setProperty("--accent-color", theme.accent);
-      // kein body.style.backgroundImage — Canvas soll sichtbar sein
     }
     applyRandomTheme();
 
-    // Mode toggle
+    // ---------------- Dark / Light Toggle ----------------
     const modeBtn = document.getElementById("mode-toggle");
     const modeIcon = document.getElementById("mode-icon");
-    modeBtn.addEventListener("click", ()=>{
+    modeBtn.addEventListener("click",()=>{
       if(document.body.classList.contains("light")){
         document.body.classList.remove("light");
         modeIcon.textContent = "🌙";
@@ -249,97 +267,65 @@
         const accent = lightAccents[Math.floor(Math.random()*lightAccents.length)];
         document.documentElement.style.setProperty("--accent-color", accent);
       }
-      updateCanvasVisibility();
     });
 
-    // ------- Canvas Wellen (asynchroner Farbwechsel, DPI korrekt skaliert) -------
+    // ---------------- Hintergrund Wellen Animation ----------------
     const canvas = document.getElementById("wave-bg");
-    const ctx = canvas.getContext("2d", { alpha: true });
-    let w = 0, h = 0, dpr = 1;
+    const ctx = canvas.getContext("2d");
+    let w, h;
 
-    function resizeCanvas(){
-      dpr = Math.max(window.devicePixelRatio || 1, 1);
-      // interne Auflösung in device pixels
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      // CSS-Größe bleibt gleich
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      // transform so malen wir in CSS-Pixels
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      w = window.innerWidth;
-      h = window.innerHeight;
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // Erzeuge mehrere Wellen mit asynchronen Farben
+    const waveColors = [
+      "#ff00ff", "#00fff7", "#39ff14", "#ff3131",
+      "#00f0ff", "#ff00a0", "#f5f242", "#ff007f",
+      "#ff6ec7", "#33ffcc"
+    ];
+    function randomColor() {
+      return waveColors[Math.floor(Math.random() * waveColors.length)];
+    }
+
     const waves = Array.from({ length: 6 }, () => ({
-      amplitude: 18 + Math.random() * 50,        // Pixel
-      frequency: 0.0008 + Math.random() * 0.004, // höhere Variation möglich
+      amplitude: 30 + Math.random() * 40,
+      frequency: 0.002 + Math.random() * 0.003,
       phase: Math.random() * Math.PI * 2,
-      speed: 0.3 + Math.random() * 1.2,          // wellen-verschiebungs-geschwindigkeit (px/s-äquivalent)
-      hue: Math.random() * 360,                  // Start-Hue in Grad
-      hueSpeed: 5 + Math.random() * 30,          // Hue-Grad pro Sekunde (asynchron)
-      alpha: 0.035 + Math.random() * 0.09,       // Transparenz
-      lineWidth: 2 + Math.random() * 3
+      speed: 0.001 + Math.random() * 0.002,
+      color: randomColor(),
+      alpha: 0.06 + Math.random() * 0.08
     }));
 
-    // Hauptzeichner
-    function drawWaves(timestamp){
-      // timestamp kommt in ms — in Sekunden umwandeln
-      const t = (timestamp || 0) / 1000;
-
-      // sauber löschen (in CSS pixels)
+    function drawWaves(time) {
       ctx.clearRect(0, 0, w, h);
-      // Additive Blending damit Neonfarben verschmelzen
       ctx.globalCompositeOperation = "lighter";
 
-      // leichte Basis-Gradientfüllung (optional sehr dezent)
-      // (nicht aktiv, damit Canvas transparent bleibt) 
-      // ctx.fillStyle = "rgba(8,8,12,0.25)";
-      // ctx.fillRect(0,0,w,h);
-
-      waves.forEach((wv, idx) => {
+      waves.forEach(wv => {
         ctx.beginPath();
-        // zeichne die sinuslinie
-        const freq = wv.frequency;
-        const phaseOffset = wv.phase + t * wv.speed;
-        // step auf x: größerer Schritt für Performance; bei Bedarf kleiner setzen
-        const step = Math.max(2, Math.round(w / 1200));
-        for (let x = 0; x <= w; x += step) {
-          const y = h * 0.5 + Math.sin(x * freq * Math.PI * 2 + phaseOffset) * wv.amplitude;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+        for (let x = 0; x <= w; x++) {
+          const y =
+            h / 2 +
+            Math.sin(x * wv.frequency + wv.phase + time * wv.speed) *
+              wv.amplitude;
+          ctx.lineTo(x, y);
         }
-        // Hue ändert sich asynchron pro Welle
-        const hue = (wv.hue + t * wv.hueSpeed) % 360;
-        const color = `hsl(${hue.toFixed(2)}, 100%, 60%)`;
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = wv.color;
         ctx.globalAlpha = wv.alpha;
-        ctx.lineWidth = wv.lineWidth;
-        ctx.shadowBlur = 40 + (wv.lineWidth * 6);
-        ctx.shadowColor = color;
+        ctx.lineWidth = 3;
+        ctx.shadowBlur = 50;
+        ctx.shadowColor = wv.color;
         ctx.stroke();
       });
 
       ctx.globalAlpha = 1;
-      // nächste Frame
       requestAnimationFrame(drawWaves);
     }
-    // Start Animation
     requestAnimationFrame(drawWaves);
 
-    function updateCanvasVisibility(){
-      if (document.body.classList.contains("light")) {
-        canvas.style.display = "none";
-      } else {
-        canvas.style.display = "block";
-      }
-    }
-    updateCanvasVisibility();
-
-    // ------- Markdown + Manifest Rendering (wie vorher) -------
+    // ---------------- Markdown Renderer ----------------
     function escapeHTML(str){
       return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
         .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
