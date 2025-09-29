@@ -26,8 +26,8 @@
       display:flex;
       flex-direction:column;
       min-height:100vh;
-      background-image: radial-gradient(at 20% 20%, rgba(255,0,255,0.15), transparent 40%),
-                        radial-gradient(at 80% 80%, rgba(0,255,247,0.12), transparent 40%);
+      background-attachment: fixed;
+      background-size: 100% 100%;
       transition: background .3s ease, color .3s ease;
     }
 
@@ -57,8 +57,7 @@
       gap:0.5rem;
       margin-top:0.75rem;
     }
-    nav.language-switch button,
-    #contrast-toggle{
+    nav.language-switch button{
       background:rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.15);
       color:var(--text);
@@ -76,8 +75,7 @@
       border-color:transparent;
       text-shadow:0 0 6px rgba(0,0,0,0.5);
     }
-    nav.language-switch button:hover:not([aria-pressed="true"]),
-    #contrast-toggle:hover{
+    nav.language-switch button:hover:not([aria-pressed="true"]){
       background:rgba(255,255,255,0.12);
     }
 
@@ -152,13 +150,27 @@
       --card-bg: #f5f5f5;
       --text: #111111;
       --muted: #333333;
-      --primary-color: #0000cc;
+      --primary-color: #000000;
       --accent-color: #cc0000;
-      background-image: none;
+      background-image: none !important;
+      text-shadow:none !important;
+      box-shadow:none !important;
     }
-    body.high-contrast header h1,
-    body.high-contrast strong.md-strong,
-    body.high-contrast em.md-em{
+    body.high-contrast .card,
+    body.high-contrast section h2::after{
+      box-shadow:none !important;
+      backdrop-filter:none !important;
+    }
+
+    /* Light mode */
+    body.light{
+      --background: #fafafa;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #444444;
+      --primary-color: #0077ff;
+      --accent-color: #00b894;
+      background: linear-gradient(135deg, #f0f0f0, #ffffff);
       text-shadow:none;
     }
 
@@ -177,14 +189,15 @@
       <h1>Manifest der Edusphere</h1>
     </div>
 
-    <nav class="language-switch" role="navigation" aria-label="Sprachumschalter">
+    <nav class="language-switch" role="navigation" aria-label="Schalter">
       <button data-lang="de" aria-pressed="true">Deutsch</button>
       <button data-lang="en" aria-pressed="false">English</button>
       <button data-lang="fr" aria-pressed="false">Français</button>
       <button data-lang="es" aria-pressed="false">Español</button>
       <button data-lang="ru" aria-pressed="false">Русский</button>
       <button data-lang="zh" aria-pressed="false">中文</button>
-      <button id="contrast-toggle">High Contrast Mode</button>
+      <button id="contrast-toggle">High Contrast</button>
+      <button id="mode-toggle">Dark/Light</button>
     </nav>
   </header>
 
@@ -195,26 +208,37 @@
   <script>
     // Cyberpunk Farbschemata
     const themes = [
-      {bg:"#0d0d0d", primary:"#ff00ff", accent:"#00fff7"},
-      {bg:"#050510", primary:"#39ff14", accent:"#ff3131"},
-      {bg:"#0b0b14", primary:"#00f0ff", accent:"#ff00a0"},
-      {bg:"#111", primary:"#f5f242", accent:"#ff007f"},
-      {bg:"#060606", primary:"#ff6ec7", accent:"#33ffcc"}
+      {bg:"linear-gradient(135deg, #0d0d0d, #1a0033)", primary:"#ff00ff", accent:"#00fff7"},
+      {bg:"linear-gradient(135deg, #050510, #1a1a2e)", primary:"#39ff14", accent:"#ff3131"},
+      {bg:"linear-gradient(135deg, #0b0b14, #260033)", primary:"#00f0ff", accent:"#ff00a0"},
+      {bg:"linear-gradient(135deg, #111, #222)", primary:"#f5f242", accent:"#ff007f"},
+      {bg:"linear-gradient(135deg, #060606, #201020)", primary:"#ff6ec7", accent:"#33ffcc"}
     ];
     function applyRandomTheme(){
-      if(document.body.classList.contains("high-contrast")) return;
+      if(document.body.classList.contains("high-contrast") || document.body.classList.contains("light")) return;
       const theme = themes[Math.floor(Math.random()*themes.length)];
       document.documentElement.style.setProperty("--background", theme.bg);
       document.documentElement.style.setProperty("--primary-color", theme.primary);
       document.documentElement.style.setProperty("--accent-color", theme.accent);
+      document.body.style.backgroundImage = theme.bg;
     }
     applyRandomTheme();
 
-    // Toggle high contrast
+    // High contrast toggle
     document.getElementById("contrast-toggle").addEventListener("click",()=>{
       document.body.classList.toggle("high-contrast");
       if(!document.body.classList.contains("high-contrast")){
         applyRandomTheme();
+      }
+    });
+
+    // Dark / Light mode toggle
+    document.getElementById("mode-toggle").addEventListener("click",()=>{
+      if(document.body.classList.contains("light")){
+        document.body.classList.remove("light");
+        applyRandomTheme();
+      } else {
+        document.body.classList.add("light");
       }
     });
 
@@ -253,7 +277,7 @@
 
     async function renderManifest(lang="de"){
       const data=await loadManifest(lang);
-      let html=`<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color);text-shadow:0 0 8px var(--accent-color)">${escapeHTML(data.title)}</h1>`;
+      let html=`<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color)">${escapeHTML(data.title)}</h1>`;
       html+=data.sections.map(renderSection).join("");
       document.getElementById("manifest-content").innerHTML=html;
       document.querySelectorAll(".language-switch button[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
