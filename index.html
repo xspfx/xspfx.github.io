@@ -1,134 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Edusphere Manifest</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manifest der Edusphere</title>
   <style>
     body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      background-color: #0a0a0a;
-      color: var(--text-color, #eee);
+      font-family: system-ui, sans-serif;
       line-height: 1.6;
-      padding: 1rem 1.5rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: background-color 0.5s ease, color 0.5s ease;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #222;
     }
-
-    h1, h2 {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      color: var(--primary-color, #00ffff);
-      transition: color 0.5s ease;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      border-bottom: 2px solid var(--primary-color, #00ffff);
-      padding-bottom: 0.3rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      transition: border-color 0.5s ease, color 0.5s ease;
-      position: relative;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      width: 50px;
-      height: 3px;
-      background: var(--accent-color, #ff00ff);
-      bottom: -8px;
-      left: 0;
-      border-radius: 2px;
-      transition: background-color 0.5s ease;
-    }
-
-    p {
-      max-width: 700px;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      color: var(--text-color, #eee);
-    }
-
-    a {
-      color: var(--primary-color, #00ffff);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--primary-color, #00ffff);
-      transition: color 0.3s ease;
-    }
-
-    a:hover, a:focus {
-      color: var(--accent-color, #ff00ff);
-      outline: none;
-      border-bottom-style: solid;
-    }
-
     header {
-      width: 100%;
-      max-width: 700px;
+      background: #111827;
+      color: #fff;
+      padding: 1.5rem;
       text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav.language-switch {
+      margin-top: 1rem;
+    }
+    nav.language-switch button {
+      background: #374151;
+      border: none;
+      color: #fff;
+      margin: 0 0.25rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 0.25rem;
+      transition: background 0.3s;
+    }
+    nav.language-switch button:hover {
+      background: #4b5563;
+    }
+    nav.language-switch button[aria-pressed="true"] {
+      background: #2563eb;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    section {
       margin-bottom: 2rem;
     }
-
-    main {
-      width: 100%;
-      max-width: 700px;
+    section h2 {
+      font-size: 1.4rem;
+      margin-top: 0;
+      color: #111827;
     }
-
+    ul {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+    }
     footer {
-      margin-top: auto;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .language-switch {
-      margin-bottom: 1.5rem;
       text-align: center;
-    }
-
-    .language-switch button {
-      background: none;
-      border: 2px solid var(--primary-color, #00ffff);
-      color: var(--primary-color, #00ffff);
-      font-weight: 600;
-      padding: 0.3rem 0.8rem;
-      margin: 0 0.25rem;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .language-switch button:hover,
-    .language-switch button:focus {
-      background-color: var(--primary-color, #00ffff);
-      color: #0a0a0a;
-      outline: none;
-    }
-
-    .language-switch button[aria-pressed="true"] {
-      background-color: var(--primary-color, #00ffff);
-      color: #0a0a0a;
-      cursor: default;
-    }
-
-    button:focus,
-    a:focus {
-      outline-offset: 3px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Manifest der Edusphere</h1>
-    <nav class="language-switch" role="navigation" aria-label="Sprachumschalter">
+    <h1>Edusphere</h1>
+    <nav class="language-switch">
       <button data-lang="de" aria-pressed="true">Deutsch</button>
       <button data-lang="en" aria-pressed="false">English</button>
       <button data-lang="fr" aria-pressed="false">Français</button>
@@ -138,222 +86,68 @@
     </nav>
   </header>
 
-  <main>
-    <article id="manifest-content">
-      <!-- Inhalte werden hier dynamisch eingesetzt -->
-    </article>
+  <main id="manifest-content">
+    <!-- Manifest wird hier dynamisch eingefügt -->
   </main>
 
   <footer>
-    &copy; 2025 Edusphere Movement
+    &copy; 2025 Edusphere – Für eine neue Aufklärung
   </footer>
 
   <script>
-    (() => {
-      const themes = [
-        {
-          '--primary-color': '#00ffe7',
-          '--accent-color': '#ff00de',
-          '--text-color': '#e0f7fa',
-          '--background-color': '#0a0a0a'
-        },
-        {
-          '--primary-color': '#39ff14',
-          '--accent-color': '#0ff0fc',
-          '--text-color': '#ccffcc',
-          '--background-color': '#050505'
-        },
-        {
-          '--primary-color': '#ff2d95',
-          '--accent-color': '#ffd500',
-          '--text-color': '#fff0f6',
-          '--background-color': '#100010'
-        },
-        {
-          '--primary-color': '#0080ff',
-          '--accent-color': '#ff6ec7',
-          '--text-color': '#d0eaff',
-          '--background-color': '#000011'
-        },
-        {
-          '--primary-color': '#7fff00',
-          '--accent-color': '#00e5ff',
-          '--text-color': '#e0ffea',
-          '--background-color': '#001100'
-        },
-        {
-          '--primary-color': '#ff5500',
-          '--accent-color': '#ffaa00',
-          '--text-color': '#ffe6cc',
-          '--background-color': '#1a0a00'
-        }
-      ];
+  async function loadManifest(lang) {
+    try {
+      const res = await fetch(`./i18n/${lang}.json`);
+      if (!res.ok) throw new Error("Sprache nicht gefunden");
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+      const res = await fetch("./i18n/de.json");
+      return res.json();
+    }
+  }
 
-      // Wähle zufällig ein Farbthema
-      const theme = themes[Math.floor(Math.random() * themes.length)];
-      const root = document.documentElement;
-      Object.entries(theme).forEach(([key, val]) => {
-        root.style.setProperty(key, val);
-      });
-      document.body.style.backgroundColor = theme['--background-color'];
-      document.body.style.color = theme['--text-color'];
-
-      // Inhalte in allen Sprachen
-      const manifestTexts = {
-        de: {
-          introTitle: "Einleitung",
-          introText: "Die Edusphere ist eine globale Gegenbewegung zur alt-right, manosphere, anti-feministischen und neo-faschistischen Bewegung. Inspiriert von der Aufklärung, steht sie für Demokratie, Freiheit, Toleranz, Integration, Menschenrechte, Austausch und Bildung. In der digitalen Welt von heute verbindet die Edusphere Menschen weltweit, um Wissen zu teilen und gemeinsame Werte zu stärken.",
-          valuesTitle: "Unsere Werte",
-          values: [
-            { title: "Demokratie", text: "Wir fördern offene und gerechte Gesellschaften, in denen alle eine Stimme haben." },
-            { title: "Freiheit", text: "Jeder Mensch soll seine Meinung frei äußern und leben können, ohne Angst vor Unterdrückung." },
-            { title: "Toleranz", text: "Wir respektieren Unterschiede und lernen voneinander, um Vorurteile abzubauen." },
-            { title: "Integration", text: "Vielfalt ist Stärke – wir setzen uns für das Zusammenwachsen unterschiedlicher Kulturen ein." },
-            { title: "Menschenrechte", text: "Die Würde und Rechte aller Menschen sind unantastbar und müssen geschützt werden." },
-            { title: "Austausch", text: "Der globale Dialog und das Teilen von Wissen sind zentrale Pfeiler unserer Bewegung." },
-            { title: "Bildung", text: "Bildung ist der Schlüssel zur Freiheit und zum Fortschritt – sie muss für alle zugänglich sein." }
-          ],
-          ideaTitle: "Die Idee der Edusphere",
-          ideaText: "Die Edusphere ist ein weltweites Netzwerk von Lernenden, Lehrenden und Aktivist:innen, die gemeinsam gegen Desinformation, Hass und Intoleranz vorgehen. Durch digitale Plattformen, offene Ressourcen und den Austausch von Ideen schaffen wir eine positive digitale Sphäre, in der Wissen frei zugänglich und gesellschaftliche Teilhabe möglich ist.",
-          visionTitle: "Unsere Vision",
-          visionText: "Eine Welt, in der digitale Bildung die Menschen befähigt, kritisch zu denken, demokratisch zu handeln und solidarisch zu leben. Die Edusphere wächst als globale Bewegung, die Freiheit, Menschenrechte und Vielfalt schützt und fördert."
-        },
-        en: {
-          introTitle: "Introduction",
-          introText: "Edusphere is a global counter-movement to the alt-right, manosphere, anti-feminist, and neo-fascist movements. Inspired by the Enlightenment, it stands for democracy, freedom, tolerance, integration, human rights, exchange, and education. In today’s digital world, Edusphere connects people worldwide to share knowledge and strengthen common values.",
-          valuesTitle: "Our Values",
-          values: [
-            { title: "Democracy", text: "We promote open and fair societies where everyone has a voice." },
-            { title: "Freedom", text: "Everyone should be able to express and live their opinions freely without fear of oppression." },
-            { title: "Tolerance", text: "We respect differences and learn from each other to break down prejudices." },
-            { title: "Integration", text: "Diversity is strength – we advocate for the coming together of different cultures." },
-            { title: "Human Rights", text: "The dignity and rights of all people are inviolable and must be protected." },
-            { title: "Exchange", text: "Global dialogue and sharing knowledge are central pillars of our movement." },
-            { title: "Education", text: "Education is the key to freedom and progress – it must be accessible to all." }
-          ],
-          ideaTitle: "The Idea of Edusphere",
-          ideaText: "Edusphere is a worldwide network of learners, educators, and activists who jointly oppose misinformation, hate, and intolerance. Through digital platforms, open resources, and the exchange of ideas, we create a positive digital sphere where knowledge is freely accessible and societal participation is possible.",
-          visionTitle: "Our Vision",
-          visionText: "A world where digital education empowers people to think critically, act democratically, and live in solidarity. Edusphere grows as a global movement protecting and promoting freedom, human rights, and diversity."
-        },
-        fr: {
-          introTitle: "Introduction",
-          introText: "L’Edusphere est un mouvement mondial de contre-courant face aux mouvements alt-right, manosphere, anti-féministes et néo-fascistes. Inspirée par les Lumières, elle défend la démocratie, la liberté, la tolérance, l’intégration, les droits humains, l’échange et l’éducation. Dans le monde numérique d’aujourd’hui, l’Edusphere relie les gens à travers le monde pour partager des connaissances et renforcer des valeurs communes.",
-          valuesTitle: "Nos Valeurs",
-          values: [
-            { title: "Démocratie", text: "Nous favorisons des sociétés ouvertes et justes où chacun a une voix." },
-            { title: "Liberté", text: "Chacun doit pouvoir exprimer et vivre ses opinions librement sans peur de l’oppression." },
-            { title: "Tolérance", text: "Nous respectons les différences et apprenons les uns des autres pour briser les préjugés." },
-            { title: "Intégration", text: "La diversité est une force – nous soutenons le rapprochement des différentes cultures." },
-            { title: "Droits de l’Homme", text: "La dignité et les droits de tous les êtres humains sont inviolables et doivent être protégés." },
-            { title: "Échange", text: "Le dialogue mondial et le partage des connaissances sont des piliers centraux de notre mouvement." },
-            { title: "Éducation", text: "L’éducation est la clé de la liberté et du progrès – elle doit être accessible à tous." }
-          ],
-          ideaTitle: "L’idée de l’Edusphere",
-          ideaText: "L’Edusphere est un réseau mondial d’apprenants, d’enseignants et d’activistes qui s’opposent ensemble à la désinformation, à la haine et à l’intolérance. Grâce aux plateformes numériques, aux ressources ouvertes et à l’échange d’idées, nous créons une sphère numérique positive où le savoir est librement accessible et la participation sociale possible.",
-          visionTitle: "Notre Vision",
-          visionText: "Un monde où l’éducation numérique permet aux gens de penser de manière critique, d’agir démocratiquement et de vivre dans la solidarité. L’Edusphere grandit comme un mouvement mondial qui protège et promeut la liberté, les droits humains et la diversité."
-        },
-        es: {
-          introTitle: "Introducción",
-          introText: "Edusphere es un movimiento global contra la alt-right, manosphere, movimientos anti-feministas y neo-fascistas. Inspirado en la Ilustración, defiende la democracia, la libertad, la tolerancia, la integración, los derechos humanos, el intercambio y la educación. En el mundo digital actual, Edusphere conecta personas en todo el mundo para compartir conocimientos y fortalecer valores comunes.",
-          valuesTitle: "Nuestros Valores",
-          values: [
-            { title: "Democracia", text: "Promovemos sociedades abiertas y justas donde todos tengan voz." },
-            { title: "Libertad", text: "Todos deberían poder expresar y vivir sus opiniones libremente sin miedo a la opresión." },
-            { title: "Tolerancia", text: "Respetamos las diferencias y aprendemos unos de otros para romper prejuicios." },
-            { title: "Integración", text: "La diversidad es fortaleza – abogamos por la unión de diferentes culturas." },
-            { title: "Derechos Humanos", text: "La dignidad y los derechos de todas las personas son inviolables y deben ser protegidos." },
-            { title: "Intercambio", text: "El diálogo global y compartir conocimientos son pilares centrales de nuestro movimiento." },
-            { title: "Educación", text: "La educación es la clave para la libertad y el progreso – debe ser accesible para todos." }
-          ],
-          ideaTitle: "La Idea de Edusphere",
-          ideaText: "Edusphere es una red mundial de aprendices, educadores y activistas que luchan juntos contra la desinformación, el odio y la intolerancia. A través de plataformas digitales, recursos abiertos y el intercambio de ideas, creamos una esfera digital positiva donde el conocimiento es libremente accesible y la participación social posible.",
-          visionTitle: "Nuestra Visión",
-          visionText: "Un mundo donde la educación digital empodera a las personas para pensar críticamente, actuar democráticamente y vivir en solidaridad. Edusphere crece como un movimiento global que protege y promueve la libertad, los derechos humanos y la diversidad."
-        },
-        ru: {
-          introTitle: "Введение",
-          introText: "Edusphere — это глобальное контрдвижение против альт-правых, маноспиры, антифеминистских и неофашистских движений. Вдохновленная эпохой Просвещения, она стоит за демократией, свободой, терпимостью, интеграцией, правами человека, обменом и образованием. В цифровом мире сегодня Edusphere связывает людей по всему миру для обмена знаниями и укрепления общих ценностей.",
-          valuesTitle: "Наши Ценности",
-          values: [
-            { title: "Демократия", text: "Мы продвигаем открытые и справедливые общества, где у каждого есть голос." },
-            { title: "Свобода", text: "Каждый человек должен иметь возможность свободно выражать свои мысли и жить без страха перед угнетением." },
-            { title: "Толерантность", text: "Мы уважаем различия и учимся друг у друга, чтобы разрушать предубеждения." },
-            { title: "Интеграция", text: "Разнообразие — это сила — мы выступаем за объединение различных культур." },
-            { title: "Права Человека", text: "Достоинство и права всех людей неприкосновенны и должны быть защищены." },
-            { title: "Обмен", text: "Глобальный диалог и обмен знаниями — центральные столпы нашего движения." },
-            { title: "Образование", text: "Образование — ключ к свободе и прогрессу — оно должно быть доступно всем." }
-          ],
-          ideaTitle: "Идея Edusphere",
-          ideaText: "Edusphere — это всемирная сеть обучающихся, преподавателей и активистов, которые вместе борются с дезинформацией, ненавистью и нетерпимостью. Через цифровые платформы, открытые ресурсы и обмен идеями мы создаем позитивную цифровую сферу, где знания свободно доступны и возможна общественная вовлеченность.",
-          visionTitle: "Наша Видение",
-          visionText: "Мир, в котором цифровое образование позволяет людям мыслить критически, действовать демократично и жить солидарно. Edusphere растет как глобальное движение, защищающее и продвигающее свободу, права человека и разнообразие."
-        },
-        zh: {
-          introTitle: "介绍",
-          introText: "Edusphere 是对极右、男子圈、反女权和新法西斯运动的全球反动运动。受启蒙时代的启发，它倡导民主、自由、宽容、融合、人权、交流和教育。在当今数字世界，Edusphere 将全球人们联系起来，共享知识，强化共同价值观。",
-          valuesTitle: "我们的价值观",
-          values: [
-            { title: "民主", text: "我们促进开放和公平的社会，每个人都有发言权。" },
-            { title: "自由", text: "每个人都应该能够自由表达和生活，而不必担心被压迫。" },
-            { title: "宽容", text: "我们尊重差异，彼此学习，以打破偏见。" },
-            { title: "融合", text: "多样性是力量——我们致力于不同文化的融合。" },
-            { title: "人权", text: "所有人的尊严和权利不可侵犯，必须得到保护。" },
-            { title: "交流", text: "全球对话和知识共享是我们运动的核心支柱。" },
-            { title: "教育", text: "教育是通向自由和进步的钥匙——它必须对所有人开放。" }
-          ],
-          ideaTitle: "Edusphere 的理念",
-          ideaText: "Edusphere 是一个由学习者、教育者和活动家组成的全球网络，他们共同反对错误信息、仇恨和不宽容。通过数字平台、开放资源和思想交流，我们创造了一个积极的数字空间，知识自由可及，社会参与成为可能。",
-          visionTitle: "我们的愿景",
-          visionText: "一个数字教育赋予人们批判思考能力、民主行动能力和团结生活能力的世界。Edusphere 作为一个全球运动，保护和促进自由、人权和多样性。"
-        }
-      };
-
-      const content = document.getElementById("manifest-content");
-      const langButtons = document.querySelectorAll(".language-switch button");
-
-      function setAriaPressed(selectedLang) {
-        langButtons.forEach(btn => {
-          btn.setAttribute("aria-pressed", btn.dataset.lang === selectedLang ? "true" : "false");
-        });
+  function renderSection(sec) {
+    let html = `<section><h2>${sec.title}</h2>`;
+    if (sec.paragraphs) {
+      html += sec.paragraphs.map(p => `<p>${p}</p>`).join("");
+    }
+    if (sec.list) {
+      html += "<ul>" + sec.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
+    }
+    if (sec.closing) {
+      if (Array.isArray(sec.closing)) {
+        html += sec.closing.map(p => `<p>${p}</p>`).join("");
+      } else {
+        html += `<p>${sec.closing}</p>`;
       }
+    }
+    html += "</section>";
+    return html;
+  }
 
-      function renderManifest(lang = 'de') {
-        const data = manifestTexts[lang] || manifestTexts.de;
-        let html = `
-          <section>
-            <h2>${data.introTitle}</h2>
-            <p>${data.introText}</p>
-          </section>
-          <section>
-            <h2>${data.valuesTitle}</h2>
-            ${data.values.map(v => `<h3>${v.title}</h3><p>${v.text}</p>`).join('')}
-          </section>
-          <section>
-            <h2>${data.ideaTitle}</h2>
-            <p>${data.ideaText}</p>
-          </section>
-          <section>
-            <h2>${data.visionTitle}</h2>
-            <p>${data.visionText}</p>
-          </section>
-        `;
-        content.innerHTML = html;
-        setAriaPressed(lang);
-      }
+  async function renderManifest(lang = "de") {
+    const data = await loadManifest(lang);
+    let html = `<h1>${data.title}</h1>`;
+    html += data.sections.map(renderSection).join("");
+    document.getElementById("manifest-content").innerHTML = html;
 
-      // Initial render Deutsch
-      renderManifest();
+    // Sprachumschalter aktualisieren
+    document.querySelectorAll(".language-switch button").forEach(btn => {
+      btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+    });
+  }
 
-      // Eventlistener für Sprachumschaltung
-      langButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (btn.getAttribute('aria-pressed') === 'true') return;
-          renderManifest(btn.dataset.lang);
-        });
-      });
-    })();
+  // Initial Deutsch laden
+  renderManifest();
+
+  // Sprachumschaltung
+  document.querySelectorAll(".language-switch button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.getAttribute("aria-pressed") === "true") return;
+      renderManifest(btn.dataset.lang);
+    });
+  });
   </script>
 </body>
 </html>
