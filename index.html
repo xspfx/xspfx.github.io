@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Manifest der Edusphere</title>
   <style>
-    :root{
-      --background: #0d0d0d;
+    :root {
+      --background: transparent;
       --card-bg: rgba(18,18,22,0.6);
       --text: #e0e0e0;
       --muted: #9ca3af;
@@ -15,190 +15,189 @@
       --max-width: 950px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
       font-family: "Inter", system-ui, sans-serif;
       background: var(--background);
       color: var(--text);
-      line-height:1.7;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      background-attachment: fixed;
-      background-size: cover;
+      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       transition: background .3s ease, color .3s ease;
-      overflow-x: hidden;
     }
 
     /* Hintergrund Canvas */
     #wave-bg {
       position: fixed;
       inset: 0;
-      z-index: -1;
       width: 100%;
       height: 100%;
+      z-index: 0;
       display: block;
     }
 
-    header{
-      max-width:var(--max-width);
-      margin:0 auto 1.5rem;
-      text-align:center;
-      padding-top:1rem;
+    header {
+      max-width: var(--max-width);
+      margin: 0 auto 1.5rem;
+      text-align: center;
+      padding-top: 1rem;
+      position: relative;
+      z-index: 1;
     }
-    header h1{
-      font-size:1.5rem;
-      letter-spacing:-0.01em;
-      color:var(--accent-color);
-      text-shadow:0 0 12px var(--accent-color);
+    header h1 {
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      color: var(--accent-color);
+      text-shadow: 0 0 12px var(--accent-color);
     }
 
-    nav.language-switch{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:0.5rem;
-      margin-top:0.75rem;
+    nav.language-switch {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
     }
-    nav.language-switch button{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.15);
-      color:var(--text);
-      padding:0.4rem 0.75rem;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:0.9rem;
+    nav.language-switch button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
       backdrop-filter: blur(6px);
       transition: all .25s ease;
-      display:flex;
-      align-items:center;
-      gap:0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
-    nav.language-switch button[aria-pressed="true"]{
-      background:var(--primary-color);
-      color:black;
-      border-color:transparent;
+    nav.language-switch button[aria-pressed="true"] {
+      background: var(--primary-color);
+      color: black;
+      border-color: transparent;
     }
-    nav.language-switch button:hover:not([aria-pressed="true"]){
-      background:rgba(255,255,255,0.12);
-    }
-
-    main{
-      max-width:var(--max-width);
-      margin:0 auto;
-      width:100%;
+    nav.language-switch button:hover:not([aria-pressed="true"]) {
+      background: rgba(255,255,255,0.12);
     }
 
-    .card{
-      background:var(--card-bg);
-      border-radius:14px;
-      padding:1.5rem 1.5rem 2rem;
-      margin-bottom:1.5rem;
-      box-shadow:0 0 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05) inset;
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05) inset;
       backdrop-filter: blur(12px);
-      border:1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
       transition: transform .25s ease, box-shadow .25s ease;
     }
-    .card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 0 30px rgba(0,0,0,0.7), 0 0 18px var(--primary-color);
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.7), 0 0 18px var(--primary-color);
     }
 
-    section{margin:1.5rem 0}
-    section h2{
-      font-size:1.2rem;
-      margin-bottom:0.6rem;
-      position:relative;
-      display:inline-block;
-      color:var(--primary-color);
-      text-shadow:0 0 10px var(--primary-color);
-      padding-bottom:0.5rem;
-    }
-    section h2::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:0;
-      width:60px;
-      height:3px;
-      border-radius:3px;
-      background:var(--accent-color);
-      transform:scaleX(1);
-      transform-origin:left;
-      transition:transform .4s ease, height .3s ease;
-      box-shadow:0 0 8px var(--accent-color);
-    }
-    section:hover h2::after{
-      transform:scaleX(2.5);
-      height:5px;
-    }
-
-    p{margin:0 0 1rem;font-size:1rem}
-    ul{margin:0.5rem 0 1rem 1.25rem}
-    li{margin-bottom:0.5rem}
-
-    strong.md-strong{color:var(--accent-color);font-weight:700;text-shadow:0 0 8px var(--accent-color)}
-    em.md-em{color:var(--primary-color);font-style:italic;text-shadow:0 0 6px var(--primary-color)}
-
-    footer{
-      margin-top:auto;
-      text-align:center;
-      color:var(--muted);
-      font-size:0.9rem;
-      padding:1rem 0;
+    section { margin: 1.5rem 0; }
+    section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
       position: relative;
+      display: inline-block;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color);
+      padding-bottom: 0.5rem;
     }
-    footer .version {
+    section h2::after {
+      content: "";
       position: absolute;
-      right: 1rem;
-      bottom: 0.5rem;
-      font-size: 0.75rem;
+      left: 0;
+      bottom: 0;
+      width: 60px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--accent-color);
+      transform: scaleX(1);
+      transform-origin: left;
+      transition: transform .4s ease, height .3s ease;
+      box-shadow: 0 0 8px var(--accent-color);
+    }
+    section:hover h2::after {
+      transform: scaleX(2.5);
+      height: 5px;
+    }
+
+    p { margin: 0 0 1rem; font-size: 1rem; }
+    ul { margin: 0.5rem 0 1rem 1.25rem; }
+    li { margin-bottom: 0.5rem; }
+
+    strong.md-strong { color: var(--accent-color); font-weight: 700; text-shadow: 0 0 8px var(--accent-color); }
+    em.md-em { color: var(--primary-color); font-style: italic; text-shadow: 0 0 6px var(--primary-color); }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
       color: var(--muted);
-      opacity: 0.8;
+      font-size: 0.9rem;
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    footer small {
+      display: block;
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+      color: var(--muted);
     }
 
     /* Light Mode */
-    body.light{
+    body.light {
       --background: #ffffff;
       --card-bg: #f5f5f5;
       --text: #111111;
       --muted: #333333;
       --primary-color: #000000;
       --accent-color: #003366;
-      background-image: none !important;
+      background: #ffffff !important;
     }
-    body.light *{
-      text-shadow:none !important;
-      box-shadow:none !important;
-      backdrop-filter:none !important;
+    body.light * {
+      text-shadow: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
     }
-    body.light nav.language-switch button{
-      background:#ffffff;
-      color:#000000;
-      border:1px solid #333;
+    body.light #wave-bg { display: none; }
+    body.light nav.language-switch button {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #333;
     }
-    body.light nav.language-switch button[aria-pressed="true"]{
-      background:var(--accent-color);
-      color:#fff;
+    body.light nav.language-switch button[aria-pressed="true"] {
+      background: var(--accent-color);
+      color: #fff;
     }
-    body.light section h2::after{
-      box-shadow:none !important;
-    }
-    body.light #wave-bg {
-      display: none;
+    body.light section h2::after {
+      box-shadow: none !important;
     }
 
     @media (max-width:600px){
-      .card{padding:1rem}
-      header h1{font-size:1.25rem}
+      .card { padding: 1rem; }
+      header h1 { font-size: 1.25rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Hintergrund Canvas -->
-  <canvas id="wave-bg" aria-hidden="true"></canvas>
+  <!-- Canvas Hintergrund -->
+  <canvas id="wave-bg"></canvas>
 
   <header>
     <h1>Manifest der Edusphere</h1>
@@ -217,59 +216,11 @@
 
   <footer>
     &copy; 2025 Edusphere – Für eine neue Aufklärung
-    <span class="version" id="version"></span>
+    <small id="version">Version: …</small>
   </footer>
 
   <script>
-    // ---------------- Versionsnummer aus JSON laden ----------------
-    async function loadVersion() {
-      try {
-        const res = await fetch("./version.json", { cache: "no-cache" });
-        if (!res.ok) throw new Error("Version.json nicht gefunden");
-        const data = await res.json();
-        document.getElementById("version").textContent = data.version || "";
-      } catch (e) {
-        console.error("Fehler beim Laden der Version:", e);
-        document.getElementById("version").textContent = "v?.?";
-      }
-    }
-    loadVersion();
-
-    // ---------------- Cyberpunk Themes ----------------
-    const themes = [
-      { primary:"#ff00ff", accent:"#00fff7" },
-      { primary:"#39ff14", accent:"#ff3131" },
-      { primary:"#00f0ff", accent:"#ff00a0" },
-      { primary:"#f5f242", accent:"#ff007f" },
-      { primary:"#ff6ec7", accent:"#33ffcc" }
-    ];
-    const lightAccents = ["#003366","#004080","#00509e","#0066cc","#000099"];
-
-    function applyRandomTheme(){
-      if(document.body.classList.contains("light")) return;
-      const theme = themes[Math.floor(Math.random()*themes.length)];
-      document.documentElement.style.setProperty("--primary-color", theme.primary);
-      document.documentElement.style.setProperty("--accent-color", theme.accent);
-    }
-    applyRandomTheme();
-
-    // ---------------- Dark / Light Toggle ----------------
-    const modeBtn = document.getElementById("mode-toggle");
-    const modeIcon = document.getElementById("mode-icon");
-    modeBtn.addEventListener("click",()=>{
-      if(document.body.classList.contains("light")){
-        document.body.classList.remove("light");
-        modeIcon.textContent = "🌙";
-        applyRandomTheme();
-      } else {
-        document.body.classList.add("light");
-        modeIcon.textContent = "☀️";
-        const accent = lightAccents[Math.floor(Math.random()*lightAccents.length)];
-        document.documentElement.style.setProperty("--accent-color", accent);
-      }
-    });
-
-    // ---------------- Hintergrund Wellen Animation ----------------
+    // Animierter Wave Hintergrund
     const canvas = document.getElementById("wave-bg");
     const ctx = canvas.getContext("2d");
     let w, h;
@@ -281,23 +232,10 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    const waveColors = [
-      "#ff00ff", "#00fff7", "#39ff14", "#ff3131",
-      "#00f0ff", "#ff00a0", "#f5f242", "#ff007f",
-      "#ff6ec7", "#33ffcc"
+    const waves = [
+      { amplitude: 40, frequency: 0.003, speed: 0.002, color: "#ff00ff" },
+      { amplitude: 25, frequency: 0.002, speed: 0.0015, color: "#00fff7" }
     ];
-    function randomColor() {
-      return waveColors[Math.floor(Math.random() * waveColors.length)];
-    }
-
-    const waves = Array.from({ length: 6 }, () => ({
-      amplitude: 30 + Math.random() * 40,
-      frequency: 0.002 + Math.random() * 0.003,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.001 + Math.random() * 0.002,
-      color: randomColor(),
-      alpha: 0.06 + Math.random() * 0.08
-    }));
 
     function drawWaves(time) {
       ctx.clearRect(0, 0, w, h);
@@ -306,72 +244,102 @@
       waves.forEach(wv => {
         ctx.beginPath();
         for (let x = 0; x <= w; x++) {
-          const y =
-            h / 2 +
-            Math.sin(x * wv.frequency + wv.phase + time * wv.speed) *
-              wv.amplitude;
-          ctx.lineTo(x, y);
+          const y = h/2 + Math.sin(x * wv.frequency + time * wv.speed) * wv.amplitude;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
         ctx.strokeStyle = wv.color;
-        ctx.globalAlpha = wv.alpha;
-        ctx.lineWidth = 3;
-        ctx.shadowBlur = 50;
+        ctx.lineWidth = 2.5;
+        ctx.globalAlpha = 0.25;
+        ctx.shadowBlur = 25;
         ctx.shadowColor = wv.color;
         ctx.stroke();
       });
 
-      ctx.globalAlpha = 1;
       requestAnimationFrame(drawWaves);
     }
     requestAnimationFrame(drawWaves);
 
-    // ---------------- Markdown Renderer ----------------
-    function escapeHTML(str){
-      return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    // Mode toggle (Dark / Light)
+    const modeBtn = document.getElementById("mode-toggle");
+    const modeIcon = document.getElementById("mode-icon");
+    modeBtn.addEventListener("click", () => {
+      if (document.body.classList.contains("light")) {
+        document.body.classList.remove("light");
+        modeIcon.textContent = "🌙";
+        canvas.style.display = "block";
+      } else {
+        document.body.classList.add("light");
+        modeIcon.textContent = "☀️";
+      }
+    });
+
+    // Markdown Utilities
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+        .replace(/'/g,"&#39;");
     }
-    function markdownInlineToHtml(s){
-      if(!s) return s;
+    function markdownInlineToHtml(s) {
+      if (!s) return s;
       s = s.replace(/\*\*([\s\S]+?)\*\*/g,'<strong class="md-strong">$1</strong>');
       s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g,'$1<em class="md-em">$2</em>');
       return s;
     }
 
-    async function loadManifest(lang){
-      try{
-        const res=await fetch(`./i18n/${lang}.json`,{cache:"no-cache"});
-        if(!res.ok) throw new Error("Not found");
+    async function loadManifest(lang) {
+      try {
+        const res = await fetch(`./i18n/${lang}.json`, { cache: "no-cache" });
+        if (!res.ok) throw new Error("Not found");
         return await res.json();
-      }catch(e){
+      } catch(e) {
         return await fetch("./i18n/de.json").then(r=>r.json());
       }
     }
 
-    function renderSection(sec){
-      let html=`<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
-      if(sec.paragraphs) html+=sec.paragraphs.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-      if(sec.list){html+="<ul>"+sec.list.map(i=>`<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("")+"</ul>";}
-      if(sec.closing){
-        if(Array.isArray(sec.closing)) html+=sec.closing.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-        else html+=`<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+    function renderSection(sec) {
+      let html = `<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
+      if (sec.paragraphs) html += sec.paragraphs.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+      if (sec.list) html += "<ul>"+sec.list.map(i=>`<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("")+"</ul>";
+      if (sec.closing) {
+        if (Array.isArray(sec.closing)) html += sec.closing.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
+        else html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
       }
-      return html+"</section>";
+      return html + "</section>";
     }
 
-    async function renderManifest(lang="de"){
-      const data=await loadManifest(lang);
-      let html=`<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color)">${escapeHTML(data.title)}</h1>`;
-      html+=data.sections.map(renderSection).join("");
-      document.getElementById("manifest-content").innerHTML=html;
+    async function renderManifest(lang="de") {
+      const data = await loadManifest(lang);
+      let html = `<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color)">${escapeHTML(data.title)}</h1>`;
+      html += data.sections.map(renderSection).join("");
+      document.getElementById("manifest-content").innerHTML = html;
       document.querySelectorAll(".language-switch button[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
-      window.scrollTo({top:0,behavior:"smooth"});
+      window.scrollTo({ top:0, behavior:"smooth" });
     }
 
     document.querySelectorAll(".language-switch button[data-lang]").forEach(btn=>{
-      btn.addEventListener("click",()=>{ if(btn.getAttribute("aria-pressed")==="true") return; renderManifest(btn.dataset.lang); });
+      btn.addEventListener("click", ()=>{
+        if (btn.getAttribute("aria-pressed")==="true") return;
+        renderManifest(btn.dataset.lang);
+      });
     });
 
     renderManifest("de");
+
+    // Versionsnummer laden
+    async function loadVersion() {
+      try {
+        const res = await fetch("./version.json",{cache:"no-cache"});
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById("version").textContent = "Version: " + data.version;
+        }
+      } catch(e) {
+        console.warn("Keine Version gefunden");
+      }
+    }
+    loadVersion();
   </script>
 </body>
 </html>
