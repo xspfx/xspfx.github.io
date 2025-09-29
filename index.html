@@ -6,56 +6,52 @@
   <title>Manifest der Edusphere</title>
   <style>
     /* RESET & BASICS */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
       background-color: #f5f6fa;
       color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
-    a {
-      color: #0e3b5f;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* HEADER */
     header {
       background-color: #0e3b5f;
       color: white;
       text-align: center;
       padding: 2rem 1rem;
     }
-
     header h1 {
       margin: 0;
       font-size: 2.5rem;
     }
-
     header p {
       font-size: 1.2rem;
       margin-top: 0.5rem;
     }
-
-    /* MAIN CONTENT */
+    nav {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    nav a {
+      margin: 0 0.5rem;
+      color: #0e3b5f;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
     main {
       max-width: 900px;
-      margin: 0 auto;
+      margin: auto;
       padding: 2rem 1rem;
+      flex: 1;
     }
-
     section {
       margin-bottom: 3rem;
     }
-
     h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
@@ -66,7 +62,6 @@
       transition: all 0.3s ease;
       position: relative;
     }
-
     h2::after {
       content: '';
       display: block;
@@ -77,28 +72,21 @@
       border-radius: 2px;
       transition: width 0.3s ease;
     }
-
     h2:hover::after {
       width: 100px;
     }
-
     ul {
       padding-left: 1.5rem;
     }
-
     li {
       margin-bottom: 0.5rem;
     }
-
     strong {
       color: #0e3b5f;
     }
-
     em {
       font-style: italic;
     }
-
-    /* FOOTER */
     footer {
       background-color: #0e3b5f;
       color: white;
@@ -106,16 +94,58 @@
       padding: 1rem;
       font-size: 0.9rem;
     }
-
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.8rem;
       }
-
       h2 {
         font-size: 1.5rem;
       }
     }
+
+    .wert-banner {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 2rem;
+  font-weight: bold;
+  height: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+.wert-banner span {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: wertwechsel 14s linear infinite;
+  transition: all 0.3s ease-in-out;
+  cursor: default;
+}
+
+.wert-banner span:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Animationsverzögerungen für jedes Wort */
+.wert-banner span:nth-child(1) { animation-delay: 0s; color: #0057a3; }       /* Demokratie */
+.wert-banner span:nth-child(2) { animation-delay: 2s; color: #007c48; }       /* Freiheit */
+.wert-banner span:nth-child(3) { animation-delay: 4s; color: #e67e22; }       /* Toleranz */
+.wert-banner span:nth-child(4) { animation-delay: 6s; color: #9b59b6; }       /* Integration */
+.wert-banner span:nth-child(5) { animation-delay: 8s; color: #c0392b; }       /* Menschenrechte */
+.wert-banner span:nth-child(6) { animation-delay: 10s; color: #16a085; }      /* Austausch */
+.wert-banner span:nth-child(7) { animation-delay: 12s; color: #2c3e50; }      /* Bildung */
+
+@keyframes wertwechsel {
+  0%   { opacity: 0; transform: translateY(100%); }
+  5%   { opacity: 1; transform: translateY(0); }
+  25%  { opacity: 1; transform: translateY(0); }
+  30%  { opacity: 0; transform: translateY(-100%); }
+  100% { opacity: 0; }
+}
+
   </style>
 </head>
 <body>
@@ -125,8 +155,27 @@
     <p>Für eine neue Aufklärung im digitalen Zeitalter</p>
   </header>
 
-  <main>
+  <nav>
+    <a href="de.html">Deutsch</a> |
+    <a href="en.html">English</a> |
+    <a href="fr.html">Français</a> |
+    <a href="es.html">Español</a> |
+    <a href="ru.html">Русский</a> |
+    <a href="zh.html">中文</a>
+  </nav>
 
+  <!-- Animation mit den zentralen Werten -->
+  <div class="wert-banner">
+    <span>Demokratie</span>
+    <span>Freiheit</span>
+    <span>Toleranz</span>
+    <span>Integration</span>
+    <span>Menschenrechte</span>
+    <span>Austausch</span>
+    <span>Bildung</span>
+  </div>
+
+  <main>
     <section>
       <h2>Präambel</h2>
       <p>Wir stehen an einem Scheideweg. Während digitale Räume einst als Verheißung für demokratischen Diskurs, freien Wissensaustausch und globale Verständigung galten, haben sich in ihren Schatten Rückzugsorte des Hasses, der Intoleranz und des antidemokratischen Denkens gebildet. In den Echokammern der sogenannten <em>Manosphere</em>, der <em>Alt-Right</em> und anderer neofaschistischer Bewegungen wächst eine neue, digital befeuerte Reaktion gegen die Errungenschaften der Aufklärung, gegen Feminismus, Menschenrechte und Gleichheit.</p>
@@ -186,4 +235,31 @@
         <li>Journalist*innen, die der Wahrheit verpflichtet bleiben.</li>
         <li>Aktivist*innen, die Brücken bauen statt Mauern.</li>
         <li>Technolog*innen, die Ethik und Verantwortung in den Code schreiben.</li>
-        <li>Schüler*innen, Studierende, Eltern, Nachbar*innen – <strong>
+        <li>Schüler*innen, Studierende, Eltern, Nachbar*innen – <strong>alle, die an eine andere Zukunft glauben.</strong></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Unser Versprechen</h2>
+      <p>Wir werden nicht schweigen, wenn Demokratie angegriffen wird.<br />
+      Wir werden nicht wegsehen, wenn Hass sich ausbreitet.<br />
+      Wir werden nicht neutral bleiben, wenn Menschenrechte verletzt werden.</p>
+      <p>Wir wählen Bildung statt Propaganda.<br />
+      Vernunft statt Fanatismus.<br />
+      Menschlichkeit statt Zynismus.</p>
+    </section>
+
+    <section>
+      <h2>Epilog: Die Zukunft ist bildbar</h2>
+      <p>Die Edusphere ist keine Utopie. Sie ist eine Einladung. Eine Einladung, Räume zu schaffen, in denen Ideen wachsen können. Eine Einladung, sich einzumischen. Eine Einladung, nicht nur zuzuschauen, sondern mitzuwirken.</p>
+      <p>Denn die Zukunft wird nicht von denen gemacht, die am lautesten schreien – sondern von denen, die bereit sind, zu lernen, zu lehren und zu handeln.</p>
+      <p><strong>Willkommen in der Edusphere.</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Edusphere – Eine Initiative für Bildung, Dialog und Demokratie
+  </footer>
+
+</body>
+</html>
