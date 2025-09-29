@@ -14,6 +14,8 @@
       --highlight-dark: #00ffff;
       --accent-light: #0044cc;
       --highlight-light: #0044cc;
+      --card-dark: rgba(30,30,45,0.9);
+      --card-light: #f9f9f9;
     }
     body {
       margin: 0;
@@ -34,7 +36,7 @@
       inset: 0;
       z-index: -1;
       background: transparent;
-      filter: blur(18px);
+      filter: blur(14px);
     }
 
     header {
@@ -69,9 +71,21 @@
       margin: 2rem auto;
       padding: 0 1rem;
     }
+    section {
+      background: var(--card-dark);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light section {
+      background: var(--card-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
     h2 {
       color: var(--accent-dark);
-      margin-top: 2rem;
+      margin-top: 0;
       font-size: 1.6rem;
       transition: color 0.3s;
     }
@@ -116,8 +130,8 @@
       background: none;
       border: none;
       cursor: pointer;
-      width: 28px;
-      height: 22px;
+      width: 26px;
+      height: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -136,7 +150,7 @@
     .menu {
       display: none;
       position: absolute;
-      top: 34px;
+      top: 30px;
       right: 0;
       background: rgba(20,20,30,0.95);
       padding: 1rem;
@@ -201,7 +215,7 @@
   </header>
   <main id="manifest-content"></main>
   <footer>
-    <span id="version">subscriptionsPass.js ver. 1.0.4</span>
+    <span id="version">subscriptionsPass.js ver. 1.0.5</span>
   </footer>
 
   <script>
@@ -256,17 +270,30 @@
       localStorage.setItem("lang", language);
       document.documentElement.lang = language;
       loadManifest(language);
+      closeMenu();
     }
 
     function toggleDarkMode() {
       document.body.classList.toggle("light");
+      closeMenu();
     }
 
     // Burger Menü
     const burgerBtn = document.getElementById("burger-btn");
     const menu = document.getElementById("menu");
+
     burgerBtn.addEventListener("click", () => {
       menu.classList.toggle("open");
+    });
+
+    function closeMenu() {
+      menu.classList.remove("open");
+    }
+
+    document.addEventListener("click", (e) => {
+      if (!menu.contains(e.target) && !burgerBtn.contains(e.target)) {
+        closeMenu();
+      }
     });
 
     // Init
@@ -298,7 +325,7 @@
         ctx.lineTo(x, y);
       }
       ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.2;
       ctx.stroke();
     }
 
@@ -308,14 +335,14 @@
 
       waves.forEach((wave, i) => {
         const darkColors = [
-          "rgba(0,255,255,0.35)",
-          "rgba(255,0,255,0.28)",
-          "rgba(0,200,255,0.32)"
+          "rgba(0,255,255,0.5)",
+          "rgba(255,0,255,0.45)",
+          "rgba(0,200,255,0.48)"
         ];
         const lightColors = [
-          "rgba(0,70,140,0.18)",
-          "rgba(0,50,120,0.15)",
-          "rgba(0,90,160,0.2)"
+          "rgba(0,70,140,0.28)",
+          "rgba(0,50,120,0.25)",
+          "rgba(0,90,160,0.3)"
         ];
         const color = isLight ? lightColors[i] : darkColors[i];
         drawWave(wave, time, color);
