@@ -1,342 +1,231 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Edusphere</title>
+  <meta charset="UTF-8">
+  <title>Manifest der Edusphere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root{
-      --background: #0d0d0d;
-      --card-bg: rgba(18,18,22,0.6);
-      --text: #e0e0e0;
-      --muted: #9ca3af;
-      --primary-color: #ff00ff; /* cyberpunk lila */
-      --accent-color: #00fff7;  /* neonblau */
-      --max-width: 950px;
+    :root {
+      --background-color: #0d1117;
+      --text-color: #e6edf3;
+      --accent-color: #00bcd4;
+      --primary-color: #64ffda;
+      --wave-blur: 20px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family: "Inter", system-ui, sans-serif;
-      background: var(--background);
-      color: var(--text);
-      line-height:1.7;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      background-attachment: fixed;
-      background-size: cover;
-      transition: background .3s ease, color .3s ease;
-      overflow-x: hidden;
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
     }
 
-    canvas#wave-bg{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-      filter: blur(40px); /* weniger Blur */
-    }
-
-    header{
-      max-width:var(--max-width);
-      margin:0 auto 1.5rem;
-      text-align:center;
-      padding-top:1rem;
-    }
-    header h1{
-      font-size:2.5rem;
-      letter-spacing:0.03em;
-      color:var(--accent-color);
-      text-shadow:0 0 8px var(--primary-color), 0 0 20px var(--accent-color);
-    }
-
-    nav.language-switch{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:0.5rem;
-      margin-top:0.75rem;
-    }
-    nav.language-switch button{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.15);
-      color:var(--text);
-      padding:0.4rem 0.75rem;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:0.9rem;
-      backdrop-filter: blur(6px);
-      transition: all .25s ease;
-      display:flex;
-      align-items:center;
-      gap:0.4rem;
-    }
-    nav.language-switch button[aria-pressed="true"]{
-      background:var(--primary-color);
-      color:black;
-      border-color:transparent;
-    }
-    nav.language-switch button:hover:not([aria-pressed="true"]){
-      background:rgba(255,255,255,0.12);
-    }
-
-    main{
-      max-width:var(--max-width);
-      margin:0 auto;
-      width:100%;
-    }
-
-    .card{
-      background:var(--card-bg);
-      border-radius:14px;
-      padding:1.5rem 1.5rem 2rem;
-      margin-bottom:1.5rem;
-      box-shadow:0 0 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05) inset;
-      backdrop-filter: blur(12px);
-      border:1px solid rgba(255,255,255,0.08);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-    .card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 0 30px rgba(0,0,0,0.7), 0 0 18px var(--primary-color);
-    }
-
-    section{margin:1.5rem 0}
-    section h2{
-      font-size:1.2rem;
-      margin-bottom:0.6rem;
-      position:relative;
-      display:inline-block;
-      color:var(--primary-color);
-      text-shadow:0 0 10px var(--primary-color);
-      padding-bottom:0.5rem;
-    }
-    section h2::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:0;
-      width:60px;
-      height:3px;
-      border-radius:3px;
-      background:var(--accent-color);
-      transform:scaleX(1);
-      transform-origin:left;
-      transition:transform .4s ease, height .3s ease;
-      box-shadow:0 0 8px var(--accent-color);
-    }
-    section:hover h2::after{
-      transform:scaleX(2.5);
-      height:5px;
-    }
-
-    p{margin:0 0 1rem;font-size:1rem}
-    ul{margin:0.5rem 0 1rem 1.25rem}
-    li{margin-bottom:0.5rem}
-
-    strong.md-strong{color:var(--accent-color);font-weight:700;text-shadow:0 0 8px var(--accent-color)}
-    em.md-em{color:var(--primary-color);font-style:italic;text-shadow:0 0 6px var(--primary-color)}
-
-    footer{
-      margin-top:auto;
-      text-align:center;
-      color:var(--muted);
-      font-size:0.9rem;
-      padding:1rem 0;
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem 1rem;
       position: relative;
+      overflow: hidden;
     }
-    footer .version {
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Wellen-Hintergrund */
+    .waves {
       position: absolute;
-      right: 1rem;
-      bottom: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      opacity: 0.8;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      filter: blur(var(--wave-blur)) brightness(1.2);
     }
 
-    /* Light Mode */
-    body.light{
-      --background: #ffffff;
-      --card-bg: #f5f5f5;
-      --text: #111111;
-      --muted: #333333;
-      --primary-color: #000000;
-      --accent-color: #003366;
-      background: #ffffff;
-    }
-    body.light *{
-      text-shadow:none !important;
-      box-shadow:none !important;
-      backdrop-filter:none !important;
-    }
-    body.light nav.language-switch button{
-      background:#ffffff;
-      color:#000000;
-      border:1px solid #333;
-    }
-    body.light nav.language-switch button[aria-pressed="true"]{
-      background:var(--accent-color);
-      color:#fff;
-    }
-    body.light section h2::after{
-      box-shadow:none !important;
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, var(--accent-color), transparent 70%);
+      opacity: 0.4;
+      animation: waveMove 25s linear infinite;
     }
 
-    @media (max-width:600px){
-      .card{padding:1rem}
-      header h1{font-size:2rem}
+    .wave:nth-child(2) {
+      top: -20%;
+      animation-duration: 35s;
+      opacity: 0.3;
+    }
+
+    @keyframes waveMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      text-shadow: 0 0 6px var(--primary-color);
+    }
+
+    section p {
+      margin-bottom: 1rem;
+    }
+
+    section ul {
+      margin: 0.5rem 0 1rem 1.25rem;
+    }
+
+    /* Subsections */
+    .subsection {
+      margin: 1rem 0 1.5rem 1rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    .subsection h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+      text-shadow: 0 0 6px var(--primary-color);
+    }
+
+    .subsection ul {
+      margin: 0.5rem 0 1rem 1.25rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      section h2 {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <canvas id="wave-bg" aria-hidden="true"></canvas>
-
   <header>
-    <h1>Edusphere</h1>
-    <nav class="language-switch" role="navigation" aria-label="Sprachschalter">
-      <button data-lang="de" aria-pressed="true">Deutsch</button>
-      <button data-lang="en" aria-pressed="false">English</button>
-      <button data-lang="fr" aria-pressed="false">Français</button>
-      <button data-lang="es" aria-pressed="false">Español</button>
-      <button data-lang="ru" aria-pressed="false">Русский</button>
-      <button data-lang="zh" aria-pressed="false">中文</button>
-      <button id="mode-toggle"><span id="mode-icon">Light Mode</span></button>
-    </nav>
+    <h1 id="manifest-title"></h1>
+    <div class="waves">
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
   </header>
-
-  <main id="manifest-content" class="card" role="main" aria-live="polite"></main>
-
-  <footer>
-    &copy; 2025 Edusphere – Für eine neue Aufklärung
-    <span class="version" id="version"></span>
-  </footer>
+  <main id="content"></main>
+  <footer>© 2025 Edusphere – Manifest für eine neue Aufklärung</footer>
 
   <script>
-    // ---------------- Versionsnummer laden ----------------
-    async function loadVersion() {
+    async function loadManifest(lang="de") {
       try {
-        const res = await fetch("./version.json", { cache: "no-cache" });
-        if (!res.ok) throw new Error("Version.json nicht gefunden");
-        const data = await res.json();
-        document.getElementById("version").textContent = data.version || "";
-      } catch (e) {
-        document.getElementById("version").textContent = "v?.?";
+        const res = await fetch(lang + ".json");
+        const manifest = await res.json();
+
+        document.getElementById("manifest-title").textContent = manifest.title;
+        const content = document.getElementById("content");
+        content.innerHTML = manifest.sections.map(renderSection).join("");
+      } catch (err) {
+        console.error("Fehler beim Laden des Manifests:", err);
       }
     }
-    loadVersion();
 
-    // ---------------- Wave Animation ----------------
-    const canvas = document.getElementById("wave-bg");
-    const ctx = canvas.getContext("2d");
-    let wavesEnabled = true;
-
-    function isMobile() {
-      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    function escapeHTML(str) {
+      return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
     }
 
-    if (isMobile()) {
-      wavesEnabled = false;
-    }
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    const waveColorsDark = ["rgba(255,0,255,0.5)", "rgba(0,255,247,0.5)"];
-    const waveColorsLight = ["rgba(0,51,102,0.35)", "rgba(0,0,0,0.25)"];
-
-    let t = 0;
-    function drawWaves() {
-      if (!wavesEnabled) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const colors = document.body.classList.contains("light") ? waveColorsLight : waveColorsDark;
-
-      colors.forEach((color, idx) => {
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height / 2);
-        for (let x = 0; x <= canvas.width; x += 15) {
-          let y = canvas.height/2 +
-                  Math.sin((x * 0.005) + t * 0.008 + idx) * 80 +
-                  Math.sin((x * 0.003) + t * 0.006 + idx*2) * 50;
-          ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 40;
-        ctx.stroke();
-      });
-      t += 1.5; // schneller
-      requestAnimationFrame(drawWaves);
-    }
-    drawWaves();
-
-    // ---------------- Mode toggle ----------------
-    const modeBtn = document.getElementById("mode-toggle");
-    const modeIcon = document.getElementById("mode-icon");
-    modeBtn.addEventListener("click",()=>{
-      if(document.body.classList.contains("light")){
-        document.body.classList.remove("light");
-        modeIcon.textContent = "Light Mode";
-      } else {
-        document.body.classList.add("light");
-        modeIcon.textContent = "Dark Mode";
-      }
-    });
-
-    // ---------------- Manifest laden ----------------
-    function escapeHTML(str){
-      return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-    }
-    function markdownInlineToHtml(s){
-      if(!s) return s;
-      s = s.replace(/\*\*([\s\S]+?)\*\*/g,'<strong class="md-strong">$1</strong>');
-      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g,'$1<em class="md-em">$2</em>');
-      return s;
-    }
-
-    async function loadManifest(lang){
-      try{
-        const res=await fetch(`./i18n/${lang}.json`,{cache:"no-cache"});
-        if(!res.ok) throw new Error("Not found");
-        return await res.json();
-      }catch(e){
-        return await fetch("./i18n/de.json").then(r=>r.json());
-      }
+    // Markdown inline parser (fett, kursiv)
+    function markdownInlineToHtml(str) {
+      return str
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>");
     }
 
     function renderSection(sec){
-      let html=`<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
-      if(sec.paragraphs) html+=sec.paragraphs.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-      if(sec.list){html+="<ul>"+sec.list.map(i=>`<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("")+"</ul>";}
-      if(sec.closing){
-        if(Array.isArray(sec.closing)) html+=sec.closing.map(p=>`<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-        else html+=`<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+      let html = `<section id="${sec.id || ""}">
+        <h2>${escapeHTML(sec.title)}</h2>`;
+
+      if (sec.paragraphs) {
+        html += sec.paragraphs
+          .map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`)
+          .join("");
       }
-      return html+"</section>";
+
+      if (sec.list) {
+        html += "<ul>" + sec.list
+          .map(i => `<li>${markdownInlineToHtml(escapeHTML(i))}</li>`)
+          .join("") + "</ul>";
+      }
+
+      // Subsections
+      if (sec.subsections) {
+        html += sec.subsections.map(sub => {
+          let subHtml = `<div class="subsection"><h3>${escapeHTML(sub.title)}</h3>`;
+          if (sub.paragraphs) {
+            subHtml += sub.paragraphs
+              .map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`)
+              .join("");
+          }
+          if (sub.list) {
+            subHtml += "<ul>" + sub.list
+              .map(i => `<li>${markdownInlineToHtml(escapeHTML(i))}</li>`)
+              .join("") + "</ul>";
+          }
+          if (sub.closing) {
+            if (Array.isArray(sub.closing)) {
+              subHtml += sub.closing
+                .map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`)
+                .join("");
+            } else {
+              subHtml += `<p>${markdownInlineToHtml(escapeHTML(sub.closing))}</p>`;
+            }
+          }
+          subHtml += "</div>";
+          return subHtml;
+        }).join("");
+      }
+
+      if (sec.closing) {
+        if (Array.isArray(sec.closing)) {
+          html += sec.closing
+            .map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`)
+            .join("");
+        } else {
+          html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
+        }
+      }
+
+      return html + "</section>";
     }
 
-    async function renderManifest(lang="de"){
-      const data=await loadManifest(lang);
-      let html=`<h2 style="margin-bottom:1rem;font-size:1.3rem;color:var(--accent-color)">${escapeHTML(data.title)}</h2>`;
-      html+=data.sections.map(renderSection).join("");
-      document.getElementById("manifest-content").innerHTML=html;
-      document.querySelectorAll(".language-switch button[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
-      window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    document.querySelectorAll(".language-switch button[data-lang]").forEach(btn=>{
-      btn.addEventListener("click",()=>{ if(btn.getAttribute("aria-pressed")==="true") return; renderManifest(btn.dataset.lang); });
-    });
-
-    renderManifest("de");
+    loadManifest("de"); // Standard: Deutsch laden
   </script>
 </body>
 </html>
