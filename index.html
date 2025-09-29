@@ -10,7 +10,7 @@
       --text-color: #e6edf3;
       --accent-color: #00bcd4;
       --primary-color: #64ffda;
-      --wave-blur: 20px;
+      --wave-blur: 15px;
     }
 
     body {
@@ -53,14 +53,14 @@
       width: 200%;
       height: 100%;
       background: radial-gradient(circle at 50% 50%, var(--accent-color), transparent 70%);
-      opacity: 0.4;
-      animation: waveMove 25s linear infinite;
+      opacity: 0.35;
+      animation: waveMove 20s linear infinite;
     }
 
     .wave:nth-child(2) {
       top: -20%;
-      animation-duration: 35s;
-      opacity: 0.3;
+      animation-duration: 30s;
+      opacity: 0.25;
     }
 
     @keyframes waveMove {
@@ -72,6 +72,8 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 2rem 1rem;
+      position: relative;
+      z-index: 2;
     }
 
     section {
@@ -117,20 +119,11 @@
       font-size: 0.9rem;
       opacity: 0.7;
     }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
-      section h2 {
-        font-size: 1.2rem;
-      }
-    }
   </style>
 </head>
 <body>
   <header>
-    <h1 id="manifest-title"></h1>
+    <h1 id="manifest-title">Lade Manifest...</h1>
     <div class="waves">
       <div class="wave"></div>
       <div class="wave"></div>
@@ -143,17 +136,23 @@
     async function loadManifest(lang="de") {
       try {
         const res = await fetch(lang + ".json");
+        if (!res.ok) throw new Error("Datei nicht gefunden: " + lang + ".json");
         const manifest = await res.json();
 
-        document.getElementById("manifest-title").textContent = manifest.title;
+        document.getElementById("manifest-title").textContent = manifest.title || "Manifest";
+
         const content = document.getElementById("content");
-        content.innerHTML = manifest.sections.map(renderSection).join("");
+        content.innerHTML = (manifest.sections || [])
+          .map(renderSection)
+          .join("");
       } catch (err) {
         console.error("Fehler beim Laden des Manifests:", err);
+        document.getElementById("manifest-title").textContent = "⚠️ Manifest konnte nicht geladen werden";
       }
     }
 
     function escapeHTML(str) {
+      if (!str) return "";
       return str.replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
@@ -163,6 +162,7 @@
 
     // Markdown inline parser (fett, kursiv)
     function markdownInlineToHtml(str) {
+      if (!str) return "";
       return str
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
         .replace(/\*(.*?)\*/g, "<em>$1</em>");
@@ -170,7 +170,7 @@
 
     function renderSection(sec){
       let html = `<section id="${sec.id || ""}">
-        <h2>${escapeHTML(sec.title)}</h2>`;
+        <h2>${escapeHTML(sec.title || "")}</h2>`;
 
       if (sec.paragraphs) {
         html += sec.paragraphs
@@ -184,10 +184,9 @@
           .join("") + "</ul>";
       }
 
-      // Subsections
       if (sec.subsections) {
         html += sec.subsections.map(sub => {
-          let subHtml = `<div class="subsection"><h3>${escapeHTML(sub.title)}</h3>`;
+          let subHtml = `<div class="subsection"><h3>${escapeHTML(sub.title || "")}</h3>`;
           if (sub.paragraphs) {
             subHtml += sub.paragraphs
               .map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`)
