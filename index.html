@@ -226,10 +226,10 @@
     function applyRandomTheme(){
       if(document.body.classList.contains("light")) return;
       const theme = themes[Math.floor(Math.random()*themes.length)];
-      document.documentElement.style.setProperty("--background", theme.bg);
+      document.documentElement.style.setProperty("--background", "#0d0d0d"); // Grundfarbe
       document.documentElement.style.setProperty("--primary-color", theme.primary);
       document.documentElement.style.setProperty("--accent-color", theme.accent);
-      document.body.style.backgroundImage = theme.bg;
+      // KEIN body.style.backgroundImage mehr!
     }
     applyRandomTheme();
 
