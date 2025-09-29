@@ -250,7 +250,7 @@
       updateCanvasVisibility();
     });
 
-    // --- Hintergrund Wellen Animation ---
+    // --- Hintergrund Wellen Animation mit Farbverlauf ---
     const canvas = document.getElementById("wave-bg");
     const ctx = canvas.getContext("2d");
     let w, h;
@@ -262,21 +262,13 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    const waveColors = [
-      "#ff00ff", "#00fff7", "#39ff14", "#ff3131",
-      "#00f0ff", "#ff00a0", "#f5f242", "#ff007f",
-      "#ff6ec7", "#33ffcc"
-    ];
-    function randomColor() {
-      return waveColors[Math.floor(Math.random() * waveColors.length)];
-    }
-
     const waves = Array.from({ length: 6 }, () => ({
       amplitude: 30 + Math.random() * 40,
       frequency: 0.002 + Math.random() * 0.003,
       phase: Math.random() * Math.PI * 2,
       speed: 0.001 + Math.random() * 0.002,
-      color: randomColor(),
+      hue: Math.random() * 360,         // Startfarbe
+      hueSpeed: 0.02 + Math.random() * 0.05, // Geschwindigkeit Farbwechsel
       alpha: 0.06 + Math.random() * 0.08
     }));
 
@@ -293,11 +285,13 @@
               wv.amplitude;
           ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = wv.color;
+        // Farbe dynamisch berechnen
+        const color = `hsl(${(wv.hue + time * wv.hueSpeed) % 360}, 100%, 60%)`;
+        ctx.strokeStyle = color;
         ctx.globalAlpha = wv.alpha;
         ctx.lineWidth = 3;
         ctx.shadowBlur = 50;
-        ctx.shadowColor = wv.color;
+        ctx.shadowColor = color;
         ctx.stroke();
       });
 
@@ -315,7 +309,7 @@
     }
     updateCanvasVisibility();
 
-    // Markdown
+    // Markdown + Manifest Rendering (wie vorher)
     function escapeHTML(str){
       return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;")
         .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
