@@ -133,23 +133,15 @@
   <footer>© 2025 Edusphere – Manifest für eine neue Aufklärung</footer>
 
   <script>
-    async function loadManifest(lang="de") {
-      try {
-        const res = await fetch(lang + ".json");
-        if (!res.ok) throw new Error("Datei nicht gefunden: " + lang + ".json");
-        const manifest = await res.json();
-
-        document.getElementById("manifest-title").textContent = manifest.title || "Manifest";
-
-        const content = document.getElementById("content");
-        content.innerHTML = (manifest.sections || [])
-          .map(renderSection)
-          .join("");
-      } catch (err) {
-        console.error("Fehler beim Laden des Manifests:", err);
-        document.getElementById("manifest-title").textContent = "⚠️ Manifest konnte nicht geladen werden";
-      }
-    }
+    async function loadManifest(lang) {
+  try {
+    const res = await fetch(`./i18n/${lang}.json`, { cache: "no-cache" });
+    if (!res.ok) throw new Error("Not found");
+    return await res.json();
+  } catch (e) {
+    return await fetch("./i18n/de.json").then(r => r.json());
+  }
+}
 
     function escapeHTML(str) {
       if (!str) return "";
