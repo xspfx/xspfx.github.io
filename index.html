@@ -165,7 +165,6 @@
       --muted: #333333;
       --primary-color: #000000;
       --accent-color: #003366;
-      background-image: none !important;
     }
     body.light *{
       text-shadow:none !important;
@@ -215,21 +214,20 @@
   <script>
     // Cyberpunk Themes (Dark Mode)
     const themes = [
-      {bg:"linear-gradient(135deg, #0d0d0d, #1a0033)", primary:"#ff00ff", accent:"#00fff7"},
-      {bg:"linear-gradient(135deg, #050510, #1a1a2e)", primary:"#39ff14", accent:"#ff3131"},
-      {bg:"linear-gradient(135deg, #0b0b14, #260033)", primary:"#00f0ff", accent:"#ff00a0"},
-      {bg:"linear-gradient(135deg, #111, #222)", primary:"#f5f242", accent:"#ff007f"},
-      {bg:"linear-gradient(135deg, #060606, #201020)", primary:"#ff6ec7", accent:"#33ffcc"}
+      {primary:"#ff00ff", accent:"#00fff7"},
+      {primary:"#39ff14", accent:"#ff3131"},
+      {primary:"#00f0ff", accent:"#ff00a0"},
+      {primary:"#f5f242", accent:"#ff007f"},
+      {primary:"#ff6ec7", accent:"#33ffcc"}
     ];
     const lightAccents = ["#003366","#004080","#00509e","#0066cc","#000099"];
 
     function applyRandomTheme(){
       if(document.body.classList.contains("light")) return;
       const theme = themes[Math.floor(Math.random()*themes.length)];
-      document.documentElement.style.setProperty("--background", "#0d0d0d"); // Grundfarbe
+      document.documentElement.style.setProperty("--background", "#0d0d0d");
       document.documentElement.style.setProperty("--primary-color", theme.primary);
       document.documentElement.style.setProperty("--accent-color", theme.accent);
-      // KEIN body.style.backgroundImage mehr!
     }
     applyRandomTheme();
 
@@ -250,7 +248,7 @@
       updateCanvasVisibility();
     });
 
-    // --- Hintergrund Wellen Animation mit Farbverlauf ---
+    // --- Hintergrund Wellen Animation (asynchroner Farbwechsel) ---
     const canvas = document.getElementById("wave-bg");
     const ctx = canvas.getContext("2d");
     let w, h;
@@ -267,7 +265,7 @@
       frequency: 0.002 + Math.random() * 0.003,
       phase: Math.random() * Math.PI * 2,
       speed: 0.001 + Math.random() * 0.002,
-      hue: Math.random() * 360,         // Startfarbe
+      hue: Math.random() * 360,              // Startfarbe
       hueSpeed: 0.02 + Math.random() * 0.05, // Geschwindigkeit Farbwechsel
       alpha: 0.06 + Math.random() * 0.08
     }));
@@ -285,7 +283,7 @@
               wv.amplitude;
           ctx.lineTo(x, y);
         }
-        // Farbe dynamisch berechnen
+        // Asynchroner Farbwechsel
         const color = `hsl(${(wv.hue + time * wv.hueSpeed) % 360}, 100%, 60%)`;
         ctx.strokeStyle = color;
         ctx.globalAlpha = wv.alpha;
