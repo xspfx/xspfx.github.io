@@ -80,8 +80,61 @@
       "closing": "Die Edusphere kennt keine nationalen Grenzen. Sie verbindet lokale Initiativen zu einer **globalen Bewegung**, in der Solidarität und Dialog die Grundlage sind. Sie ist eine digitale Agora – offen, streitbar, gerecht."
     },
     {
+      "id": "praxis",
+      "title": "6. Wege in die Praxis",
+      "paragraphs": [
+        "Damit die Edusphere mehr ist als eine Idee, braucht sie konkrete Strukturen und Handlungsfelder."
+      ],
+      "subsections": [
+        {
+          "title": "a) Organisation",
+          "list": [
+            "**Dezentral und vernetzt**: Lokale Initiativen in Schulen, Universitäten, Bibliotheken oder Online-Communities bilden Knotenpunkte.",
+            "**Global verbunden**: Eine offene Infrastruktur vernetzt diese Knoten zu einer weltweiten Bewegung.",
+            "**Selbstbestimmt**: Die Edusphere hat keine Hierarchie, sondern lebt von geteilten Prinzipien."
+          ]
+        },
+        {
+          "title": "b) Handlungsfelder",
+          "list": [
+            "**Bildung & Mündigkeit**: Medienkompetenz, Open-Source-Wissen, Räume für respektvollen Dialog.",
+            "**Technologie & Verantwortung**: Transparente Algorithmen, ethischer Code, gemeinwohlorientierte Plattformen.",
+            "**Kultur & Kunst**: Projekte, die Bilder der Solidarität schaffen und „Memes der Aufklärung“ verbreiten.",
+            "**Aktivismus & Zivilgesellschaft**: Grassroots-Kampagnen, Community-Projekte, internationale Solidarität."
+          ]
+        },
+        {
+          "title": "c) Werkzeuge",
+          "list": [
+            "Eine **digitale Agora** für Austausch, Lernmaterialien und Projekte.",
+            "Eine **Edusphere-Akademie** für kritisches Denken und demokratische Praxis.",
+            "**Mentoring-Programme** zwischen Generationen.",
+            "Ein gemeinsames **Fact-Checking-Netzwerk** gegen Desinformation."
+          ]
+        },
+        {
+          "title": "d) Politische Forderungen",
+          "list": [
+            "Das **Recht auf digitale Bildung** als Menschenrecht anerkennen.",
+            "**Plattformregulierung**: Transparenzpflichten für Algorithmen und Grenzen für Hassmonetarisierung.",
+            "Aufbau einer **öffentlichen digitalen Infrastruktur** als demokratisches Gemeingut."
+          ]
+        },
+        {
+          "title": "e) Beteiligung",
+          "list": [
+            "Gründet **Lernzirkel**.",
+            "Schafft **kreative Beiträge** – Texte, Videos, Kunst.",
+            "Entwickelt **Werkzeuge** für digitale Demokratie.",
+            "Engagiert euch für **Bildungsgerechtigkeit**.",
+            "Baut **solidarische Netzwerke** über Grenzen hinweg."
+          ]
+        }
+      ]
+    },
+    {
       "id": "promise",
-      "title": "6. Unser Versprechen",
+      "title": "7. Unser Versprechen",
       "list": [
         "Wir werden nicht schweigen, wenn Demokratie angegriffen wird.",
         "Wir werden nicht wegsehen, wenn Hass sich ausbreitet.",
