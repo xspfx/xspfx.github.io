@@ -7,11 +7,13 @@
   <style>
     :root {
       --bg-dark: #0a0a0f;
-      --bg-light: #f5f5fa;
+      --bg-light: #ffffff;
       --text-dark: #e0e0ff;
       --text-light: #202020;
-      --accent: #8a2be2;
-      --highlight: #00ffff;
+      --accent-dark: #8a2be2;
+      --highlight-dark: #00ffff;
+      --accent-light: #0044cc;
+      --highlight-light: #0044cc;
     }
     body {
       margin: 0;
@@ -43,12 +45,23 @@
       font-size: 2.5rem;
       font-weight: bold;
       margin: 0;
-      color: var(--highlight);
+      color: var(--highlight-dark);
       text-shadow: 0 0 8px rgba(0,255,255,0.6);
-      transition: text-shadow 0.3s;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+    header h2 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0 0;
+      font-weight: normal;
+      color: var(--accent-dark);
+      transition: color 0.3s;
     }
     body.light header h1 {
+      color: var(--accent-light);
       text-shadow: none;
+    }
+    body.light header h2 {
+      color: var(--highlight-light);
     }
 
     main {
@@ -57,20 +70,32 @@
       padding: 0 1rem;
     }
     h2 {
-      color: var(--accent);
+      color: var(--accent-dark);
       margin-top: 2rem;
       font-size: 1.6rem;
+      transition: color 0.3s;
     }
     h3 {
-      color: var(--highlight);
+      color: var(--highlight-dark);
       margin-top: 1rem;
       font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    body.light h2 {
+      color: var(--accent-light);
+    }
+    body.light h3 {
+      color: var(--highlight-light);
     }
     ul {
       margin: 0.5rem 0 1rem 1.5rem;
     }
     strong {
-      color: var(--highlight);
+      color: var(--highlight-dark);
+      transition: color 0.3s;
+    }
+    body.light strong {
+      color: var(--highlight-light);
     }
 
     footer {
@@ -91,23 +116,27 @@
       background: none;
       border: none;
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 0;
     }
     .burger span {
       display: block;
-      height: 4px;
-      background: var(--highlight);
+      height: 3px;
+      background: var(--highlight-dark);
       border-radius: 2px;
       transition: 0.3s;
+    }
+    body.light .burger span {
+      background: var(--highlight-light);
     }
     .menu {
       display: none;
       position: absolute;
-      top: 40px;
+      top: 34px;
       right: 0;
       background: rgba(20,20,30,0.95);
       padding: 1rem;
@@ -115,7 +144,7 @@
       min-width: 150px;
     }
     body.light .menu {
-      background: rgba(250,250,255,0.95);
+      background: rgba(245,245,250,0.95);
     }
     .menu.open {
       display: block;
@@ -126,15 +155,24 @@
       padding: 0.4rem 0.8rem;
       border: none;
       border-radius: 6px;
-      background: var(--accent);
+      background: var(--accent-dark);
       color: white;
       cursor: pointer;
       width: 100%;
       text-align: left;
+      transition: background 0.3s, color 0.3s;
     }
     .menu button:hover {
-      background: var(--highlight);
+      background: var(--highlight-dark);
       color: black;
+    }
+    body.light .menu button {
+      background: var(--accent-light);
+      color: white;
+    }
+    body.light .menu button:hover {
+      background: var(--highlight-light);
+      color: white;
     }
   </style>
 </head>
@@ -158,11 +196,12 @@
   </div>
 
   <header>
-    <h1 id="manifest-title">Lade Manifest...</h1>
+    <h1 id="manifest-title">Edusphere Manifest</h1>
+    <h2 id="manifest-subtitle">Für eine neue Aufklärung im digitalen Zeitalter</h2>
   </header>
   <main id="manifest-content"></main>
   <footer>
-    <span id="version">subscriptionsPass.js ver. 1.0.3</span>
+    <span id="version">subscriptionsPass.js ver. 1.0.4</span>
   </footer>
 
   <script>
@@ -175,7 +214,9 @@
         const res = await fetch(manifestPath(language));
         if (!res.ok) throw new Error("Manifest konnte nicht geladen werden");
         const manifest = await res.json();
-        document.getElementById("manifest-title").textContent = manifest.title;
+        document.getElementById("manifest-title").textContent = manifest.title.split(":")[0];
+        const subtitle = manifest.title.includes(":") ? manifest.title.split(":")[1].trim() : "";
+        document.getElementById("manifest-subtitle").textContent = subtitle;
         document.getElementById("manifest-content").innerHTML = manifest.sections.map(renderSection).join("");
       } catch (err) {
         document.getElementById("manifest-title").textContent = "Manifest konnte nicht geladen werden";
@@ -221,7 +262,7 @@
       document.body.classList.toggle("light");
     }
 
-    // Burger Menü Logik
+    // Burger Menü
     const burgerBtn = document.getElementById("burger-btn");
     const menu = document.getElementById("menu");
     burgerBtn.addEventListener("click", () => {
@@ -272,9 +313,9 @@
           "rgba(0,200,255,0.32)"
         ];
         const lightColors = [
-          "rgba(0,120,180,0.18)",
-          "rgba(150,0,150,0.15)",
-          "rgba(0,100,150,0.2)"
+          "rgba(0,70,140,0.18)",
+          "rgba(0,50,120,0.15)",
+          "rgba(0,90,160,0.2)"
         ];
         const color = isLight ? lightColors[i] : darkColors[i];
         drawWave(wave, time, color);
