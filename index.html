@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edusphere Manifest</title>
   <style>
     :root {
@@ -17,195 +17,134 @@
       --card-dark: rgba(30,30,45,0.9);
       --card-light: #f9f9f9;
     }
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-dark);
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+
+    /* basic layout */
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg-dark);
+      color:var(--text-dark);
+      line-height:1.6;
+      transition:background .25s, color .25s;
     }
-    body.light {
-      background: var(--bg-light);
-      color: var(--text-light);
+    body.light{
+      background:var(--bg-light);
+      color:var(--text-light);
     }
 
-    /* Hintergrund Canvas */
-    #wave-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: transparent;
+    /* Wave canvas (background) */
+    #wave-bg{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
       filter: blur(14px);
     }
 
-    header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
+    /* header / title */
+    header{ text-align:center; padding:2rem 1rem 1rem; }
+    header h1{
+      margin:0; font-size:2.5rem; font-weight:700;
+      color:var(--highlight-dark);
+      text-shadow:0 0 8px rgba(0,255,255,0.6);
+      transition: color .25s, text-shadow .25s;
     }
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin: 0;
-      color: var(--highlight-dark);
-      text-shadow: 0 0 8px rgba(0,255,255,0.6);
-      transition: color 0.3s, text-shadow 0.3s;
+    header h2{
+      margin:0.5rem 0 0; font-size:1.1rem; font-weight:400;
+      color:var(--accent-dark); transition: color .25s;
     }
-    header h2 {
-      font-size: 1.2rem;
-      margin: 0.5rem 0 0;
-      font-weight: normal;
-      color: var(--accent-dark);
-      transition: color 0.3s;
-    }
-    body.light header h1 {
-      color: var(--accent-light);
-      text-shadow: none;
-    }
-    body.light header h2 {
-      color: var(--highlight-light);
-    }
+    body.light header h1{ color:var(--accent-light); text-shadow:none; }
+    body.light header h2{ color:var(--highlight-light); }
 
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    /* main content / cards */
+    main{ max-width:900px; margin:2rem auto; padding:0 1rem; }
+    section{
+      background:var(--card-dark);
+      padding:1.5rem;
+      margin:1.5rem 0;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      transition: background .25s, box-shadow .25s;
     }
-    section {
-      background: var(--card-dark);
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      transition: background 0.3s, color 0.3s;
+    body.light section{
+      background:var(--card-light);
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
     }
-    body.light section {
-      background: var(--card-light);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    h2 {
-      color: var(--accent-dark);
-      margin-top: 0;
-      font-size: 1.6rem;
-      transition: color 0.3s;
-    }
-    h3 {
-      color: var(--highlight-dark);
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      transition: color 0.3s;
-    }
-    body.light h2 {
-      color: var(--accent-light);
-    }
-    body.light h3 {
-      color: var(--highlight-light);
-    }
-    ul {
-      margin: 0.5rem 0 1rem 1.5rem;
-    }
-    strong {
-      color: var(--highlight-dark);
-      transition: color 0.3s;
-    }
-    body.light strong {
-      color: var(--highlight-light);
-    }
+    section h2{ margin:0 0 .6rem 0; font-size:1.5rem; color:var(--accent-dark); transition: color .25s; }
+    section h3{ margin:.6rem 0; font-size:1.05rem; color:var(--highlight-dark); transition: color .25s; }
+    body.light section h2{ color:var(--accent-light); }
+    body.light section h3{ color:var(--highlight-light); }
 
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #888;
-      margin: 3rem 0 1rem;
-    }
+    p{ margin:0 0 .9rem; }
+    ul{ margin:.5rem 0 1rem 1.25rem; }
+    li{ margin-bottom:.45rem; }
 
-    /* Burger Menü */
-    .menu-container {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 10;
+    /* markdown inline classes */
+    strong.md-strong{
+      color:var(--highlight-dark);
+      font-weight:700;
+      text-shadow:0 0 8px rgba(0,255,255,0.12);
     }
-    .burger {
-      background: none;
-      border: none;
-      cursor: pointer;
-      width: 26px;
-      height: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 0;
+    em.md-em{
+      color:var(--accent-dark);
+      font-style:italic;
+      text-shadow:0 0 6px rgba(138,43,226,0.06);
     }
-    .burger span {
-      display: block;
-      height: 3px;
-      background: var(--highlight-dark);
-      border-radius: 2px;
-      transition: 0.3s;
+    body.light strong.md-strong{ color:var(--highlight-light); text-shadow:none; }
+    body.light em.md-em{ color:var(--accent-light); text-shadow:none; }
+
+    /* footer */
+    footer{ text-align:center; font-size:0.85rem; color:#999; margin:3rem 0 1rem; }
+
+    /* burger menu (compact lines) */
+    .menu-container{ position:fixed; top:1rem; right:1rem; z-index:12; }
+    .burger{
+      width:28px; height:20px; background:none; border:none; cursor:pointer; padding:0;
+      display:flex; flex-direction:column; justify-content:space-between;
     }
-    body.light .burger span {
-      background: var(--highlight-light);
+    .burger span{
+      display:block; height:3px; border-radius:2px; background:var(--highlight-dark); transition:background .2s;
     }
-    .menu {
-      display: none;
-      position: absolute;
-      top: 30px;
-      right: 0;
-      background: rgba(20,20,30,0.95);
-      padding: 1rem;
-      border-radius: 8px;
-      min-width: 150px;
+    body.light .burger span{ background:var(--highlight-light); }
+
+    .menu{
+      display:none; position:absolute; top:34px; right:0;
+      background:rgba(20,20,30,0.95); padding:10px; border-radius:8px; min-width:170px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
-    body.light .menu {
-      background: rgba(245,245,250,0.95);
+    body.light .menu{ background:rgba(250,250,255,0.95); box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    .menu.open{ display:block; }
+    .menu button{
+      display:block; width:100%; text-align:left; margin:.25rem 0; padding:.45rem .6rem;
+      border:none; border-radius:6px; cursor:pointer; background:var(--accent-dark); color:white;
     }
-    .menu.open {
-      display: block;
-    }
-    .menu button {
-      display: block;
-      margin: 0.3rem 0;
-      padding: 0.4rem 0.8rem;
-      border: none;
-      border-radius: 6px;
-      background: var(--accent-dark);
-      color: white;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-      transition: background 0.3s, color 0.3s;
-    }
-    .menu button:hover {
-      background: var(--highlight-dark);
-      color: black;
-    }
-    body.light .menu button {
-      background: var(--accent-light);
-      color: white;
-    }
-    body.light .menu button:hover {
-      background: var(--highlight-light);
-      color: white;
+    .menu button:hover{ background:var(--highlight-dark); color:black; }
+    body.light .menu button{ background:var(--accent-light); color:white; }
+    body.light .menu button:hover{ background:var(--highlight-light); color:white; }
+
+    @media (max-width:600px){
+      header h1{ font-size:1.8rem; }
+      section{ padding:1rem; }
     }
   </style>
 </head>
 <body>
-  <canvas id="wave-bg"></canvas>
+  <canvas id="wave-bg" aria-hidden="true"></canvas>
 
-  <div class="menu-container">
-    <button class="burger" id="burger-btn" aria-label="Menü">
+  <div class="menu-container" id="menu-container">
+    <button class="burger" id="burger-btn" aria-label="Menü" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <div class="menu" id="menu">
-      <button onclick="setLanguage('de')">Deutsch</button>
-      <button onclick="setLanguage('en')">English</button>
-      <button onclick="setLanguage('fr')">Français</button>
-      <button onclick="setLanguage('es')">Español</button>
-      <button onclick="setLanguage('ru')">Русский</button>
-      <button onclick="setLanguage('zh')">中文</button>
-      <hr>
-      <button onclick="toggleDarkMode()">🌙 Dark/Light</button>
+    <div class="menu" id="menu" role="menu" aria-hidden="true">
+      <button type="button" onclick="setLanguage('de')">Deutsch</button>
+      <button type="button" onclick="setLanguage('en')">English</button>
+      <button type="button" onclick="setLanguage('fr')">Français</button>
+      <button type="button" onclick="setLanguage('es')">Español</button>
+      <button type="button" onclick="setLanguage('ru')">Русский</button>
+      <button type="button" onclick="setLanguage('zh')">中文</button>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:.6rem 0;">
+      <button type="button" onclick="toggleDarkMode()">🌙 Dark/Light</button>
     </div>
   </div>
 
@@ -213,144 +152,90 @@
     <h1 id="manifest-title">Edusphere Manifest</h1>
     <h2 id="manifest-subtitle">Für eine neue Aufklärung im digitalen Zeitalter</h2>
   </header>
-  <main id="manifest-content"></main>
+
+  <main id="manifest-content" aria-live="polite">
+    <!-- content from JSON will be rendered here -->
+  </main>
+
   <footer>
     <span id="version">subscriptionsPass.js ver. 1.0.5</span>
   </footer>
 
   <script>
-    const lang = localStorage.getItem("lang") || document.documentElement.lang || "de";
-    document.documentElement.lang = lang;
-    const manifestPath = (lang) => `i18n/${lang}.json`;
+  /* ---------------- utilities ---------------- */
+  function escapeHTML(str){
+    if (str === undefined || str === null) return "";
+    return String(str)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
 
-    async function loadManifest(language) {
-      try {
-        const res = await fetch(manifestPath(language));
-        if (!res.ok) throw new Error("Manifest konnte nicht geladen werden");
-        const manifest = await res.json();
-        document.getElementById("manifest-title").textContent = manifest.title.split(":")[0];
-        const subtitle = manifest.title.includes(":") ? manifest.title.split(":")[1].trim() : "";
-        document.getElementById("manifest-subtitle").textContent = subtitle;
-        document.getElementById("manifest-content").innerHTML = manifest.sections.map(renderSection).join("");
-      } catch (err) {
-        document.getElementById("manifest-title").textContent = "Manifest konnte nicht geladen werden";
-        console.error(err);
-      }
+  // markdown-like inline parser (works on already-escaped text)
+  function markdownInlineToHtml(s){
+    if(!s) return "";
+    // bold **...**
+    s = s.replace(/\*\*([\s\S]+?)\*\*/g, '<strong class="md-strong">$1</strong>');
+    // italic *...* (avoid matching bold internals)
+    s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em class="md-em">$2</em>');
+    return s;
+  }
+
+  function formatText(raw){
+    return markdownInlineToHtml( escapeHTML(raw) );
+  }
+
+  /* ---------------- manifest loader + render ---------------- */
+  const initialLang = localStorage.getItem("lang") || document.documentElement.lang || "de";
+  document.documentElement.lang = initialLang;
+
+  async function loadManifest(lang = initialLang) {
+    const path = `i18n/${lang}.json`;
+    try{
+      const res = await fetch(path, {cache:"no-cache"});
+      if(!res.ok) throw new Error("Manifest nicht gefunden: " + path);
+      const manifest = await res.json();
+
+      // Title / subtitle support
+      const fullTitle = manifest.title || "Edusphere Manifest";
+      const parts = fullTitle.split(":");
+      document.getElementById("manifest-title").textContent = parts[0] || fullTitle;
+      document.getElementById("manifest-subtitle").textContent = parts.slice(1).join(":").trim() || "";
+
+      // render sections
+      const container = document.getElementById("manifest-content");
+      container.innerHTML = (manifest.sections || []).map(renderSection).join("");
+    }catch(err){
+      console.error(err);
+      document.getElementById("manifest-title").textContent = "Manifest konnte nicht geladen werden";
+      document.getElementById("manifest-subtitle").textContent = "";
+      document.getElementById("manifest-content").innerHTML = `<section><p style="color:salmon">Fehler beim Laden des Manifests. Prüfe i18n/${lang}.json und öffne die Seite über http(s).</p></section>`;
+    }
+  }
+
+  function renderSection(sec){
+    if(!sec) return "";
+    const id = sec.id ? escapeHTML(sec.id) : "";
+    let html = `<section id="${id}">`;
+
+    // Section title (escaped)
+    html += `<h2>${escapeHTML(sec.title || "")}</h2>`;
+
+    // paragraphs
+    if(Array.isArray(sec.paragraphs)){
+      html += sec.paragraphs.map(p => `<p>${formatText(p)}</p>`).join("");
     }
 
-    function renderSection(sec) {
-      let html = `<section id="${sec.id}">`;
-      html += `<h2>${sec.title}</h2>`;
-      if (sec.paragraphs) {
-        html += sec.paragraphs.map(p => `<p>${p}</p>`).join("");
-      }
-      if (sec.list) {
-        html += "<ul>" + sec.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
-      }
-      if (sec.subsections) {
-        html += sec.subsections.map(sub => {
-          let subHtml = `<h3>${sub.title}</h3>`;
-          if (sub.paragraphs) subHtml += sub.paragraphs.map(p => `<p>${p}</p>`).join("");
-          if (sub.list) subHtml += "<ul>" + sub.list.map(li => `<li>${li}</li>`).join("") + "</ul>";
-          return subHtml;
-        }).join("");
-      }
-      if (sec.closing) {
-        if (Array.isArray(sec.closing)) {
-          html += sec.closing.map(c => `<p><strong>${c}</strong></p>`).join("");
-        } else {
-          html += `<p><strong>${sec.closing}</strong></p>`;
-        }
-      }
-      html += "</section>";
-      return html;
+    // list
+    if(Array.isArray(sec.list)){
+      html += "<ul>" + sec.list.map(i => `<li>${formatText(i)}</li>`).join("") + "</ul>";
     }
 
-    function setLanguage(language) {
-      localStorage.setItem("lang", language);
-      document.documentElement.lang = language;
-      loadManifest(language);
-      closeMenu();
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("light");
-      closeMenu();
-    }
-
-    // Burger Menü
-    const burgerBtn = document.getElementById("burger-btn");
-    const menu = document.getElementById("menu");
-
-    burgerBtn.addEventListener("click", () => {
-      menu.classList.toggle("open");
-    });
-
-    function closeMenu() {
-      menu.classList.remove("open");
-    }
-
-    document.addEventListener("click", (e) => {
-      if (!menu.contains(e.target) && !burgerBtn.contains(e.target)) {
-        closeMenu();
-      }
-    });
-
-    // Init
-    loadManifest(lang);
-  </script>
-
-  <script>
-    const canvas = document.getElementById('wave-bg');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const waves = [
-      { amp: 40, len: 0.008, speed: 0.002, phase: 0 },
-      { amp: 25, len: 0.012, speed: 0.0016, phase: 2 },
-      { amp: 55, len: 0.006, speed: 0.0023, phase: 4 }
-    ];
-
-    function drawWave({ amp, len, speed, phase }, time, color) {
-      ctx.beginPath();
-      for (let x = 0; x <= width; x += 6) {
-        const y = height/2 + amp * Math.sin(x * len + time * speed + phase);
-        ctx.lineTo(x, y);
-      }
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2.2;
-      ctx.stroke();
-    }
-
-    function animate(time) {
-      ctx.clearRect(0, 0, width, height);
-      const isLight = document.body.classList.contains("light");
-
-      waves.forEach((wave, i) => {
-        const darkColors = [
-          "rgba(0,255,255,0.5)",
-          "rgba(255,0,255,0.45)",
-          "rgba(0,200,255,0.48)"
-        ];
-        const lightColors = [
-          "rgba(0,70,140,0.28)",
-          "rgba(0,50,120,0.25)",
-          "rgba(0,90,160,0.3)"
-        ];
-        const color = isLight ? lightColors[i] : darkColors[i];
-        drawWave(wave, time, color);
-      });
-
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-  </script>
-</body>
-</html>
+    // subsections
+    if(Array.isArray(sec.subsections)){
+      html += sec.subsections.map(sub => {
+        let subHtml = `<h3>${escapeHTML(sub.title || "")}</h3>`;
+        if(Array.isArray(sub.paragraphs)) subHtml += sub.paragraphs.map(p => `<p>${formatText(p)}</p>`).join("");
+        if(Array.isArray(sub.list)) subHtml += "<ul>" + sub.list.map(i => `<li>${formatText(i)}</li
