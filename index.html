@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Manifest der Edusphere</title>
+  <title>Edusphere</title>
   <style>
     :root {
-      /* Dark mode background wieder schwarz (Transparenz rückgängig) */
       --background: #0d0d0d;
       --card-bg: rgba(18,18,22,0.6);
       --text: #e0e0e0;
@@ -16,377 +15,205 @@
       --max-width: 950px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
 
     body {
       font-family: "Inter", system-ui, sans-serif;
-      background: var(--background); /* wieder schwarz im Dark Mode */
+      background: var(--background);
       color: var(--text);
-      line-height: 1.7;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      transition: background .3s ease, color .3s ease;
-      overflow-x: hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
-    /* Canvas-Hintergrund: liegt über dem Body-Hintergrund, unter dem Content */
+    /* Canvas Hintergrund */
     #wave-bg {
       position: fixed;
       inset: 0;
-      z-index: 0;            /* zwischen Hintergrund und Content */
       width: 100%;
       height: 100%;
-      display: block;
+      z-index: 0;
       pointer-events: none;
+      display: block;
     }
 
-    /* Content liegt über dem Canvas */
-    header, main, footer, .card, nav.language-switch {
+    /* Content über Canvas */
+    header, main, footer {
       position: relative;
       z-index: 1;
     }
 
     header {
-      max-width: var(--max-width);
-      margin: 0 auto 1.5rem;
-      text-align: center;
-      padding-top: 1rem;
+      text-align:center;
+      margin:2rem auto 1.5rem;
     }
+
+    /* Cyberpunk Glitch Effekt für Titel */
     header h1 {
-      font-size: 1.5rem;
-      letter-spacing: -0.01em;
+      font-size:3rem;
+      font-weight:900;
       color: var(--accent-color);
-      text-shadow: 0 0 12px var(--accent-color);
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: glitch-skew 2s infinite linear alternate-reverse;
     }
 
-    nav.language-switch {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.75rem;
-    }
-    nav.language-switch button {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: var(--text);
-      padding: 0.4rem 0.75rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      backdrop-filter: blur(6px);
-      transition: all .25s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    nav.language-switch button[aria-pressed="true"] {
-      background: var(--primary-color);
-      color: black;
-      border-color: transparent;
-    }
-    nav.language-switch button:hover:not([aria-pressed="true"]) {
-      background: rgba(255,255,255,0.12);
-    }
-
-    main {
-      max-width: var(--max-width);
-      margin: 0 auto;
+    header h1::before,
+    header h1::after {
+      content: "Edusphere";
+      position: absolute;
+      left: 0;
       width: 100%;
+      overflow: hidden;
+      color: var(--primary-color);
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    header h1::before {
+      animation: glitch-top 3s infinite linear alternate-reverse;
+      text-shadow: 2px 0 var(--primary-color);
+    }
+    header h1::after {
+      animation: glitch-bottom 2.5s infinite linear alternate-reverse;
+      text-shadow: -2px 0 var(--accent-color);
+    }
+
+    @keyframes glitch-skew {
+      0% { transform: skew(0deg); }
+      20% { transform: skew(1deg); }
+      40% { transform: skew(-1deg); }
+      60% { transform: skew(0.5deg); }
+      80% { transform: skew(-0.5deg); }
+      100% { transform: skew(0deg); }
+    }
+
+    @keyframes glitch-top {
+      0% { clip: rect(0, 9999px, 0, 0); }
+      10% { clip: rect(0, 9999px, 5px, 0); }
+      20% { clip: rect(0, 9999px, 15px, 0); }
+      40% { clip: rect(0, 9999px, 8px, 0); }
+      60% { clip: rect(0, 9999px, 20px, 0); }
+      80% { clip: rect(0, 9999px, 3px, 0); }
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+
+    @keyframes glitch-bottom {
+      0% { clip: rect(100px, 9999px, 100px, 0); }
+      20% { clip: rect(80px, 9999px, 120px, 0); }
+      40% { clip: rect(110px, 9999px, 140px, 0); }
+      60% { clip: rect(90px, 9999px, 130px, 0); }
+      80% { clip: rect(100px, 9999px, 150px, 0); }
+      100% { clip: rect(100px, 9999px, 100px, 0); }
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 14px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.05) inset;
+      margin: 0 auto 1.5rem;
+      max-width: var(--max-width);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,0.08);
-      transition: transform .25s ease, box-shadow .25s ease;
     }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(0,0,0,0.7), 0 0 18px var(--primary-color);
-    }
-
-    section { margin: 1.5rem 0; }
-    section h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.6rem;
-      position: relative;
-      display: inline-block;
-      color: var(--primary-color);
-      text-shadow: 0 0 10px var(--primary-color);
-      padding-bottom: 0.5rem;
-    }
-    section h2::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 60px;
-      height: 3px;
-      border-radius: 3px;
-      background: var(--accent-color);
-      transform: scaleX(1);
-      transform-origin: left;
-      transition: transform .4s ease, height .3s ease;
-      box-shadow: 0 0 8px var(--accent-color);
-    }
-    section:hover h2::after {
-      transform: scaleX(2.5);
-      height: 5px;
-    }
-
-    p { margin: 0 0 1rem; font-size: 1rem; }
-    ul { margin: 0.5rem 0 1rem 1.25rem; }
-    li { margin-bottom: 0.5rem; }
-
-    strong.md-strong { color: var(--accent-color); font-weight: 700; text-shadow: 0 0 8px var(--accent-color); }
-    em.md-em { color: var(--primary-color); font-style: italic; text-shadow: 0 0 6px var(--primary-color); }
 
     footer {
-      margin-top: auto;
-      text-align: center;
+      margin-top:auto;
+      text-align:center;
       color: var(--muted);
-      font-size: 0.9rem;
-      padding: 1rem 0;
+      font-size:0.9rem;
+      padding:1rem 0;
+      position: relative;
     }
     footer small {
-      display: block;
-      font-size: 0.75rem;
-      margin-top: 0.3rem;
+      display:block;
+      font-size:0.75rem;
+      margin-top:0.3rem;
       color: var(--muted);
-    }
-
-    /* Light Mode (Canvas bleibt sichtbar und dezent) */
-    body.light {
-      --background: #ffffff;
-      --card-bg: #f5f5f5;
-      --text: #111111;
-      --muted: #333333;
-      --primary-color: #000000;
-      --accent-color: #003366;
-      background: #ffffff;
-      color: var(--text);
-    }
-    body.light * {
-      text-shadow: none !important;
-      box-shadow: none !important;
-      backdrop-filter: none !important;
-    }
-    body.light nav.language-switch button {
-      background: #ffffff;
-      color: #000000;
-      border: 1px solid #333;
-    }
-    body.light nav.language-switch button[aria-pressed="true"] {
-      background: var(--accent-color);
-      color: #fff;
-    }
-    body.light section h2::after {
-      box-shadow: none !important;
-    }
-
-    @media (max-width:600px) {
-      .card { padding: 1rem; }
-      header h1 { font-size: 1.25rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Canvas Hintergrund -->
-  <canvas id="wave-bg" aria-hidden="true"></canvas>
+  <!-- Canvas -->
+  <canvas id="wave-bg"></canvas>
 
   <header>
-    <h1>Manifest der Edusphere</h1>
-    <nav class="language-switch" role="navigation" aria-label="Schalter">
-      <button data-lang="de" aria-pressed="true">Deutsch</button>
-      <button data-lang="en" aria-pressed="false">English</button>
-      <button data-lang="fr" aria-pressed="false">Français</button>
-      <button data-lang="es" aria-pressed="false">Español</button>
-      <button data-lang="ru" aria-pressed="false">Русский</button>
-      <button data-lang="zh" aria-pressed="false">中文</button>
-      <button id="mode-toggle"><span id="mode-icon">🌙</span> Dark/Light</button>
-    </nav>
+    <h1>Edusphere</h1>
   </header>
 
-  <main id="manifest-content" class="card" role="main" aria-live="polite"></main>
+  <main class="card" role="main">
+    <p>Manifest-Inhalt wird hier geladen …</p>
+  </main>
 
   <footer>
     &copy; 2025 Edusphere – Für eine neue Aufklärung
-    <small id="version">Version: …</small>
+    <small id="version">Version …</small>
   </footer>
 
   <script>
-    // ---------- Canvas Setup (DPI-aware) ----------
+    // --- Canvas Setup ---
     const canvas = document.getElementById("wave-bg");
     const ctx = canvas.getContext("2d", { alpha: true });
-    let w = 0, h = 0, dpr = 1;
+    let w, h, dpr;
 
     function resizeCanvas() {
-      dpr = Math.max(window.devicePixelRatio || 1, 1);
-      // interne Pixeldimensionen
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      // CSS-Größe
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
       canvas.style.width = window.innerWidth + "px";
       canvas.style.height = window.innerHeight + "px";
-      // Koordinatensystem so setzen, dass wir in CSS-Pixels zeichnen
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
       w = window.innerWidth;
       h = window.innerHeight;
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // ---------- Wave-Parameter (langsamer, riesiger Blur) ----------
-    // Dark mode: neon-lila & neon-blau (keine Zufallsfarben)
-    const darkWaves = [
-      { amplitude: 60, frequency: 0.0032, speed: 0.03, color: "#ff00ff", lineWidth: 4, alpha: 0.38 },
-      { amplitude: 40, frequency: 0.0021, speed: 0.02, color: "#00fff7", lineWidth: 4, alpha: 0.36 }
-    ];
-    // Light mode: dezente, hellere halbtransparente Varianten
-    const lightWaves = [
-      { amplitude: 50, frequency: 0.0026, speed: 0.02, color: "rgba(0,145,255,0.18)", lineWidth: 3, alpha: 0.22 },
-      { amplitude: 30, frequency: 0.0016, speed: 0.015, color: "rgba(200,80,255,0.14)", lineWidth: 3, alpha: 0.18 }
+    // --- Wellen: nur vertikal schwingen, kein horizontaler Lauf ---
+    const waves = [
+      { amplitude: 80, frequency: 0.003, speed: 1.5, color: "#ff00ff" },
+      { amplitude: 60, frequency: 0.002, speed: 1.0, color: "#00fff7" }
     ];
 
-    // Sehr großer Blur-Effekt
-    const BIG_BLUR = 220;
+    const BIG_BLUR = 180;
 
-    // ---------- Zeichnungsfunktion ----------
-    function drawWaves(timestamp) {
-      // timestamp kommt in ms -> Sekunden
-      const t = (timestamp || 0) / 1000;
-
-      // Löschen im CSS-Pixel-Raum
-      ctx.clearRect(0, 0, w, h);
+    function drawWaves(t) {
+      ctx.clearRect(0,0,w,h);
       ctx.globalCompositeOperation = "lighter";
-
-      const waves = document.body.classList.contains("light") ? lightWaves : darkWaves;
-
-      // Basis: leicht dunkle Füllung über dem schwarzen Hintergrund für Tiefe (optional)
-      // (auskommentiert, falls zu dunkel) 
-      // ctx.fillStyle = document.body.classList.contains("light") ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.06)";
-      // ctx.fillRect(0,0,w,h);
 
       waves.forEach(wv => {
         ctx.beginPath();
-        // Schrittweite, um Performance zu halten; je kleiner, desto glatter
-        const step = Math.max(2, Math.round(w / 1400));
-        const phase = t * wv.speed;
-        for (let x = 0; x <= w; x += step) {
-          const y = h * 0.5 + Math.sin(x * wv.frequency * Math.PI * 2 + phase) * wv.amplitude;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+        const step = 3; // Schrittweite in Pixel
+        for (let x=0; x<=w; x+=step) {
+          // Nur vertikale Schwingung, Zeitabhängig -> pulsieren
+          const y = h/2 + Math.sin(x * wv.frequency + t*0.001*wv.speed) * wv.amplitude;
+          if (x===0) ctx.moveTo(x,y);
+          else ctx.lineTo(x,y);
         }
-        // Stroke
         ctx.strokeStyle = wv.color;
-        ctx.globalAlpha = wv.alpha;
-        ctx.lineWidth = wv.lineWidth;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 4;
         ctx.shadowBlur = BIG_BLUR;
         ctx.shadowColor = wv.color;
         ctx.stroke();
       });
 
-      ctx.globalAlpha = 1;
       requestAnimationFrame(drawWaves);
     }
     requestAnimationFrame(drawWaves);
 
-    // ---------- Dark / Light Toggle ----------
-    const modeBtn = document.getElementById("mode-toggle");
-    const modeIcon = document.getElementById("mode-icon");
-    modeBtn.addEventListener("click", () => {
-      if (document.body.classList.contains("light")) {
-        // zurück zu Dark
-        document.body.classList.remove("light");
-        modeIcon.textContent = "🌙";
-        // setze dunklen Hintergrund wieder explizit
-        document.documentElement.style.setProperty("--background", "#0d0d0d");
-        document.body.style.background = getComputedStyle(document.documentElement).getPropertyValue("--background");
-      } else {
-        // Light Mode
-        document.body.classList.add("light");
-        modeIcon.textContent = "☀️";
-        document.documentElement.style.setProperty("--background", "#ffffff");
-        document.body.style.background = getComputedStyle(document.documentElement).getPropertyValue("--background");
-      }
-      // resize, damit ggf. DPR transform korrekt bleibt
-      resizeCanvas();
-    });
-
-    // ---------- Markdown & Manifest Rendering (wie zuvor) ----------
-    function escapeHTML(str) {
-      return String(str)
-        .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
-        .replace(/'/g,"&#39;");
-    }
-    function markdownInlineToHtml(s) {
-      if (!s) return s;
-      s = s.replace(/\*\*([\s\S]+?)\*\*/g,'<strong class="md-strong">$1</strong>');
-      s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g,'$1<em class="md-em">$2</em>');
-      return s;
-    }
-
-    async function loadManifest(lang) {
-      try {
-        const res = await fetch(`./i18n/${lang}.json`, { cache: "no-cache" });
-        if (!res.ok) throw new Error("Not found");
-        return await res.json();
-      } catch(e) {
-        return await fetch("./i18n/de.json").then(r=>r.json());
-      }
-    }
-
-    function renderSection(sec) {
-      let html = `<section id="${sec.id||""}"><h2>${escapeHTML(sec.title)}</h2>`;
-      if (sec.paragraphs) html += sec.paragraphs.map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-      if (sec.list) html += "<ul>" + sec.list.map(i => `<li>${markdownInlineToHtml(escapeHTML(i))}</li>`).join("") + "</ul>";
-      if (sec.closing) {
-        if (Array.isArray(sec.closing)) html += sec.closing.map(p => `<p>${markdownInlineToHtml(escapeHTML(p))}</p>`).join("");
-        else html += `<p>${markdownInlineToHtml(escapeHTML(sec.closing))}</p>`;
-      }
-      return html + "</section>";
-    }
-
-    async function renderManifest(lang="de") {
-      const data = await loadManifest(lang);
-      let html = `<h1 style="margin-bottom:1rem;font-size:1.1rem;color:var(--accent-color)">${escapeHTML(data.title)}</h1>`;
-      html += data.sections.map(renderSection).join("");
-      document.getElementById("manifest-content").innerHTML = html;
-      document.querySelectorAll(".language-switch button[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    document.querySelectorAll(".language-switch button[data-lang]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (btn.getAttribute("aria-pressed") === "true") return;
-        renderManifest(btn.dataset.lang);
-      });
-    });
-
-    renderManifest("de");
-
-    // ---------- Versionsnummer aus JSON laden ----------
+    // --- Version aus JSON laden ---
     async function loadVersion() {
       try {
-        const res = await fetch("./version.json", { cache: "no-cache" });
-        if (res.ok) {
+        const res = await fetch("./version.json", {cache:"no-cache"});
+        if(res.ok) {
           const data = await res.json();
-          document.getElementById("version").textContent = "Version: " + (data.version || "?.?");
-        } else {
-          document.getElementById("version").textContent = "Version: ?.?";
+          document.getElementById("version").textContent = "Version " + data.version;
         }
-      } catch (e) {
-        console.warn("Keine Version gefunden", e);
-        document.getElementById("version").textContent = "Version: ?.?";
+      } catch(e) {
+        document.getElementById("version").textContent = "Version ?";
       }
     }
     loadVersion();
