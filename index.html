@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Edusphere</title>
+  <title>eduSphere</title>
   <style>
     :root {
       --background: #0d0d0d;
@@ -35,7 +35,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      filter: blur(18px) brightness(1.2);
+      filter: blur(13px) brightness(7.2);
     }
 
     header {
@@ -237,8 +237,8 @@
   </div>
 
   <header>
-    <h1>Edusphere</h1>
-    <h2>Manifest</h2>
+    <h1>eduSphere</h1>
+    <h2>manifest - 0.0.2</h2>
     <nav class="language-switch" role="navigation" aria-label="Sprachschalter">
       <button data-lang="de" aria-pressed="true">Deutsch</button>
       <button data-lang="en" aria-pressed="false">English</button>
@@ -250,11 +250,11 @@
   </header>
 
   <main id="manifest-content" class="card" role="main" aria-live="polite">
-    <p>Lade Manifest...</p>
+    <p>Loading Manifest...</p>
   </main>
 
   <footer>
-    &copy; 2025 Edusphere – Für eine neue Aufklärung
+    &copy; 2025 - eduSphere movement
   </footer>
 
   <script>
@@ -393,9 +393,9 @@
     resize();
 
     const waves = [
-      { amp: 40, len: 0.008, speed: 0.002, phase: 0 },
-      { amp: 25, len: 0.012, speed: 0.0016, phase: 2 },
-      { amp: 55, len: 0.006, speed: 0.0023, phase: 4 }
+      { amp: 66,  len: 0.008, speed: 0.002, phase: 0 },
+      { amp: 123, len: 0.012, speed: 0.0006, phase: 2 },
+      { amp: 25,  len: 0.006, speed: 0.0011, phase: 4 }
     ];
 
     function drawWave({ amp, len, speed, phase }, time, color) {
@@ -405,7 +405,7 @@
         ctx.lineTo(x, y);
       }
       ctx.strokeStyle = color;
-      ctx.lineWidth = 2.2;
+      ctx.lineWidth = 3.5;
       ctx.stroke();
     }
 
@@ -415,9 +415,9 @@
       const isLight = document.body.classList.contains("light");
       waves.forEach((wave, i) => {
         const baseColorsDark = [
-          "rgba(0,255,255,0.35)",
-          "rgba(255,0,255,0.28)",
-          "rgba(0,200,255,0.32)"
+          "rgba(0,255,255,0.65)",
+          "rgba(255,0,255,0.55)",
+          "rgba(0,200,255,0.6)"
         ];
         const baseColorsLight = [
           "rgba(0,120,180,0.18)",
